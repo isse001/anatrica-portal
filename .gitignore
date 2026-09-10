@@ -1,0 +1,11 @@
+# GitHub Pages deploy = only these files. Everything else stays local.
+*
+!.gitignore
+!.gitattributes
+!index.html
+!news.json
+!news_fetch.py
+!DEPLOY_PORTAL.md
+!.github
+!.github/workflows
+!.github/workflows/news.yml

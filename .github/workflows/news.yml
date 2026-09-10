@@ -1,0 +1,38 @@
+name: refresh news.json
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"      # every 6 h (minute 17 to avoid the top-of-hour rush)
+  workflow_dispatch: {}          # allow manual "Run workflow"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: news-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch GDELT -> news.json
+        run: python news_fetch.py
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- news.json; then
+            echo "news.json unchanged — nothing to commit"
+            exit 0
+          fi
+          git config user.name  "news-bot"
+          git config user.email "news-bot@users.noreply.github.com"
+          git add news.json
+          git commit -m "news.json: refresh $(date -u +'%Y-%m-%dT%H:%MZ')"
+          git push
