@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COA Uygunluk Kontrolü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F7F6F2; --surface:#FFFFFF; --surface-2:#EFEDE5; --surface-3:#E6E2D7;
+  --ink:#14181A; --ink-secondary:#52585C; --ink-muted:#84898D;
+  --border:#DEDAD0; --border-strong:#C7C2B4;
+  --accent:#0B5D63; --accent-ink:#FFFFFF; --accent-soft:#DCEBEA;
+  --good:#1E8E5A; --good-soft:#DDF0E5; --bad:#B3261E; --bad-soft:#F7DEDB;
+  --warn:#9C6B00; --warn-soft:#F6EAC7; --info:#2F6FB0; --info-soft:#DDE8F4;
+  --shadow:0 1px 2px rgba(20,24,26,.06), 0 8px 24px -12px rgba(20,24,26,.18);
+  --radius-s:6px; --radius-m:10px; --radius-l:16px;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#0F1417; --surface:#161C20; --surface-2:#1D2429; --surface-3:#252D33;
+  --ink:#EDEFEE; --ink-secondary:#AEB6BA; --ink-muted:#7C858A;
+  --border:#2A3238; --border-strong:#3A444B;
+  --accent:#3FB2A8; --accent-ink:#062421; --accent-soft:#173330;
+  --good:#4CBE86; --good-soft:#15301F; --bad:#EF7A6F; --bad-soft:#3A1A17;
+  --warn:#E0B23D; --warn-soft:#332A11; --info:#5A93D6; --info-soft:#15263A;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 26px -12px rgba(0,0,0,.55);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0F1417; --surface:#161C20; --surface-2:#1D2429; --surface-3:#252D33;
+  --ink:#EDEFEE; --ink-secondary:#AEB6BA; --ink-muted:#7C858A;
+  --border:#2A3238; --border-strong:#3A444B;
+  --accent:#3FB2A8; --accent-ink:#062421; --accent-soft:#173330;
+  --good:#4CBE86; --good-soft:#15301F; --bad:#EF7A6F; --bad-soft:#3A1A17;
+  --warn:#E0B23D; --warn-soft:#332A11; --info:#5A93D6; --info-soft:#15263A;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 26px -12px rgba(0,0,0,.55);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;font-size:14px}
+.wrap{max-width:1200px;margin:0 auto;padding:22px 16px 90px}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+.mono{font-family:var(--mono)}
+.muted{color:var(--ink-muted)}
+
+/* masthead */
+.mast{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:16px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)}
+.mast h1{font-size:23px;margin-top:4px}
+.mast .sub{color:var(--ink-secondary);font-size:13px;margin-top:4px;max-width:72ch}
+.mast-tools{display:flex;gap:8px;flex-wrap:wrap}
+
+/* tabs */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:18px}
+.tab{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;cursor:pointer;color:var(--ink-muted);font-weight:600;font-size:13.5px;margin-bottom:-1px}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .n{font-family:var(--mono);font-size:11px;font-weight:500;background:var(--surface-2);border-radius:999px;padding:1px 7px;margin-left:6px;color:var(--ink-secondary)}
+
+/* generic */
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);border-radius:var(--radius-s);padding:8px 12px;cursor:pointer;font-size:13px;font-weight:500;white-space:nowrap}
+.btn:hover{border-color:var(--ink-muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:var(--surface-2);border-color:var(--border)}
+.btn.danger{color:var(--bad)}
+.btn.sm{padding:5px 9px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);box-shadow:var(--shadow)}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border)}
+.card-h h2{font-size:15px}
+.card-b{padding:16px}
+.lbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:5px}
+.inp{width:100%;padding:8px 10px;border:1px solid var(--border-strong);border-radius:var(--radius-s);background:var(--surface);font-size:13.5px}
+textarea.inp{font-family:var(--mono);font-size:12px;min-height:140px;resize:vertical}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.step{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin-bottom:10px}
+.step b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:12px;font-family:var(--mono)}
+
+/* layout of check tab */
+.check-grid{display:grid;grid-template-columns:minmax(280px,360px) 1fr;gap:18px;align-items:start}
+@media (max-width:900px){.check-grid{grid-template-columns:1fr}}
+.side>.card+.card{margin-top:14px}
+
+/* dropzone */
+.drop{border:1.5px dashed var(--border-strong);border-radius:var(--radius-m);padding:22px 14px;text-align:center;cursor:pointer;background:var(--surface-2);transition:border-color .15s,background .15s}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop .big{font-weight:600;font-size:14px}
+.drop .small{font-size:12px;color:var(--ink-muted);margin-top:4px}
+.drop svg{color:var(--accent);margin-bottom:6px}
+.filechip{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;background:var(--surface-2);border-radius:var(--radius-s);padding:7px 10px;word-break:break-all}
+.progress{height:4px;background:var(--surface-3);border-radius:4px;overflow:hidden;margin-top:10px}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px;text-decoration:underline}
+
+/* verdict */
+.verdict{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:var(--radius-m);border:1px solid;margin-bottom:14px}
+.verdict .ic{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:22px}
+.verdict h3{font-size:19px}
+.verdict p{margin:2px 0 0;font-size:13px;color:var(--ink-secondary)}
+.v-ok{background:var(--good-soft);border-color:var(--good)} .v-ok .ic{background:var(--good)} .v-ok h3{color:var(--good)}
+.v-bad{background:var(--bad-soft);border-color:var(--bad)} .v-bad .ic{background:var(--bad)} .v-bad h3{color:var(--bad)}
+.v-warn{background:var(--warn-soft);border-color:var(--warn)} .v-warn .ic{background:var(--warn)} .v-warn h3{color:var(--warn)}
+.v-none{background:var(--surface-2);border-color:var(--border)} .v-none .ic{background:var(--ink-muted)}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.stat{font-family:var(--mono);font-size:11.5px;border-radius:999px;padding:3px 10px;border:1px solid var(--border)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);font-weight:500;text-align:left;padding:8px 10px;border-bottom:1px solid var(--border-strong);white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--mono);white-space:nowrap}
+.pname{font-weight:500}
+.psub{font-size:11.5px;color:var(--ink-muted)}
+.vin{width:110px;padding:5px 7px;border:1px solid var(--border-strong);border-radius:5px;background:var(--surface);font-family:var(--mono);font-size:12.5px}
+.vin.auto{border-color:var(--accent);background:var(--accent-soft)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.p-ok{background:var(--good-soft);color:var(--good)}
+.p-bad{background:var(--bad-soft);color:var(--bad)}
+.p-warn{background:var(--warn-soft);color:var(--warn)}
+.p-miss{background:var(--surface-3);color:var(--ink-secondary)}
+.p-info{background:var(--info-soft);color:var(--info)}
+tr.row-bad td{background:color-mix(in srgb,var(--bad-soft) 55%,transparent)}
+tr.speaking td{background:var(--accent-soft)!important;box-shadow:inset 0 1px 0 var(--accent),inset 0 -1px 0 var(--accent)}
+tr.speaking td:first-child{box-shadow:inset 3px 0 0 var(--accent),inset 0 1px 0 var(--accent),inset 0 -1px 0 var(--accent)}
+.ttsbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);padding:9px 12px;margin-bottom:14px;font-size:12.5px;color:var(--ink-secondary)}
+.ttsbar label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.ttsbar select{padding:4px 6px;border:1px solid var(--border-strong);border-radius:5px;background:var(--surface);font-size:12px;max-width:220px}
+.ttsbar .ttl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.btn.speak-on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.speak-on .eq{display:inline-block;width:8px;height:8px;border-radius:2px;background:currentColor;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.src{font-size:11px;color:var(--ink-muted);font-family:var(--mono);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+details.raw summary{cursor:pointer;font-size:12.5px;color:var(--ink-secondary);padding:10px 0}
+details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);padding:10px;font-size:11.5px;max-height:320px;overflow:auto;white-space:pre-wrap}
+.legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:12px;color:var(--ink-secondary);margin-top:12px}
+.empty{padding:40px 20px;text-align:center;color:var(--ink-muted)}
+.empty .big{font-size:15px;color:var(--ink-secondary);font-weight:600;margin-bottom:4px}
+
+/* library */
+.lib-grid{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:18px;align-items:start}
+@media (max-width:900px){.lib-grid{grid-template-columns:1fr}}
+.lib-list{max-height:640px;overflow:auto}
+.lib-item{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--border);padding:10px 14px;cursor:pointer}
+.lib-item:hover{background:var(--surface-2)}
+.lib-item[aria-current="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.lib-item .c{font-family:var(--mono);font-size:11px;color:var(--ink-muted)}
+.tag{font-family:var(--mono);font-size:10px;border-radius:4px;padding:1px 5px;background:var(--surface-3);color:var(--ink-secondary);margin-left:4px}
+.ed td{padding:5px 6px}
+.ed input,.ed select{width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;background:var(--surface);font-size:12.5px}
+.ed input.n{font-family:var(--mono);width:84px}
+.x{background:none;border:0;color:var(--ink-muted);cursor:pointer;font-size:16px;padding:2px 6px;border-radius:4px}
+.x:hover{color:var(--bad);background:var(--bad-soft)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.search{min-width:0;flex:1}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:50;max-width:90vw}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(15,20,23,.45);display:grid;place-items:center;z-index:40;padding:16px}
+.modal .card{width:min(980px,100%);max-height:92vh;overflow:auto}
+
+/* print report */
+#report{display:none}
+.rep{font-size:13px}
+.rep .rep-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:12px}
+.rep .rep-no{font-family:var(--mono);font-size:12px;color:var(--ink-muted);text-align:right}
+.rep table.meta td{border:0;padding:3px 10px 3px 0;vertical-align:top}
+.rep table.meta td:nth-child(odd){color:var(--ink-muted);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.rep-v{padding:10px 14px;border-radius:var(--radius-s);font-size:16px;font-weight:700;margin:12px 0;border:1px solid}
+.rep-v.ok{background:var(--good-soft);color:var(--good);border-color:var(--good)}
+.rep-v.bad{background:var(--bad-soft);color:var(--bad);border-color:var(--bad)}
+.rep-v.warn{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
+.rep-v.none{background:var(--surface-2);color:var(--ink-secondary);border-color:var(--border)}
+.rep-sign{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px}
+.rep-sign div{border-top:1px solid var(--ink-muted);padding-top:4px;font-size:11px;color:var(--ink-muted)}
+.sumrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px}
+.sum{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);padding:12px 14px;box-shadow:var(--shadow);border-left:3px solid var(--k,var(--border-strong))}
+.sum .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.sum .v{font-size:24px;font-weight:600;margin-top:2px}
+#histTbl tbody tr[data-open]{cursor:pointer}
+#histTbl tbody tr[data-open]:hover td{background:var(--surface-2)}
+.saved{font-family:var(--mono);font-size:11.5px;color:var(--good);display:inline-flex;align-items:center;gap:6px}
+.saved.idle{color:var(--ink-muted)}
+@media print{
+  body{background:#fff;color:#000;font-size:12px}
+  .wrap>*:not(#report){display:none!important}
+  .toast,.modal{display:none!important}
+  #report{display:block}
+  #report table{font-size:11px}
+  #report th,#report td{border-bottom:1px solid #bbb;padding:5px 6px}
+  .rep-v{border:2px solid #000!important;background:none!important;color:#000!important}
+  .rep-sign div{border-top-color:#000;color:#000}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:560px){.vin{width:84px} th,td{padding:7px 6px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div>
+    <div class="eyebrow">Anatrica · Kalite Kontrol</div>
+    <h1>COA ↔ TDS Uygunluk Kontrolü</h1>
+    <div class="sub">Ürünün TDS'sini ekleyin, teslimatla gelen COA'yı yükleyin veya elle girin — parametre parametre karşılaştırır ve sevkiyatın uygun olup olmadığını söyler. <b>TDS'leriniz ve raporlarınız yalnızca kendi tarayıcınızda saklanır</b>, kimseyle paylaşılmaz.</div>
+  </div>
+  <div class="mast-tools">
+    <button class="btn primary" data-addtds>＋ Yeni TDS ekle</button>
+    <button class="btn ghost sm" id="btnTheme" title="Tema">◐ Tema</button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" data-tab="check" aria-selected="true">COA Kontrol</button>
+  <button class="tab" role="tab" data-tab="lib" aria-selected="false">TDS Kütüphanesi <span class="n" id="nLib">0</span></button>
+  <button class="tab" role="tab" data-tab="hist" aria-selected="false">Raporlar <span class="n" id="nHist">0</span></button>
+</nav>
+
+<!-- ============ CHECK ============ -->
+<section id="v-check">
+  <div class="check-grid">
+    <div class="side">
+
+      <div class="card"><div class="card-b">
+        <div class="step"><b>1</b> Ürün / TDS seç</div>
+        <select class="inp" id="prodSel"></select>
+        <div class="psub" id="autoNote" style="margin-top:6px"></div>
+        <div style="margin-top:8px"><button class="linkbtn" data-addtds>＋ Yeni TDS ekle (PDF, yapıştır veya elle)</button></div>
+      </div></div>
+      <div class="card"><div class="card-b">
+        <div class="step"><b>2</b> COA yükle veya elle gir</div>
+        <div class="drop" id="coaDrop" tabindex="0" role="button" aria-label="COA dosyası yükle">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v6M9 15l3-3 3 3"/></svg>
+          <div class="big">COA dosyasını bırakın veya seçin</div>
+          <div class="small">PDF · JPG · PNG (taranmış belgeler OCR ile okunur)</div>
+        </div>
+        <input type="file" id="coaFile" accept=".pdf,image/*,.txt" hidden>
+        <div id="coaChip" class="filechip" hidden></div>
+        <div class="progress" id="coaProg" hidden><i></i></div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+          <button class="linkbtn" id="btnManual">✎ COA değerlerini tabloya elle gir</button>
+          <button class="linkbtn" id="btnPaste">…veya COA metnini yapıştırın</button></div>
+        <div id="pasteBox" hidden style="margin-top:8px">
+          <textarea class="inp" id="pasteTxt" placeholder="COA tablosunu buraya yapıştırın (e-posta, Word, Excel)…"></textarea>
+          <button class="btn sm primary" id="btnPasteGo" style="margin-top:6px">Metni oku</button>
+        </div>
+      </div></div>
+
+      <div class="card"><div class="card-b">
+        <div class="step"><b>3</b> Sevkiyat bilgisi</div>
+        <div class="grid2">
+          <div><label class="lbl" for="fSup">Tedarikçi</label><input class="inp" id="fSup"></div>
+          <div><label class="lbl" for="fLot">Lot / Batch</label><input class="inp" id="fLot"></div>
+          <div><label class="lbl" for="fDate">COA tarihi</label><input class="inp" id="fDate"></div>
+          <div><label class="lbl" for="fRef">Sevkiyat / Konteyner</label><input class="inp" id="fRef"></div>
+        </div>
+        <label class="lbl" for="fNote" style="margin-top:12px">Not</label>
+        <input class="inp" id="fNote">
+      </div></div>
+    </div>
+
+    <div>
+      <div id="verdict" class="verdict v-none">
+        <div class="ic">?</div>
+        <div><h3>Henüz kontrol yok</h3><p>Soldan bir COA yükleyin; ürün otomatik tanınır ve değerler TDS ile karşılaştırılır. Değerleri tabloda elle de girebilir/düzeltebilirsiniz.</p></div>
+      </div>
+      <div class="ttsbar" id="ttsBar" hidden>
+        <span class="ttl">🔊 Sesli okuma</span>
+        <label><input type="checkbox" id="ttsAuto"> Analiz bitince otomatik oku</label>
+        <label>Oku: <select id="ttsMode"><option value="all">Tüm değerler</option><option value="issues">Sadece sorunlular</option></select></label>
+        <label>Hız: <select id="ttsRate"><option value="0.8">Yavaş</option><option value="1">Normal</option><option value="1.2">Hızlı</option><option value="1.5">Çok hızlı</option></select></label>
+        <label>Ses: <select id="ttsVoice"></select></label>
+      </div>
+      <div class="card">
+        <div class="card-h">
+          <h2 id="resTitle">Parametre karşılaştırması</h2>
+          <div class="toolbar">
+            <span class="saved idle" id="saveState">Rapor COA okununca otomatik kaydedilir</span>
+            <button class="btn sm ghost" id="btnSpeak" hidden>🔊 Sesli oku</button>
+            <button class="btn sm ghost" id="btnPrint">Yazdır / PDF</button>
+            <button class="btn sm primary" id="btnClear">＋ Yeni kontrol</button>
+          </div>
+        </div>
+        <div class="card-b" style="padding-top:8px">
+          <div class="stats" id="stats"></div>
+          <div class="tbl-wrap">
+            <table id="resTbl">
+              <thead><tr><th>Parametre</th><th>TDS limiti</th><th>COA değeri</th><th>Durum</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="legend">
+            <span><span class="pill p-ok">UYGUN</span> limit içinde</span>
+            <span><span class="pill p-warn">SINIRDA</span> limit içinde ama çok yakın (maks/aralık: limitin son %5'i · min: limitin en fazla 0,5 puan üstü)</span>
+            <span><span class="pill p-bad">UYGUN DEĞİL</span> limit dışı</span>
+            <span><span class="pill p-miss">EKSİK</span> COA'da yok</span>
+            <span><span class="pill p-info">BİLGİ</span> değerlendirilmez</span>
+          </div>
+          <details class="raw" id="rawBox" hidden><summary>COA'dan okunan ham metin</summary><pre id="rawTxt"></pre></details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIBRARY ============ -->
+<section id="v-lib" hidden>
+  <div class="lib-grid">
+    <div class="card">
+      <div class="card-h" style="gap:8px">
+        <input class="inp search" id="libSearch" placeholder="Ürün / kod ara…">
+      </div>
+      <div class="lib-list" id="libList"></div>
+      <div class="card-b" style="border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px">
+        <div class="drop tds-drop" id="tdsDrop" tabindex="0" role="button" aria-label="TDS dosyası yükle" style="padding:16px 12px">
+          <div class="big">＋ Yeni TDS ekle</div>
+          <div class="small">TDS PDF'lerini buraya bırakın veya tıklayın (birden fazla seçilebilir)</div>
+        </div>
+        <input type="file" id="tdsFile" accept=".pdf,image/*,.txt" multiple hidden>
+        <button class="btn ghost" id="btnTdsBlank">＋ Elle TDS oluştur</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn ghost sm" id="btnExport" style="flex:1" title="TDS'lerinizi ve raporlarınızı dosya olarak indirir — başka bilgisayara taşımak veya arkadaşınızla paylaşmak için">Yedeği indir</button>
+          <button class="btn ghost sm" id="btnImport" style="flex:1" title="İndirilen yedek / paylaşılan TDS dosyasını ekler (mevcutlar silinmez)">Yedek / TDS dosyası ekle</button>
+          <input type="file" id="impFile" accept=".json" hidden>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="libEd"></div>
+  </div>
+</section>
+
+<!-- ============ HISTORY ============ -->
+<section id="v-hist" hidden>
+  <div class="sumrow" id="sumRow"></div>
+  <div class="card">
+    <div class="card-h">
+      <h2>COA uygunluk raporları</h2>
+      <div class="toolbar">
+        <select class="inp" id="histVerdict" style="width:auto">
+          <option value="">Tüm sonuçlar</option><option value="ok">Uygun</option><option value="warn">Koşullu</option><option value="bad">Uygun değil</option>
+        </select>
+        <input class="inp" id="histSearch" placeholder="Ürün, tedarikçi, lot, rapor no…" style="width:230px">
+        <button class="btn sm ghost" id="btnCsv">CSV indir</button>
+      </div>
+    </div>
+    <div class="tbl-wrap"><table id="histTbl">
+      <thead><tr><th>Rapor no</th><th>Tarih</th><th>Ürün</th><th>Tedarikçi</th><th>Lot</th><th>Sonuç</th><th>Sorunlu parametreler</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="report"></section>
+</div>
+
+<div class="modal" id="modal" hidden></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+"use strict";
+const STORE_KEY = "anatrica-coa-v1";
+if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("on"),2600); }
+function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ return false; } }
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+
+/* ================= number + spec parsing ================= */
+// "99,5" → 99.5 ; "1,000" / "7,680" → thousands ; "0,05" → 0.05
+function normNum(s){
+  s = s.replace(/\s/g,"");
+  if (/^\d{1,3}(,\d{3})+(\.\d+)?$/.test(s) && !/^0,/.test(s)) return parseFloat(s.replace(/,/g,""));
+  return parseFloat(s.replace(",", "."));
+}
+const NUM_RX = /-?\d+(?:[.,]\d+)*/g;
+function nums(s){ const o=[]; let m; NUM_RX.lastIndex=0; while((m=NUM_RX.exec(s))) o.push({v:normNum(m[0]), i:m.index, len:m[0].length}); return o; }
+
+const INFO_RX = /^(origin|appearance|physical state|synonyms?|odou?r|packing|packaging|loading|property|form|miscibility|solubility|microbiological|general app|boiling|melting|freezing|vapou?r|colou?r$|approx|shelf|storage|hs code|cas)/i;
+const MAX_KW = /moist|water|\bash|iron|\bfe\b|fe2o3|\bcao\b|sio2|al2o3|al203|\bloi\b|ignition|insolub|residue|chlorid|sulfat|sulphat|free acid|nitrate|carbon|heavy|arsen|lead|copper|\boil\b|reject|evaporat|heating loss|impurit|ferrous|\bcl\b|na2co3|nacl|acidity|non-volatile|mercury|cadmium|volatile/i;
+const MIN_KW = /purity|assay|content|iodine|hardness|stability|\bmgo\b|\bmg\b|methylene|strength|available|total alkali|main/i;
+
+function cleanUnit(u){
+  u = (u||"").replace(/\b(min|max)\.?/gi,"").replace(/[≥≤]|Value/g,"").trim();
+  return (u === "_" || u === "-") ? "" : u;
+}
+function parseSpec(name, unit, spec){
+  const p = {name:(name||"").trim(), unit:cleanUnit(unit), type:"info", lo:null, hi:null, text:"", inferred:false, raw:[unit||"",spec||""].join(" ").trim()};
+  const s0 = (spec||"").trim();
+  if (INFO_RX.test(p.name) || /≈/.test(s0)) { p.type="info"; p.text=s0==="_"?"":s0; return p; }
+  let s = s0.replace(/\([^)]*\)/g," ").replace(/\bto\b/gi,"-").replace(/~/g,"-");
+  const ctx = ((unit||"")+" "+s).toLowerCase();
+  const ns = nums(s.replace(/(\d)\s*[-–—]\s*(\d)/g,"$1 – $2"));
+  const residual = s.replace(NUM_RX,"").replace(/min\.?|max\.?|nlt|nmt/gi,"").replace(/[≥≤<>=%\-–—\/\s.,]/g,"");
+  if (!ns.length){ p.type = (s0 && s0 !== "_") ? "text" : "info"; p.text = s0==="_"?"":s0; return p; }
+  if (residual.length){ p.type="text"; p.text=s0; return p; }
+  const isMin = /min|≥|>=|>|nlt/.test(ctx), isMax = /max|≤|<=|<|nmt/.test(ctx);
+  if (ns.length >= 2 && /[–—-]/.test(s.replace(/^\s*-/,"")) && !isMin && !isMax){ p.type="range"; p.lo=Math.min(ns[0].v,ns[1].v); p.hi=Math.max(ns[0].v,ns[1].v); }
+  else if (isMin && !isMax){ p.type="min"; p.lo=ns[0].v; }
+  else if (isMax && !isMin){ p.type="max"; p.hi=ns[0].v; }
+  else if (ns.length === 1){
+    const n = p.name;
+    if (MAX_KW.test(n)) { p.type="max"; p.hi=ns[0].v; p.inferred=true; }
+    else if (MIN_KW.test(n)) { p.type="min"; p.lo=ns[0].v; p.inferred=true; }
+    else { p.type="nominal"; p.lo=ns[0].v; }
+  } else { p.type="text"; p.text=s0; }
+  return p;
+}
+function fmt(v){ if (v==null || isNaN(v)) return ""; return String(+v.toPrecision(10)); }
+function limitText(p){
+  const u = p.unit ? " "+p.unit : "";
+  switch(p.type){
+    case "min": return "≥ "+fmt(p.lo)+u;
+    case "max": return "≤ "+fmt(p.hi)+u;
+    case "range": return fmt(p.lo)+" – "+fmt(p.hi)+u;
+    case "nominal": return "≈ "+fmt(p.lo)+u+" (tipik)";
+    case "text": return p.text;
+    default: return p.text || "—";
+  }
+}
+
+/* ================= library ================= */
+function tdsFromRows(meta, rows){
+  return Object.assign({params: rows.map(r => parseSpec(r[0], r[1], r[2]))}, meta);
+}
+const state = { lib: [], hist: [], cur: null, libSel: null, coaText: "", coaLines: [], coaFile: "" };
+// Storage: this page's localStorage; inside the portal (srcdoc iframe, where that can throw)
+// fall back to the portal shell's localStorage via postMessage.
+const STORAGE = (function(){
+  try { localStorage.setItem("__coa_t","1"); localStorage.removeItem("__coa_t"); return "local"; }
+  catch(e){ return window.parent !== window ? "parent" : "none"; }
+})();
+function applyStored(d){
+  // each user keeps only the TDS they added themselves (old built-in entries are dropped)
+  state.lib = (d && Array.isArray(d.lib)) ? d.lib.filter(t => !t.builtin) : [];
+  state.hist = (d && Array.isArray(d.hist)) ? d.hist : [];
+}
+applyStored(STORAGE === "local" ? lsGet(STORE_KEY) : null);
+if (STORAGE === "parent") try { window.parent.postMessage({__coaStoreGet: STORE_KEY}, "*"); } catch(e){}
+let warnedStore = false;
+function persist(){
+  const data = {v:1, lib:state.lib, hist:state.hist};
+  if (STORAGE === "local" && lsSet(STORE_KEY, data)) return;
+  if (STORAGE === "parent"){ try { window.parent.postMessage({__coaStoreSet:{key:STORE_KEY, val:JSON.stringify(data)}}, "*"); return; } catch(e){} }
+  if (!warnedStore){ warnedStore = true; toast("Uyarı: tarayıcı depolaması kapalı — raporlar kalıcı değil. 'Yedeği indir' kullanın."); }
+}
+const tdsById = id => state.lib.find(t => t.id === id);
+const tdsLabel = t => t.name + (t.code ? " · "+t.code : "");
+
+/* ================= file → text lines ================= */
+async function pdfLines(buf, onProg){
+  if (!window.pdfjsLib) throw new Error("PDF okuyucu yüklenemedi (internet bağlantısı gerekli).");
+  const pdf = await pdfjsLib.getDocument({data:buf}).promise;
+  const lines = [];
+  let textChars = 0;
+  for (let i=1;i<=pdf.numPages;i++){
+    const page = await pdf.getPage(i);
+    const tc = await page.getTextContent();
+    const items = tc.items.filter(it => it.str && it.str.trim()).map(it => ({s:it.str, x:it.transform[4], y:it.transform[5], h:Math.abs(it.transform[3])||8, w:it.width||0}));
+    textChars += items.reduce((a,b)=>a+b.s.length,0);
+    items.sort((a,b)=> b.y-a.y || a.x-b.x);
+    const rows = [];
+    for (const it of items){
+      const r = rows.find(r => Math.abs(r.y - it.y) <= Math.max(2.5, it.h*0.45));
+      if (r) r.items.push(it); else rows.push({y:it.y, items:[it]});
+    }
+    rows.sort((a,b)=>b.y-a.y);
+    for (const r of rows){
+      r.items.sort((a,b)=>a.x-b.x);
+      let line = "", lastEnd = null;
+      for (const it of r.items){
+        if (lastEnd != null) line += (it.x - lastEnd > 12) ? "  |  " : " ";
+        line += it.s.trim(); lastEnd = it.x + it.w;
+      }
+      lines.push(line.replace(/\s+/g," ").trim());
+    }
+    onProg && onProg(i/pdf.numPages);
+  }
+  if (textChars < 40){ // scanned PDF → OCR each page
+    const out = [];
+    for (let i=1;i<=pdf.numPages;i++){
+      const page = await pdf.getPage(i);
+      const vp = page.getViewport({scale:2.2});
+      const c = document.createElement("canvas"); c.width=vp.width; c.height=vp.height;
+      await page.render({canvasContext:c.getContext("2d"), viewport:vp}).promise;
+      out.push(...await ocr(c, f => onProg && onProg((i-1+f)/pdf.numPages)));
+    }
+    return {lines:out, ocr:true};
+  }
+  return {lines, ocr:false};
+}
+let tessLoading = null;
+function loadTess(){
+  if (window.Tesseract) return Promise.resolve();
+  return tessLoading || (tessLoading = new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"; s.onload=res; s.onerror=()=>rej(new Error("OCR motoru yüklenemedi (internet gerekli).")); document.head.appendChild(s); }));
+}
+async function ocr(img, onProg){
+  await loadTess();
+  const w = await Tesseract.createWorker("eng", 1, { logger: m => { if (m.status==="recognizing text" && onProg) onProg(m.progress); } });
+  const { data } = await w.recognize(img);
+  await w.terminate();
+  return data.text.split(/\n/).map(l => l.replace(/\s+/g," ").trim()).filter(Boolean);
+}
+async function fileLines(file, onProg){
+  const n = file.name.toLowerCase();
+  if (n.endsWith(".pdf") || file.type === "application/pdf") return pdfLines(await file.arrayBuffer(), onProg);
+  if (file.type.startsWith("image/")) return {lines: await ocr(file, onProg), ocr:true};
+  return {lines: (await file.text()).split(/\r?\n/).map(l=>l.replace(/\t/g,"  |  ").replace(/\s+/g," ").trim()).filter(Boolean), ocr:false};
+}
+
+/* ================= COA matching ================= */
+const SYN = [
+  ["moisture","water","h2o","loss on drying","free moisture","water content","humidity"],
+  ["iron","fe"],["chloride","cl","chlorides","cl-"],["sulfate","sulphate","so4","sulfates","sulphates"],
+  ["insoluble","water insoluble","insolubles","water insoluble matter","insoluble matter","water insoluble substance","insoluble in water","insolubility","water-insoluble matter","insoluble residue"],
+  ["loi","loss on ignition","ignition loss","lgination loss","loss of ignition"],
+  ["ash","ashes","total ash"],["lead","pb"],["arsenic","as","arsenical"],["copper","cu"],["calcium","ca","ca2+"],
+  ["mercury","hg"],["cadmium","cd"],["sodium chloride","nacl","naci"],["sodium carbonate","na2co3"],
+  ["iron oxide","fe2o3","ferric oxide","iron sesquioxide"],["total alkali","total alkalinity"],["sodium hydroxide","naoh"],["manganese","mn"],["sulfur","sulphur","s"],["nitrogen","n","total nitrogen"],["magnesium","mg"],
+  ["purity","assay"],["heavy metal","heavy metals"],["free acid","free acidity"],
+  ["residue on ignition","ignition residue","sulphated ash","sulfated ash"],
+  ["evaporation residue","non-volatile matter","residue on evaporation","non volatile matter"],
+  ["al2o3","al203","aluminium oxide","aluminum oxide"],["sio2","silica","silicon oxide","silicon dioxide"],
+  ["cao","calcium oxide"],["mgo","magnesium oxide"],["ph","ph value"],["density","specific gravity"],
+  ["iodine value","iodine number","iodine adsorption"],["hardness","hardness number","ball pan hardness"]
+];
+const SYM = new Set(["fe","cl","as","pb","cu","ca","hg","cd","ph","mg","s","mn","n"]);
+const normTxt = s => (s||"").toLowerCase().replace(/[（]/g,"(").replace(/[）]/g,")").replace(/[₀-₉]/g,c=>"0123456789"["₀₁₂₃₄₅₆₇₈₉".indexOf(c)]).replace(/\s+/g," ").trim();
+function aliasesOf(name){
+  const n = normTxt(name);
+  const set = new Set();
+  const base = n.replace(/\([^)]*\)/g," ").replace(/\{[^}]*\}/g," ").replace(/\s+/g," ").trim();
+  if (base) set.add(base);
+  (n.match(/\(([^)]*)\)/g)||[]).forEach(g => g.slice(1,-1).split(/,|\bas\b/).forEach(x => { x=x.trim(); if (x && !/^\d/.test(x) && !/(mass|w\/w|by wt|onset|water solution|guaranteed)/.test(x)) set.add(x); }));
+  const baseNoQual = base.replace(/\b(at|@)\b.*$/,"").replace(/\bcontent\b/,"").trim();
+  if (baseNoQual && baseNoQual !== base) set.add(baseNoQual);
+  for (const g of SYN) if ([...set].some(a => g.includes(a))) g.forEach(x => set.add(x));
+  return [...set].filter(a => a.length >= 1);
+}
+function findAlias(line, alias){
+  // returns end index of match or -1
+  if (alias.length <= 2 || SYM.has(alias)){
+    const sym = alias.charAt(0).toUpperCase() + alias.slice(1);
+    const rx = alias === "ph" ? /(^|[^A-Za-z])p[Hh]([^A-Za-z0-9]|$)/ : new RegExp("(^|[^A-Za-z])" + sym.replace(/[+]/g,"\\+") + "([^A-Za-z0-9]|$)");
+    const m = rx.exec(line); return m ? m.index + m[1].length + alias.length : -1;
+  }
+  const L = normTxt(line), a = alias.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  const m = new RegExp("(^|[^a-z0-9])" + a + "(?![a-z])").exec(L);
+  if (m) return m.index + m[1].length + alias.length;
+  // word-order-free fallback: "sieve residue 50 μ" ↔ "Residue on sieve 50 µm"
+  const toks = alias.split(/[^a-z0-9]+/).filter(w => w.length >= 3 && !/^\d+$/.test(w));
+  if (toks.length < 2) return -1;
+  let end = -1;
+  for (const w of toks){ const r = new RegExp("(^|[^a-z0-9])" + w + "(?![a-z])").exec(L); if (!r) return -1; end = Math.max(end, r.index + r[1].length + w.length); }
+  return -end - 2; // negative → fuzzy (decoded by caller)
+}
+const RESULT_WORDS = /\b(conforms?|complies|comply|pass(ed)?|ok|absent|negative|nil|not detected|n\.?d\.?|none|clear|meets?)\b/i;
+function extractValue(line, fromIdx, p){
+  let s = line.slice(Math.max(0,fromIdx));
+  s = s.replace(/[（]/g,"(").replace(/[）]/g,")").replace(/\([^)]*\)/g," ");
+  s = s.replace(/\b[A-Z][a-z]?\d[A-Za-z0-9.]*/g," ");                 // formulas: Fe2O3, H2SO4, MgSO4.7H2O
+  s = s.replace(/-?\d+(?:[.,]\d+)?\s*(?:±\s*\d+\s*)?(?:º|°|℃)\s*C?/g," "); // temperatures
+  s = s.replace(/\d+(?:[.,]\d+)?\s*(?:μ|µ|um|mesh)\w*/gi," ");              // sieve sizes
+  s = s.replace(/(?:≥|≤|>=|<=|=>|=<|\bmin\.?|\bmax\.?|\bnlt\b|\bnmt\b|not less than|not more than)\s*:?\s*-?\d+(?:[.,]\d+)*/gi," ");
+  s = s.replace(/-?\d+(?:[.,]\d+)*\s*(?:%\s*)?(?:min|max)\b\.?/gi," ");
+  s = s.replace(/\d+(?:[.,]\d+)*\s*[-–—~]\s*\d+(?:[.,]\d+)*/g," ");        // spec ranges
+  const tokens = []; let m; const rx = /(<|>)?\s*(-?\d+(?:[.,]\d+)*)/g;
+  while ((m = rx.exec(s))) tokens.push({pre:m[1]||"", v:normNum(m[2]), raw:(m[1]||"")+m[2]});
+  const ctxU = s.toLowerCase();
+  let conv = null;
+  if (tokens.length){
+    const t = tokens[tokens.length-1];
+    let v = t.v;
+    const tu = (p.unit||"").toLowerCase();
+    if (/%/.test(tu) && /ppm|mg\/kg/.test(ctxU) && !/%/.test(ctxU)){ v = v/10000; conv="ppm→%"; }
+    else if (/ppm|mg\/kg/.test(tu) && /%/.test(ctxU) && !/ppm|mg\/kg/.test(ctxU)){ v = v*10000; conv="%→ppm"; }
+    return {value: (t.pre==="<" ? "<" : t.pre===">" ? ">" : "") + fmt(v), conv};
+  }
+  const w = RESULT_WORDS.exec(s);
+  return w ? {value:w[0], conv:null} : null;
+}
+function matchCoa(tds, lines){
+  const cands = [];
+  tds.params.forEach((p, pi) => {
+    if (p.type === "info") return;
+    const al = aliasesOf(p.name);
+    lines.forEach((ln, li) => {
+      let best = null;
+      for (const a of al){
+        let end = findAlias(ln, a), len = a.length;
+        if (end < -1){ end = -end - 2; len = len * 0.6; }
+        if (end >= 0 && (!best || len > best.len)) best = {len, end};
+      }
+      if (!best) return;
+      const ex = extractValue(ln, best.end, p);
+      if (!ex) return;
+      cands.push({pi, li, score: best.len + (normTxt(ln).includes(normTxt(p.name)) ? 50 : 0), ...ex});
+    });
+  });
+  cands.sort((a,b)=>b.score-a.score);
+  const usedP = new Set(), usedL = new Set(), res = {};
+  for (const c of cands){
+    if (usedP.has(c.pi) || usedL.has(c.li)) continue;
+    usedP.add(c.pi); usedL.add(c.li);
+    res[c.pi] = {value:c.value, line:lines[c.li], conv:c.conv};
+  }
+  return res;
+}
+function detectProduct(lines){
+  const txt = normTxt(lines.join(" \n "));
+  let best = null;
+  for (const t of state.lib){
+    let sc = 0;
+    const nm = normTxt(t.name), gr = normTxt(t.grade||"");
+    if (nm && txt.includes(nm)) sc += 20 + nm.length/4;
+    else { const words = nm.split(" ").filter(w=>w.length>3); const hit = words.filter(w=>txt.includes(w)).length; sc += words.length ? 10*hit/words.length : 0; }
+    if (gr && txt.includes(gr)) sc += 12;
+    else if (gr){ const gt = gr.replace(/[()]/g," ").split(" ").filter(w => w.length >= 2); sc += gt.length ? 10 * gt.filter(w => txt.includes(w)).length / gt.length : 0; }
+    if (t.code && txt.includes(normTxt(t.code))) sc += 30;
+    const m = matchCoa(t, lines); const k = Object.keys(m).length;
+    const tot = t.params.filter(p=>p.type!=="info").length || 1;
+    sc += 12 * k / tot + k*0.5;
+    if (!best || sc > best.sc) best = {t, sc};
+  }
+  return best && best.sc > 6 ? best.t : null;
+}
+function detectMeta(lines){
+  const txt = lines.join("\n"), o = {};
+  let m = /(?:batch|lot)\s*(?:no\.?|number|nr\.?|#)?\s*[:.\-|]?\s*\|?\s*([A-Z0-9][A-Z0-9\-\/.]{2,})/i.exec(txt);
+  if (m) o.lot = m[1];
+  m = /(?:date of (?:analysis|manufactur\w*|production|issue)|analysis date|production date|manufactur\w* date|mfg\.? date|issue date|date)\s*[:.\-|]?\s*\|?\s*(\d{1,4}[.\/\-]\d{1,2}[.\/\-]\d{1,4}|\d{1,2}\s+[A-Za-z]{3,9}\.?\s+\d{4}|[A-Za-z]{3,9}\.?\s+\d{1,2},?\s+\d{4})/i.exec(txt);
+  if (m) o.date = m[1];
+  return o;
+}
+
+/* ================= evaluation ================= */
+const ST = { ok:["UYGUN","p-ok"], warn:["SINIRDA","p-warn"], bad:["UYGUN DEĞİL","p-bad"], miss:["EKSİK","p-miss"], info:["BİLGİ","p-info"], manual:["MANUEL","p-warn"] };
+function evalParam(p, raw){
+  const s = (raw==null ? "" : String(raw)).trim();
+  if (p.type === "info") return {st:"info"};
+  if (!s) return {st: p.type === "nominal" ? "info" : "miss"};
+  if (p.type === "text"){
+    const tx = normTxt(p.text);
+    if (/absent|negative|nil|not detected/.test(tx)) return {st: /absent|negative|nil|not detected|n\.?d|none|conform|compl|pass/i.test(s) ? "ok" : (/present|positive|detected/i.test(s) ? "bad" : "manual")};
+    return {st: /conform|compl|pass|meets|ok|uygun/i.test(s) ? "ok" : "manual", note:"görsel/manuel kontrol"};
+  }
+  const lt = /^</.test(s), gt = /^>/.test(s);
+  const nd = /^(n\.?d\.?|not detected|nil|none|absent)$/i.test(s);
+  const n = nums(s.replace(/^[<>]\s*/,""));
+  if (!n.length && !nd){
+    if (/conform|compl|pass|meets|uygun|ok/i.test(s)) return {st:"manual", note:"sayısal değer yok, 'uygun' beyanı"};
+    return {st:"manual", note:"sayı okunamadı"};
+  }
+  const v = nd ? 0 : n[0].v;
+  switch(p.type){
+    case "min":
+      if (lt) return {st:"bad"};
+      if (v < p.lo) return {st:"bad", v};
+      // "close to limit": for high-purity % specs a quarter of the headroom to 100 %, otherwise 0.5 % of the limit
+      const band = (/%/.test(p.unit||"") && p.lo > 50 && p.lo < 100) ? Math.min((100 - p.lo) * 0.25, 0.5) : Math.abs(p.lo) * 0.005;
+      return {st: (!gt && v < p.lo + band) ? "warn" : "ok", v};
+    case "max":
+      if (gt) return {st: v >= p.hi ? "bad" : "manual", v};
+      if (v > p.hi) return {st:"bad", v};
+      return {st: (!lt && !nd && v >= p.hi*0.95 && p.hi>0) ? "warn" : "ok", v};
+    case "range": {
+      if (v < p.lo || v > p.hi) return {st:"bad", v};
+      const band = (p.hi-p.lo)*0.05;
+      return {st: (v <= p.lo+band || v >= p.hi-band) ? "warn" : "ok", v};
+    }
+    case "nominal": {
+      const dev = p.lo ? (v-p.lo)/p.lo*100 : 0;
+      return {st:"info", v, note:"tipik değerden sapma "+(dev>=0?"+":"")+dev.toFixed(1)+"%"};
+    }
+  }
+  return {st:"manual"};
+}
+function overall(results){
+  const c = {ok:0,warn:0,bad:0,miss:0,info:0,manual:0};
+  results.forEach(r => c[r.st]++);
+  const evaluated = c.ok + c.warn + c.bad;
+  let v;
+  if (c.bad) v = "bad";
+  else if (!evaluated) v = "none";
+  else if (c.miss || c.manual || c.warn) v = "warn";
+  else v = "ok";
+  return {c, v};
+}
+
+/* ================= CHECK view ================= */
+const coaVals = {}; // pi → {value, auto, line, conv}
+function fillProdSel(){
+  const sel = $("#prodSel"), cur = state.cur;
+  const sorted = [...state.lib].sort((a,b)=>tdsLabel(a).localeCompare(tdsLabel(b)));
+  sel.innerHTML = (state.lib.length ? '<option value="">— Ürün seçin —</option>' : '<option value="">— Önce TDS ekleyin —</option>') + sorted.map(t => `<option value="${esc(t.id)}">${esc(tdsLabel(t))}${t.grade?" — "+esc(t.grade):""}</option>`).join("");
+  sel.value = cur || "";
+  $("#nLib").textContent = state.lib.length;
+  $("#nHist").textContent = state.hist.length;
+}
+function currentResults(){
+  const t = tdsById(state.cur); if (!t) return [];
+  return t.params.map((p,pi) => { const cv = coaVals[pi]||{}; return Object.assign({p, pi, value:cv.value||"", auto:!!cv.auto, line:cv.line||"", conv:cv.conv}, evalParam(p, cv.value)); });
+}
+function renderCheck(){
+  const t = tdsById(state.cur);
+  const tb = $("#resTbl tbody");
+  if (!t){
+    tb.innerHTML = state.lib.length
+      ? `<tr><td colspan="4"><div class="empty"><div class="big">Ürün seçilmedi</div>Soldan ürünün TDS'sini seçin, sonra COA'yı yükleyin veya değerleri tabloya elle yazın.</div></td></tr>`
+      : `<tr><td colspan="4"><div class="empty"><div class="big">Henüz TDS yok</div>Karşılaştırma için önce ürünün TDS'sini ekleyin — PDF yükleyerek, tabloyu yapıştırarak veya elle.<br><br><button class="btn primary" data-addtds>＋ İlk TDS'yi ekle</button></div></td></tr>`;
+    $("#stats").innerHTML = ""; setVerdict(null); $("#resTitle").textContent = "Parametre karşılaştırması"; return;
+  }
+  $("#resTitle").textContent = tdsLabel(t) + (t.grade ? " — " + t.grade : "");
+  const R = currentResults();
+  tb.innerHTML = R.map(r => {
+    const p = r.p, [lab, cls] = ST[r.st];
+    const note = [r.note, p.inferred ? "limit yönü tahmini" : "", r.conv ? "birim çevrildi "+r.conv : ""].filter(Boolean).join(" · ");
+    const input = p.type === "info" ? `<span class="muted">—</span>` : `<input class="vin${r.auto?" auto":""}" data-pi="${r.pi}" value="${esc(r.value)}" placeholder="değer" title="${r.auto?"COA'dan otomatik okundu — düzeltebilirsiniz":"Elle girin"}">`;
+    return `<tr data-row="${r.pi}" class="${r.st==="bad"?"row-bad":""}">
+      <td><div class="pname">${esc(p.name)}</div>${r.line?`<span class="src" title="${esc(r.line)}">↳ ${esc(r.line)}</span>`:""}</td>
+      <td class="num">${esc(limitText(p))}</td>
+      <td>${input}</td>
+      <td><span class="pill ${cls}">${lab}</span>${note?`<div class="psub">${esc(note)}</div>`:""}</td></tr>`;
+  }).join("");
+  const o = overall(R);
+  $("#stats").innerHTML = [["ok","Uygun"],["warn","Sınırda"],["bad","Uygun değil"],["miss","Eksik"],["manual","Manuel"],["info","Bilgi"]]
+    .filter(([k])=>o.c[k]).map(([k,l])=>`<span class="stat ${ST[k][1]}">${l}: ${o.c[k]}</span>`).join("");
+  setVerdict(o, R);
+  if (state.coaLines.length || Object.keys(coaVals).length) autoSave();
+}
+function setVerdict(o, R){
+  const el = $("#verdict");
+  if (!o){ el.className="verdict v-none"; el.innerHTML=`<div class="ic">?</div><div><h3>Henüz kontrol yok</h3><p>Soldan bir COA yükleyin; ürün otomatik tanınır ve değerler TDS ile karşılaştırılır. Değerleri tabloda elle de girebilir/düzeltebilirsiniz.</p></div>`; return; }
+  const names = st => R.filter(r=>r.st===st).map(r=>r.p.name);
+  let cls, ic, h, p;
+  if (o.v === "bad"){ cls="v-bad"; ic="✕"; h="UYGUN DEĞİL"; p="Limit dışı: " + names("bad").join(", ") + ". Sevkiyatı kabul etmeden önce tedarikçiyle görüşün / numune analizi isteyin."; }
+  else if (o.v === "ok"){ cls="v-ok"; ic="✓"; h="UYGUN"; p=`Değerlendirilen ${o.c.ok} parametrenin tamamı TDS limitleri içinde.`; }
+  else if (o.v === "warn"){
+    cls="v-warn"; ic="!"; h="KOŞULLU UYGUN";
+    const parts = [];
+    if (o.c.warn) parts.push("sınıra yakın: " + names("warn").join(", "));
+    if (o.c.miss) parts.push("COA'da eksik: " + names("miss").join(", "));
+    if (o.c.manual) parts.push("manuel kontrol: " + names("manual").join(", "));
+    p = "Limit dışı değer yok, ancak " + parts.join(" · ") + ".";
+  } else { cls="v-none"; ic="?"; h="Değer bekleniyor"; p="COA yükleyin veya değerleri tabloya girin."; }
+  el.className = "verdict " + cls;
+  el.innerHTML = `<div class="ic">${ic}</div><div><h3>${h}</h3><p>${esc(p)}</p></div>`;
+}
+function applyCoa(lines, fname, isOcr){
+  recId = null; setSaved(null);   // each COA read = a new report, so start its shipment fields fresh
+  ["#fSup","#fLot","#fDate","#fRef","#fNote"].forEach(s => $(s).value = "");
+  state.coaLines = lines; state.coaFile = fname;
+  $("#rawBox").hidden = !lines.length; $("#rawTxt").textContent = lines.join("\n");
+  const meta = detectMeta(lines);
+  if (meta.lot && !$("#fLot").value) $("#fLot").value = meta.lot;
+  if (meta.date && !$("#fDate").value) $("#fDate").value = meta.date;
+  const det = detectProduct(lines);
+  if (det){ state.cur = det.id; $("#prodSel").value = det.id; $("#autoNote").textContent = "Otomatik tanındı — yanlışsa listeden değiştirin."; }
+  else if (!state.cur) $("#autoNote").textContent = state.lib.length ? "Ürün tanınamadı — lütfen listeden seçin veya bu ürünün TDS'sini ekleyin." : "COA okundu. Karşılaştırmak için önce bu ürünün TDS'sini ekleyin.";
+  runMatch();
+  toast((isOcr?"OCR ile okundu · ":"") + Object.keys(coaVals).length + " parametre COA'dan eşleştirildi");
+  if (TTS.ok && TTS.auto && state.cur) speakCurrent();
+}
+function runMatch(){
+  for (const k in coaVals) delete coaVals[k];
+  const t = tdsById(state.cur);
+  if (t && state.coaLines.length){
+    const m = matchCoa(t, state.coaLines);
+    for (const pi in m) coaVals[pi] = {value:m[pi].value, auto:true, line:m[pi].line, conv:m[pi].conv};
+  }
+  renderCheck();
+}
+async function handleCoaFile(file){
+  const chip = $("#coaChip"), prog = $("#coaProg");
+  chip.hidden = false; chip.innerHTML = `📄 <span>${esc(file.name)}</span> <span class="muted" id="coaStat">okunuyor…</span>`;
+  prog.hidden = false; prog.firstElementChild.style.width = "5%";
+  try{
+    const {lines, ocr:isOcr} = await fileLines(file, f => { prog.firstElementChild.style.width = Math.max(5, f*100)+"%"; const s=$("#coaStat"); if (s && isFinite(f)) s.textContent = Math.round(f*100)+"%"; });
+    $("#coaStat").textContent = lines.length + " satır" + (isOcr ? " · OCR" : "");
+    applyCoa(lines, file.name, isOcr);
+  } catch(e){ $("#coaStat").textContent = "hata"; toast("Okunamadı: " + e.message); console.error(e); }
+  finally { setTimeout(()=>prog.hidden = true, 500); }
+}
+function clearCheck(){
+  stopSpeak();
+  recId = null; setSaved(null);
+  for (const k in coaVals) delete coaVals[k];
+  state.coaLines = []; state.coaFile = "";
+  ["#fSup","#fLot","#fDate","#fRef","#fNote","#pasteTxt"].forEach(s => $(s).value = "");
+  $("#coaChip").hidden = true; $("#rawBox").hidden = true; $("#autoNote").textContent = "";
+  renderCheck();
+}
+function snapshot(){
+  const t = tdsById(state.cur); if (!t) return null;
+  const R = currentResults(), o = overall(R);
+  return { id: uid(), ts: new Date().toISOString(), tdsId: t.id, product: tdsLabel(t), grade: t.grade||"",
+    sup: $("#fSup").value.trim(), lot: $("#fLot").value.trim(), coaDate: $("#fDate").value.trim(), ref: $("#fRef").value.trim(), note: $("#fNote").value.trim(),
+    file: state.coaFile, verdict: o.v, coaLines: state.coaLines.slice(0, 300),
+    rows: R.map(r => ({name:r.p.name, limit:limitText(r.p), value:r.value, st:r.st, note:r.note||"", line:r.line||""})) };
+}
+const VLAB = {ok:["UYGUN","p-ok"], bad:["UYGUN DEĞİL","p-bad"], warn:["KOŞULLU","p-warn"], none:["—","p-miss"]};
+
+/* every comparison is kept as a numbered report: one record per check, updated while you edit */
+let recId = null, saveTimer = null;
+function nextNo(){
+  const y = new Date().getFullYear(), pre = "COA-" + y + "-";
+  const max = state.hist.reduce((m,h) => (h.no && h.no.startsWith(pre)) ? Math.max(m, parseInt(h.no.slice(pre.length),10)||0) : m, 0);
+  return pre + String(max + 1).padStart(4, "0");
+}
+function autoSave(){ clearTimeout(saveTimer); saveTimer = setTimeout(doAutoSave, 600); }
+function doAutoSave(){
+  const s = snapshot(); if (!s || s.verdict === "none") return;
+  const i = recId ? state.hist.findIndex(h => h.id === recId) : -1;
+  if (i >= 0){ const old = state.hist[i]; Object.assign(s, {id:old.id, no:old.no, ts:old.ts, updated:new Date().toISOString()}); state.hist[i] = s; }
+  else { s.no = nextNo(); recId = s.id; state.hist.unshift(s); }
+  persist(); $("#nHist").textContent = state.hist.length; setSaved(s);
+  if (!$("#v-hist").hidden) renderHist();
+}
+function setSaved(rec){
+  const el = $("#saveState");
+  if (!rec){ el.className = "saved idle"; el.textContent = "Rapor COA okununca otomatik kaydedilir"; return; }
+  el.className = "saved";
+  el.innerHTML = `✓ ${esc(rec.no)} kaydedildi · <button class="linkbtn" data-open="${esc(rec.id)}">raporu aç</button>`;
+}
+function reportHTML(rec){
+  const d = new Date(rec.ts), v = rec.verdict;
+  return `<div class="rep">
+    <div class="rep-head"><div><div class="eyebrow">Anatrica · Kalite Kontrol</div><h2 style="font-size:19px;margin-top:3px">COA Uygunluk Raporu</h2></div>
+      <div class="rep-no">${esc(rec.no||"")}<br>${d.toLocaleString("tr-TR")}${rec.updated?"<br>güncellendi "+new Date(rec.updated).toLocaleString("tr-TR"):""}</div></div>
+    <table class="meta"><tbody>
+      <tr><td>Ürün / TDS</td><td>${esc(rec.product)} ${rec.grade?"— "+esc(rec.grade):""}</td></tr>
+      <tr><td>Tedarikçi</td><td>${esc(rec.sup||"—")}</td></tr>
+      <tr><td>Lot / Batch</td><td>${esc(rec.lot||"—")}</td></tr>
+      <tr><td>COA tarihi</td><td>${esc(rec.coaDate||"—")}</td></tr>
+      <tr><td>Sevkiyat</td><td>${esc(rec.ref||"—")}</td></tr>
+      <tr><td>COA dosyası</td><td>${esc(rec.file||"—")}</td></tr>
+    </tbody></table>
+    <div class="rep-v ${v}">SONUÇ: ${VLAB[v][0]}</div>
+    <div class="tbl-wrap"><table><thead><tr><th>Parametre</th><th>TDS limiti</th><th>COA değeri</th><th>Durum</th><th>Not</th></tr></thead><tbody>
+      ${rec.rows.map(r=>`<tr class="${r.st==="bad"?"row-bad":""}"><td>${esc(r.name)}</td><td class="num">${esc(r.limit)}</td><td class="num">${esc(r.value||"—")}</td><td><span class="pill ${ST[r.st][1]}">${ST[r.st][0]}</span></td><td class="psub">${esc(r.note)}</td></tr>`).join("")}
+    </tbody></table></div>
+    ${rec.note?`<p><b>Not:</b> ${esc(rec.note)}</p>`:""}
+    <div class="rep-sign"><div>Kontrol eden / İmza</div><div>Onaylayan / İmza</div></div></div>`;
+}
+function printReport(rec){
+  if (!rec){ toast("Önce ürün seçin ve COA yükleyin"); return; }
+  $("#report").innerHTML = reportHTML(rec);
+  window.print();
+}
+function openReport(rec){
+  if (!rec) return;
+  const m = $("#modal"); m.hidden = false;
+  m.innerHTML = `<div class="card" role="dialog" aria-modal="true" aria-label="Rapor ${esc(rec.no||"")}">
+    <div class="card-h"><div class="toolbar">
+        <button class="btn sm primary" id="rpPrint">Yazdır / PDF</button>
+        <button class="btn sm ghost" id="rpEdit">COA ekranında aç / düzenle</button>
+        <button class="btn sm ghost" id="rpSpeak" ${TTS.ok?"":"hidden"}>🔊 Sesli oku</button>
+        <button class="btn sm danger" id="rpDel">Sil</button></div>
+      <button class="x" id="atClose" title="Kapat">×</button></div>
+    <div class="card-b">${reportHTML(rec)}</div></div>`;
+  $("#atClose").onclick = closeModal;
+  $("#rpPrint").onclick = () => printReport(rec);
+  $("#rpEdit").onclick = () => { closeModal(); loadReport(rec); };
+  $("#rpSpeak").onclick = () => speakRows(rec.product, rec.verdict, rec.rows.map(r => ({name:r.name, limit:r.limit, value:r.value, st:r.st})), $("#rpSpeak"));
+  $("#rpDel").onclick = () => { if (!confirm((rec.no||"Rapor") + " silinsin mi?")) return; deleteReport(rec.id); closeModal(); };
+}
+function deleteReport(id){
+  state.hist = state.hist.filter(h => h.id !== id);
+  if (recId === id){ recId = null; setSaved(null); }
+  persist(); fillProdSel(); renderHist();
+}
+function loadReport(rec){
+  const t = tdsById(rec.tdsId);
+  if (!t){ toast("Bu raporun TDS'si kütüphanede yok — sadece görüntülenebilir"); openReport(rec); return; }
+  clearTimeout(saveTimer);
+  clearCheck();
+  state.cur = t.id; state.coaLines = rec.coaLines || []; state.coaFile = rec.file || "";
+  $("#fSup").value = rec.sup||""; $("#fLot").value = rec.lot||""; $("#fDate").value = rec.coaDate||""; $("#fRef").value = rec.ref||""; $("#fNote").value = rec.note||"";
+  $("#rawBox").hidden = !state.coaLines.length; $("#rawTxt").textContent = state.coaLines.join("\n");
+  if (state.coaFile){ $("#coaChip").hidden = false; $("#coaChip").textContent = "📄 " + state.coaFile; }
+  t.params.forEach((p, pi) => { const r = rec.rows.find(x => x.name === p.name); if (r && r.value) coaVals[pi] = {value:r.value, auto:false, line:r.line||""}; });
+  fillProdSel(); recId = rec.id; setSaved(rec);
+  showTab("check"); renderCheck(); clearTimeout(saveTimer);
+  toast(rec.no + " düzenleniyor — değişiklikler bu rapora kaydedilir");
+}
+
+/* ================= LIBRARY view ================= */
+function renderLibList(){
+  const q = normTxt($("#libSearch").value);
+  const items = [...state.lib].sort((a,b)=>tdsLabel(a).localeCompare(tdsLabel(b))).filter(t => !q || normTxt(tdsLabel(t)+" "+(t.grade||"")).includes(q));
+  $("#libList").innerHTML = items.map(t => `<button class="lib-item" data-id="${esc(t.id)}" aria-current="${t.id===state.libSel}">
+      <div class="pname">${esc(t.name)}${t.builtin?"":'<span class="tag">yüklendi</span>'}</div>
+      <div class="c">${esc(t.code||"")} ${t.grade?"· "+esc(t.grade):""} · ${t.params.length} satır</div></button>`).join("") || `<div class="empty">Sonuç yok</div>`;
+}
+const TYPES = [["min","Min (≥)"],["max","Maks (≤)"],["range","Aralık"],["text","Metin"],["nominal","Tipik"],["info","Bilgi"]];
+function paramEditorRows(params){
+  return params.map((p,i)=>`<tr data-i="${i}">
+    <td><input data-f="name" value="${esc(p.name)}"></td>
+    <td><input data-f="unit" value="${esc(p.unit)}" style="width:80px"></td>
+    <td><select data-f="type">${TYPES.map(([v,l])=>`<option value="${v}"${p.type===v?" selected":""}>${l}</option>`).join("")}</select></td>
+    <td><input class="n" data-f="lo" value="${p.lo==null?"":fmt(p.lo)}" ${["min","range","nominal"].includes(p.type)?"":"disabled"}></td>
+    <td><input class="n" data-f="hi" value="${p.hi==null?"":fmt(p.hi)}" ${["max","range"].includes(p.type)?"":"disabled"}></td>
+    <td><input data-f="text" value="${esc(p.text)}" ${["text","info"].includes(p.type)?"":"disabled"}></td>
+    <td><button class="x" data-del="${i}" title="Satırı sil">×</button></td></tr>`).join("");
+}
+function paramTable(params){
+  return `<div class="tbl-wrap"><table class="ed"><thead><tr><th>Parametre</th><th>Birim</th><th>Limit tipi</th><th>Min</th><th>Maks</th><th>Metin</th><th></th></tr></thead>
+    <tbody>${paramEditorRows(params)}</tbody></table></div>`;
+}
+function bindParamTable(root, params, onChange){
+  root.addEventListener("input", e => {
+    const tr = e.target.closest("tr[data-i]"); if (!tr) return;
+    const p = params[+tr.dataset.i], f = e.target.dataset.f;
+    if (f === "lo" || f === "hi"){ const n = nums(e.target.value); p[f] = n.length ? n[0].v : null; }
+    else p[f] = e.target.value;
+    if (f === "type") return;  // handled on change (re-renders enabled fields)
+    onChange();
+  });
+  root.addEventListener("change", e => {
+    if (e.target.dataset.f !== "type") return;
+    const p = params[+e.target.closest("tr[data-i]").dataset.i];
+    p.type = e.target.value; p.inferred = false;
+    root.querySelector("tbody").innerHTML = paramEditorRows(params); onChange();
+  });
+  root.addEventListener("click", e => {
+    const d = e.target.closest("[data-del]"); if (d){ params.splice(+d.dataset.del,1); root.querySelector("tbody").innerHTML = paramEditorRows(params); onChange(); }
+  });
+}
+function renderLibEd(){
+  const t = tdsById(state.libSel), el = $("#libEd");
+  if (!t){ el.innerHTML = `<div class="empty"><div class="big">${state.lib.length ? "Bir TDS seçin" : "Kütüphaneniz boş"}</div>${state.lib.length ? "Soldaki listeden bir ürün seçin veya yeni TDS ekleyin." : "Soldan TDS PDF'i yükleyin, tabloyu yapıştırın veya elle oluşturun. Arkadaşınızın paylaştığı TDS dosyasını 'Yedek / TDS dosyası ekle' ile ekleyebilirsiniz."} Limitler burada düzenlenebilir; COA kontrolü bu limitleri kullanır.</div>`; return; }
+  el.innerHTML = `<div class="card-h"><div><h2>${esc(tdsLabel(t))}</h2><div class="psub">${esc(t.grade||"")} ${t.src?"· kaynak: "+esc(t.src):""}</div></div>
+    <div class="toolbar"><button class="btn sm primary" id="edUse">Bu TDS ile COA kontrol et →</button><button class="btn sm danger" id="edDel">TDS'yi sil</button></div></div>
+    <div class="card-b">
+      <div class="grid2" style="margin-bottom:14px">
+        <div><label class="lbl">Ürün adı</label><input class="inp" id="edName" value="${esc(t.name)}"></div>
+        <div><label class="lbl">TDS kodu</label><input class="inp" id="edCode" value="${esc(t.code||"")}"></div>
+        <div><label class="lbl">Kalite / grade</label><input class="inp" id="edGrade" value="${esc(t.grade||"")}"></div>
+      </div>
+      <div id="edTbl">${paramTable(t.params)}</div>
+      <div class="toolbar" style="margin-top:10px"><button class="btn sm ghost" id="edAdd">＋ Satır ekle</button>
+      <span class="psub">"Min/Maks/Aralık" satırları otomatik değerlendirilir; "Metin" satırları manuel onay ister; "Bilgi" satırları (menşe, görünüş…) değerlendirilmez.</span></div>
+    </div>`;
+  const save = () => { persist(); fillProdSel(); renderLibList(); if (state.cur === t.id) renderCheck(); };
+  bindParamTable($("#edTbl"), t.params, save);
+  $("#edName").oninput = e => { t.name = e.target.value; save(); };
+  $("#edCode").oninput = e => { t.code = e.target.value; save(); };
+  $("#edGrade").oninput = e => { t.grade = e.target.value; save(); };
+  $("#edAdd").onclick = () => { t.params.push({name:"",unit:"%",type:"max",lo:null,hi:null,text:"",inferred:false}); $("#edTbl tbody").innerHTML = paramEditorRows(t.params); save(); };
+  $("#edDel").onclick = () => { if (!confirm(tdsLabel(t)+" silinsin mi?")) return; state.lib = state.lib.filter(x=>x!==t); if (state.cur===t.id){ state.cur=null; renderCheck(); } state.libSel=null; persist(); fillProdSel(); renderLibList(); renderLibEd(); };
+  $("#edUse").onclick = () => { state.cur = t.id; fillProdSel(); runMatch(); showTab("check"); };
+}
+
+/* TDS import: lines → rows */
+const ADDR_RX = /(maslak|meydan sk|veko giz|no:3 kat|34398|istanbul|türkiye|\+90 ?850|info@|www\.|anatrica\.net)/i;
+function parseTdsLines(lines, fname){
+  const clean = lines.map(l => l.split("|").map(x=>x.trim()).filter(x => x && !ADDR_RX.test(x)).join(" | ")).filter(Boolean);
+  let start = clean.findIndex(l => /(propert|parameter|characteristic|specification|test item|item)\b.*\b(unit|result|value|spec|limit|standard)/i.test(l));
+  const body = start >= 0 ? clean.slice(start+1) : clean;
+  const rows = [];
+  const UNIT_RX = /^(%\s*(?:min|max|m\/m|w\/w|w\/v|by wt)?\.?|wt%|w\/%|ppm(?:\s*(?:min|max))?|mg\/kg(?:\s*(?:min|max))?|mg\/g(?:\s*(?:min|max))?|g\/cm3|g\/cm³|g\/cc|g\/ml|kg\/m3|mm|mesh|cfu\/g|mEq\/lit|min\.?|max\.?|_|-|≥|≤)$/i;
+  for (const l of body){
+    if (/^(page|www|tel|fax|e-?mail|note|remark)/i.test(l)) continue;
+    let parts = l.split(" | ");
+    if (parts.length >= 3){ rows.push([parts[0], parts[1], parts.slice(2).join(" ")]); continue; }
+    // single-string line: split "Name  unit  spec"
+    const m = /^(.*?)\s+((?:%|wt%|w\/%|ppm|mg\/kg|mg\/g|g\/cm3|g\/cc|mm|_)(?:\s*(?:min|max|m\/m|w\/w))?\.?)\s+(.+)$/i.exec(l)
+           || /^(.*?[A-Za-z)\]])\s+((?:min|max)\.?)\s+(.+)$/i.exec(l)
+           || /^(.*?[A-Za-z)\]])\s+([≥≤<>]=?\s*-?\d.*)$/.exec(l);
+    if (m) rows.push(m.length === 4 ? [m[1], m[2], m[3]] : [m[1], "", m[2]]);
+    else if (parts.length === 2 && /\d/.test(parts[1])) rows.push([parts[0], "", parts[1]]);
+  }
+  const filt = rows.filter(r => r[0] && r[0].length < 90 && !/^(properties|parameter)$/i.test(r[0]));
+  const text = clean.join("\n");
+  const code = (/(ANT-[A-Z]{2}-\d{3})/.exec(fname||"") || /(ANT-[A-Z]{2}-\d{3})/.exec(text) || [,""])[1];
+  const specIdx = clean.findIndex(l => /product specification|technical data|specification/i.test(l));
+  let grade = specIdx >= 0 && clean[specIdx+1] ? clean[specIdx+1].split(" | ")[0] : "";
+  let name = (fname||"").replace(/\.[^.]+$/,"").replace(code,"").replace(/[_-]+/g," ").trim() || grade || "Yeni ürün";
+  return {name, code, grade, rows: filt};
+}
+function openImportReview(queue){
+  if (!queue.length) return;
+  const item = queue.shift();
+  const t = {id: uid(), name:item.name, code:item.code, grade:item.grade, src:item.file, builtin:false, params: item.rows.map(r=>parseSpec(r[0],r[1],r[2]))};
+  const m = $("#modal");
+  m.hidden = false;
+  m.innerHTML = `<div class="card" role="dialog" aria-modal="true">
+    <div class="card-h"><div><h2>TDS içe aktarma — kontrol edin</h2><div class="psub">${esc(item.file)} · ${item.rows.length} satır okundu${item.ocr?" (OCR)":""}${queue.length?" · sırada "+queue.length+" dosya daha":""}</div></div></div>
+    <div class="card-b">
+      <div class="grid2" style="margin-bottom:12px">
+        <div><label class="lbl">Ürün adı</label><input class="inp" id="imName" value="${esc(t.name)}"></div>
+        <div><label class="lbl">TDS kodu</label><input class="inp" id="imCode" value="${esc(t.code)}"></div>
+        <div><label class="lbl">Kalite / grade</label><input class="inp" id="imGrade" value="${esc(t.grade)}"></div>
+      </div>
+      ${item.rows.length ? "" : `<p class="psub" style="color:var(--warn)">Tablo satırı otomatik bulunamadı — satırları elle ekleyin veya ham metinden kopyalayın.</p>`}
+      <div id="imTbl">${paramTable(t.params)}</div>
+      <div class="toolbar" style="margin-top:10px"><button class="btn sm ghost" id="imAdd">＋ Satır ekle</button></div>
+      <details class="raw"><summary>Ham metin</summary><pre>${esc(item.lines.join("\n"))}</pre></details>
+      <div class="toolbar" style="justify-content:flex-end;margin-top:12px">
+        <button class="btn ghost" id="imCancel">Vazgeç</button>
+        <button class="btn primary" id="imSave">Kütüphaneye kaydet</button>
+      </div>
+    </div></div>`;
+  bindParamTable($("#imTbl"), t.params, ()=>{});
+  $("#imAdd").onclick = () => { t.params.push({name:"",unit:"%",type:"max",lo:null,hi:null,text:"",inferred:false}); $("#imTbl tbody").innerHTML = paramEditorRows(t.params); };
+  const close = () => { m.hidden = true; m.innerHTML = ""; openImportReview(queue); };
+  $("#imCancel").onclick = close;
+  $("#imSave").onclick = () => {
+    t.name = $("#imName").value.trim() || "Yeni ürün"; t.code = $("#imCode").value.trim(); t.grade = $("#imGrade").value.trim();
+    t.params = t.params.filter(p => p.name.trim());
+    state.lib.push(t); state.libSel = t.id;
+    if (addFromCheck){ state.cur = t.id; $("#autoNote").textContent = "Yeni eklenen TDS seçildi."; runMatch(); }
+    persist(); fillProdSel(); renderLibList(); renderLibEd(); toast("TDS kaydedildi: " + tdsLabel(t) + (addFromCheck ? " — COA kontrolünde seçildi" : "")); close();
+  };
+}
+async function handleTdsFiles(files){
+  const queue = [];
+  for (const f of files){
+    toast("Okunuyor: " + f.name);
+    try { const {lines, ocr:isOcr} = await fileLines(f); const r = parseTdsLines(lines, f.name); queue.push(Object.assign(r, {file:f.name, lines, ocr:isOcr})); }
+    catch(e){ toast("Okunamadı: " + f.name + " — " + e.message); }
+  }
+  openImportReview(queue);
+}
+
+/* ================= HISTORY view ================= */
+function renderHist(){
+  const H = state.hist, cnt = k => H.filter(h => h.verdict === k).length;
+  $("#sumRow").innerHTML = [["Toplam rapor", H.length, "var(--accent)"], ["Uygun", cnt("ok"), "var(--good)"], ["Koşullu", cnt("warn"), "var(--warn)"], ["Uygun değil", cnt("bad"), "var(--bad)"]]
+    .map(([k,v,c]) => `<div class="sum" style="--k:${c}"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
+  const q = normTxt($("#histSearch").value), fv = $("#histVerdict").value;
+  const rows = H.filter(h => (!fv || h.verdict === fv) && (!q || normTxt([h.no,h.product,h.sup,h.lot,h.ref,h.note,h.file].join(" ")).includes(q)));
+  $("#histTbl tbody").innerHTML = rows.map(h => {
+    const bad = h.rows.filter(r=>r.st==="bad"||r.st==="warn"||r.st==="miss").map(r=>r.name+" ("+ST[r.st][0].toLocaleLowerCase("tr-TR")+")");
+    return `<tr data-open="${h.id}"><td class="num">${esc(h.no||"—")}</td><td class="num">${new Date(h.ts).toLocaleString("tr-TR",{dateStyle:"short",timeStyle:"short"})}</td>
+      <td><div class="pname">${esc(h.product)}</div><div class="psub">${esc(h.file||"")}</div></td>
+      <td>${esc(h.sup||"—")}</td><td class="num">${esc(h.lot||"—")}</td>
+      <td><span class="pill ${VLAB[h.verdict][1]}">${VLAB[h.verdict][0]}</span></td>
+      <td class="psub" style="max-width:320px">${esc(bad.join(", ")||"—")}</td>
+      <td style="white-space:nowrap"><button class="btn sm ghost" data-open="${h.id}">Aç</button> <button class="btn sm ghost" data-rep="${h.id}">Yazdır</button> <button class="x" data-hdel="${h.id}" title="Sil">×</button></td></tr>`;
+  }).join("") || `<tr><td colspan="8"><div class="empty"><div class="big">${H.length ? "Filtreye uyan rapor yok" : "Henüz rapor yok"}</div>${H.length ? "" : "COA Kontrol sekmesinde bir COA yüklediğinizde karşılaştırma otomatik olarak burada rapor olarak saklanır."}</div></td></tr>`;
+}
+function csv(){
+  const head = ["Rapor no","Tarih","Ürün","Grade","Tedarikçi","Lot","COA tarihi","Sevkiyat","Sonuç","Parametre","TDS limiti","COA değeri","Durum","Not"];
+  const out = [head];
+  state.hist.forEach(h => h.rows.forEach(r => out.push([h.no||"", h.ts, h.product, h.grade, h.sup, h.lot, h.coaDate, h.ref, VLAB[h.verdict][0], r.name, r.limit, r.value, ST[r.st][0], r.note])));
+  const s = "﻿" + out.map(r => r.map(c => '"' + String(c==null?"":c).replace(/"/g,'""') + '"').join(";")).join("\r\n");
+  download("coa_raporlari.csv", s, "text/csv");
+}
+function download(name, content, type){
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([content], {type})); a.download = name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+/* ================= voice read-out (Web Speech API, offline OS voices) ================= */
+const TTS = { ok: "speechSynthesis" in window && typeof SpeechSynthesisUtterance === "function",
+  auto: true, mode: "all", rate: 1, voiceURI: "", voices: [], btn: null, run: 0 };
+(function(){ try { Object.assign(TTS, JSON.parse(localStorage.getItem("anatrica-coa-tts")) || {}); } catch(e){} TTS.btn = null; TTS.run = 0; })();
+function saveTts(){ try { localStorage.setItem("anatrica-coa-tts", JSON.stringify({auto:TTS.auto, mode:TTS.mode, rate:TTS.rate, voiceURI:TTS.voiceURI})); } catch(e){} }
+const trNum = t => String(t).replace(/(\d)\.(\d)/g, "$1,$2");
+function unitWord(u){
+  u = (u||"").trim();
+  const map = [[/^ppm/i,"pe pe em"],[/^mg\/kg/i,"miligram bölü kilogram"],[/^mg\/g/i,"miligram bölü gram"],[/^g\/cm(3|³)/i,"gram bölü santimetreküp"],
+    [/^g\/cc/i,"gram bölü santimetreküp"],[/^g\/ml/i,"gram bölü mililitre"],[/^cfu\/g/i,"koloni bölü gram"],[/^mm$/i,"milimetre"],[/^mesh$/i,"meş"],[/^meq\/lit/i,"miliekivalan bölü litre"]];
+  for (const [rx, w] of map) if (rx.test(u)) return w;
+  return "";
+}
+function withUnit(n, u){
+  u = (u||"").trim(); n = trNum(n);
+  if (/%/.test(u) || /^w\/%/i.test(u)) return "yüzde " + n;
+  const w = unitWord(u); return w ? n + " " + w : n;
+}
+function sayLimit(t){
+  t = String(t||"").trim(); let m;
+  if (!t || t === "—") return "";
+  if ((m = /^≈\s*(\S+)\s*(.*?)\s*\(tipik\)$/.exec(t))) return "tipik değer " + withUnit(m[1], m[2]);
+  if ((m = /^([≥≤])\s*(\S+)\s*(.*)$/.exec(t))) return (m[1] === "≥" ? "en az " : "en fazla ") + withUnit(m[2], m[3]);
+  if ((m = /^(\S+)\s*–\s*(\S+)\s*(.*)$/.exec(t))) return withUnit(trNum(m[1]) + " ile " + trNum(m[2]), m[3]) + " arası";
+  return trWords(trNum(t));
+}
+function sayValue(v){
+  v = String(v||"").trim(); if (!v) return "";
+  if (/^</.test(v)) return trNum(v.slice(1).trim()) + " altında";
+  if (/^>/.test(v)) return trNum(v.slice(1).trim()) + " üzerinde";
+  return trWords(trNum(v));
+}
+const WORDS = [[/\bnot detected\b|\bn\.?d\.?(?=\s|$)/gi,"tespit edilmedi"],[/\babsent\b/gi,"yok"],[/\bnegative\b/gi,"negatif"],[/\bpositive\b/gi,"pozitif"],[/\bconforms?\b|\bcomplies\b|\bcomply\b|\bpass(ed)?\b/gi,"uyumlu"],[/\bnil\b|\bnone\b/gi,"yok"]];
+const trWords = t => WORDS.reduce((x, [rx, w]) => x.replace(rx, w), String(t||""));
+const sayName = n => String(n||"").replace(/[（(][^）)]*[）)]/g, " ").replace(/[{][^}]*[}]/g, " ").replace(/_/g, " ").replace(/\s+/g, " ").trim();
+const SAY_ST = { ok:"Uygun.", warn:"Uygun, ancak sınıra çok yakın.", bad:"Uygun değil!", miss:"Bu değer COA'da yok.", manual:"Manuel kontrol gerekli.", info:"" };
+const SAY_V = { ok:"uygun", warn:"koşullu uygun", bad:"uygun değil", none:"değer bekleniyor" };
+function buildSpeech(product, verdict, rows, mode){
+  const S = [], ev = rows.filter(r => r.st !== "info");
+  const bad = ev.filter(r => r.st === "bad").length, open = ev.filter(r => ["warn","miss","manual"].includes(r.st)).length;
+  let head = sayName(product).replace(/·.*$/, "").trim() + " için sonuç: " + SAY_V[verdict] + ".";
+  if (bad) head += " " + bad + " parametre limit dışında.";
+  else if (open) head += " " + open + " parametre dikkat istiyor.";
+  S.push({text: head, row: null});
+  const list = mode === "issues" ? ev.filter(r => r.st !== "ok") : ev;
+  if (mode === "issues" && !list.length) S.push({text: "Tüm parametreler limit içinde.", row: null});
+  for (const r of list){
+    const parts = [sayName(r.name) + "."];
+    const lim = sayLimit(r.limit); if (lim) parts.push("Limit " + lim + ".");
+    const val = sayValue(r.value); if (val) parts.push("COA değeri " + val + ".");
+    if (SAY_ST[r.st]) parts.push(SAY_ST[r.st]);
+    S.push({text: parts.join(" "), row: r.pi == null ? null : r.pi});
+  }
+  S.push({text: "Analiz tamamlandı.", row: null});
+  return S;
+}
+function pickVoice(){
+  const V = TTS.voices;
+  return V.find(v => v.voiceURI === TTS.voiceURI) || V.find(v => /^tr/i.test(v.lang) && /natural|online/i.test(v.name)) || V.find(v => /^tr/i.test(v.lang)) || null;
+}
+function fillVoices(){
+  if (!TTS.ok) return;
+  TTS.voices = speechSynthesis.getVoices();
+  const tr = TTS.voices.filter(v => /^tr/i.test(v.lang)), other = TTS.voices.filter(v => !/^tr/i.test(v.lang));
+  const cur = pickVoice();
+  $("#ttsVoice").innerHTML = (tr.length ? "" : `<option value="">Türkçe ses yok — varsayılan</option>`) +
+    tr.concat(other).map(v => `<option value="${esc(v.voiceURI)}"${cur && v.voiceURI === cur.voiceURI ? " selected" : ""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("");
+}
+function markRow(pi){
+  $$("#resTbl tr.speaking").forEach(tr => tr.classList.remove("speaking"));
+  if (pi == null) return;
+  const tr = $(`#resTbl tr[data-row="${pi}"]`);
+  if (tr){ tr.classList.add("speaking"); tr.scrollIntoView({block:"nearest", behavior:"smooth"}); }
+}
+function setSpeakBtn(btn, on){
+  if (!btn) return;
+  btn.classList.toggle("speak-on", on);
+  btn.innerHTML = on ? '<span class="eq"></span> Durdur' : "🔊 Sesli oku";
+}
+function stopSpeak(){
+  if (!TTS.ok) return;
+  TTS.run++; speechSynthesis.cancel(); markRow(null); setSpeakBtn(TTS.btn, false); TTS.btn = null;
+}
+function speakRows(product, verdict, rows, btn){
+  if (!TTS.ok) return toast("Bu tarayıcı sesli okumayı desteklemiyor");
+  if (TTS.btn === btn && btn){ stopSpeak(); return; }   // same button again = stop
+  stopSpeak();
+  const S = buildSpeech(product, verdict, rows, TTS.mode), run = TTS.run, voice = pickVoice();
+  if (!voice && !TTS.warned){ TTS.warned = true; toast("Bilgisayarda Türkçe ses bulunamadı — varsayılan ses kullanılıyor"); }
+  TTS.btn = btn || null; setSpeakBtn(TTS.btn, true);
+  // one utterance per sentence: avoids Chrome cutting long utterances, and lets us highlight each row
+  S.forEach((seg, i) => {
+    const u = new SpeechSynthesisUtterance(seg.text);
+    u.lang = voice ? voice.lang : "tr-TR"; if (voice) u.voice = voice; u.rate = +TTS.rate || 1;
+    u.onstart = () => { if (run === TTS.run) markRow(seg.row); };
+    if (i === S.length - 1) u.onend = u.onerror = () => { if (run === TTS.run){ markRow(null); setSpeakBtn(TTS.btn, false); TTS.btn = null; } };
+    speechSynthesis.speak(u);
+  });
+}
+function speakCurrent(btn){
+  const t = tdsById(state.cur);
+  if (!t) return toast("Önce ürün seçin ve COA yükleyin");
+  const R = currentResults(), o = overall(R);
+  speakRows(tdsLabel(t), o.v, R.map(r => ({name:r.p.name, limit:limitText(r.p), value:r.value, st:r.st, pi:r.pi})), btn || $("#btnSpeak"));
+}
+if (TTS.ok){
+  $("#ttsBar").hidden = false; $("#btnSpeak").hidden = false;
+  $("#ttsAuto").checked = !!TTS.auto; $("#ttsMode").value = TTS.mode; $("#ttsRate").value = String(TTS.rate);
+  if (!$("#ttsRate").value) $("#ttsRate").value = "1";
+  fillVoices(); speechSynthesis.addEventListener ? speechSynthesis.addEventListener("voiceschanged", fillVoices) : (speechSynthesis.onvoiceschanged = fillVoices);
+  $("#ttsAuto").onchange = e => { TTS.auto = e.target.checked; saveTts(); };
+  $("#ttsMode").onchange = e => { TTS.mode = e.target.value; saveTts(); };
+  $("#ttsRate").onchange = e => { TTS.rate = +e.target.value; saveTts(); };
+  $("#ttsVoice").onchange = e => { TTS.voiceURI = e.target.value; saveTts(); };
+  $("#btnSpeak").onclick = () => speakCurrent($("#btnSpeak"));
+  window.addEventListener("pagehide", stopSpeak);
+}
+
+/* ================= wiring ================= */
+function showTab(k){
+  $$(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === k));
+  ["check","lib","hist"].forEach(x => $("#v-"+x).hidden = x !== k);
+  if (k === "lib"){ renderLibList(); renderLibEd(); }
+  if (k === "hist") renderHist();
+}
+$$(".tab").forEach(b => b.onclick = () => showTab(b.dataset.tab));
+
+const drop = $("#coaDrop");
+drop.onclick = () => $("#coaFile").click();
+drop.onkeydown = e => { if (e.key==="Enter"||e.key===" "){ e.preventDefault(); $("#coaFile").click(); } };
+["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) handleCoaFile(f); });
+$("#coaFile").onchange = e => { const f = e.target.files[0]; if (f) handleCoaFile(f); e.target.value = ""; };
+$("#btnManual").onclick = () => {
+  if (!state.lib.length) return openAddTds();
+  if (!state.cur){ toast("Önce 1. adımda ürünün TDS'sini seçin"); $("#prodSel").focus(); return; }
+  const v = $("#resTbl .vin"); if (v){ v.scrollIntoView({block:"center", behavior:"smooth"}); v.focus(); }
+  toast("Değerleri COA'dan okuyup tabloya yazın — sonuç ve rapor kendiliğinden oluşur");
+};
+$("#btnPaste").onclick = () => { $("#pasteBox").hidden = !$("#pasteBox").hidden; };
+$("#btnPasteGo").onclick = () => {
+  const lines = $("#pasteTxt").value.split(/\r?\n/).map(l=>l.replace(/\t/g,"  |  ").replace(/\s+/g," ").trim()).filter(Boolean);
+  if (!lines.length) return toast("Metin boş");
+  $("#coaChip").hidden = false; $("#coaChip").innerHTML = `📋 Yapıştırılan metin · ${lines.length} satır`;
+  applyCoa(lines, "yapıştırılan metin", false);
+};
+$("#prodSel").onchange = e => { state.cur = e.target.value || null; $("#autoNote").textContent = ""; runMatch(); };
+$("#resTbl").addEventListener("input", e => {
+  const pi = e.target.dataset.pi; if (pi == null) return;
+  coaVals[pi] = Object.assign(coaVals[pi]||{}, {value:e.target.value, auto:false, conv:null});
+  const pos = e.target.selectionStart;
+  renderCheck();
+  const el = $(`#resTbl .vin[data-pi="${pi}"]`); if (el){ el.focus(); try{ el.setSelectionRange(pos,pos); }catch(_){} }
+});
+$("#btnClear").onclick = clearCheck;
+$("#btnPrint").onclick = () => { const s = snapshot(); if (s && recId){ const r = state.hist.find(h=>h.id===recId); if (r){ s.no = r.no; s.ts = r.ts; } } printReport(s); };
+["#fSup","#fLot","#fDate","#fRef","#fNote"].forEach(id => $(id).addEventListener("input", () => { if (recId || state.coaLines.length) autoSave(); }));
+document.addEventListener("click", e => {
+  if (e.target.closest("[data-rep],[data-hdel]")) return;
+  const b = e.target.closest("[data-open]"); if (b) openReport(state.hist.find(h => h.id === b.dataset.open));
+});
+
+$("#libSearch").oninput = renderLibList;
+$("#libList").onclick = e => { const b = e.target.closest(".lib-item"); if (!b) return; state.libSel = b.dataset.id; renderLibList(); renderLibEd(); };
+let addFromCheck = false;
+function openAddTds(){
+  addFromCheck = !$("#v-check").hidden;
+  const m = $("#modal"); m.hidden = false;
+  m.innerHTML = `<div class="card" role="dialog" aria-modal="true" aria-labelledby="atTitle" style="width:min(620px,100%)">
+    <div class="card-h"><h2 id="atTitle">Yeni TDS ekle</h2><button class="x" id="atClose" title="Kapat">×</button></div>
+    <div class="card-b">
+      <div class="drop" id="atDrop" tabindex="0" role="button" aria-label="TDS dosyası seç">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v6M9 15l3-3 3 3"/></svg>
+        <div class="big">TDS dosyasını bırakın veya seçin</div>
+        <div class="small">PDF · JPG · PNG — birden fazla dosya seçebilirsiniz. Tablo otomatik okunur, kaydetmeden önce kontrol edersiniz.</div>
+      </div>
+      <label class="lbl" for="atPaste" style="margin-top:16px">…veya TDS tablosunu yapıştırın (her satır: Parametre · Birim · Limit)</label>
+      <textarea class="inp" id="atPaste" placeholder="Purity	% min	99.0&#10;Moisture	% max	0.5&#10;Fe	ppm max	10"></textarea>
+      <div class="toolbar" style="justify-content:space-between;margin-top:10px">
+        <button class="btn ghost" id="atBlank">Boş tablo ile elle gir</button>
+        <button class="btn primary" id="atPasteGo">Yapıştırılanı oku</button>
+      </div>
+    </div></div>`;
+  const pick = () => $("#tdsFile").click();
+  $("#atClose").onclick = closeModal;
+  $("#atDrop").onclick = pick;
+  $("#atDrop").onkeydown = e => { if (e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(); } };
+  bindDrop($("#atDrop"), fs => { closeModal(); handleTdsFiles(fs); });
+  $("#atBlank").onclick = () => { closeModal(); openImportReview([blankTds()]); };
+  $("#atPasteGo").onclick = () => {
+    const lines = $("#atPaste").value.split(/\r?\n/).map(l=>l.replace(/\t/g,"  |  ").replace(/\s+/g," ").trim()).filter(Boolean);
+    if (!lines.length) return toast("Metin boş");
+    const r = parseTdsLines(["Properties | Unit | Result"].concat(lines), "");
+    closeModal(); openImportReview([Object.assign(r, {name:"Yeni ürün", file:"yapıştırılan metin", lines})]);
+  };
+  setTimeout(() => $("#atDrop").focus(), 30);
+}
+function closeModal(){ if (TTS.btn && TTS.btn.id === "rpSpeak") stopSpeak(); const m = $("#modal"); m.hidden = true; m.innerHTML = ""; }
+function blankTds(){ return {name:"Yeni ürün", code:"", grade:"", rows:[["Purity","% min",""],["Moisture","% max",""]], file:"elle oluşturuldu", lines:[]}; }
+function bindDrop(el, onFiles){
+  ["dragenter","dragover"].forEach(ev => el.addEventListener(ev, e => { e.preventDefault(); el.classList.add("over"); }));
+  ["dragleave","drop"].forEach(ev => el.addEventListener(ev, e => { e.preventDefault(); el.classList.remove("over"); }));
+  el.addEventListener("drop", e => { const fs = [...e.dataTransfer.files]; if (fs.length) onFiles(fs); });
+}
+document.addEventListener("click", e => { if (e.target.closest("[data-addtds]")) openAddTds(); });
+const tdsDrop = $("#tdsDrop");
+tdsDrop.onclick = () => { addFromCheck = false; $("#tdsFile").click(); };
+tdsDrop.onkeydown = e => { if (e.key==="Enter"||e.key===" "){ e.preventDefault(); tdsDrop.click(); } };
+bindDrop(tdsDrop, fs => { addFromCheck = false; handleTdsFiles(fs); });
+$("#tdsFile").onchange = e => { const fs = [...e.target.files]; e.target.value = ""; if (fs.length){ closeModal(); handleTdsFiles(fs); } };
+$("#btnTdsBlank").onclick = () => { addFromCheck = false; openImportReview([blankTds()]); };
+$("#btnExport").onclick = () => download("coa_kontrol_yedek_" + new Date().toISOString().slice(0,10) + ".json", JSON.stringify({v:1, lib:state.lib, hist:state.hist}, null, 1), "application/json");
+$("#btnImport").onclick = () => $("#impFile").click();
+$("#impFile").onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  try { const d = JSON.parse(await f.text()); if (!Array.isArray(d.lib)) throw new Error("geçersiz dosya");
+    const libIds = new Set(state.lib.map(t => t.id)), histIds = new Set(state.hist.map(h => h.id));
+    const addL = d.lib.filter(t => t && t.id && Array.isArray(t.params) && !libIds.has(t.id)).map(t => Object.assign(t, {builtin:false}));
+    const addH = (Array.isArray(d.hist) ? d.hist : []).filter(h => h && h.id && !histIds.has(h.id));
+    state.lib = state.lib.concat(addL); state.hist = state.hist.concat(addH).sort((a,b) => String(b.ts).localeCompare(String(a.ts)));
+    persist(); fillProdSel(); renderLibList(); renderLibEd(); renderCheck(); if (!$("#v-hist").hidden) renderHist();
+    toast("Eklendi: " + addL.length + " TDS, " + addH.length + " rapor" + ((d.lib.length - addL.length) ? " · zaten olan " + (d.lib.length - addL.length) + " TDS atlandı" : "")); }
+  catch(err){ toast("Yedek okunamadı: " + err.message); }
+};
+$("#histSearch").oninput = renderHist;
+$("#histVerdict").onchange = renderHist;
+$("#btnCsv").onclick = csv;
+$("#histTbl").onclick = e => {
+  const r = e.target.closest("[data-rep]"); if (r) return printReport(state.hist.find(h=>h.id===r.dataset.rep));
+  const d = e.target.closest("[data-hdel]"); if (d && confirm("Rapor silinsin mi?")) deleteReport(d.dataset.hdel);
+};
+function dismissModal(){ if ($("#imCancel")) $("#imCancel").click(); else if ($("#atClose")) closeModal(); }
+$("#modal").addEventListener("click", e => { if (e.target.id === "modal") dismissModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#modal").hidden) dismissModal(); });
+
+// theme
+const THEMES = ["light","dark","system"];
+function applyTheme(t){ if (t === "system") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t); }
+let theme = (function(){ try{ return localStorage.getItem("anatrica-coa-theme") || "system"; }catch(e){ return "system"; } })();
+applyTheme(theme);
+$("#btnTheme").onclick = () => { theme = THEMES[(THEMES.indexOf(theme)+1)%3]; applyTheme(theme); try{ localStorage.setItem("anatrica-coa-theme", theme); }catch(e){} toast("Tema: " + ({light:"açık",dark:"koyu",system:"sistem"})[theme]); };
+window.addEventListener("message", e => {
+  const d = e.data; if (!d) return;
+  if (d.__portalTheme) applyTheme(d.__portalTheme);
+  if (d.__coaStoreData && d.__coaStoreData.key === STORE_KEY && STORAGE === "parent"){
+    let v = null; try { v = JSON.parse(d.__coaStoreData.val); } catch(_){}
+    if (v){ applyStored(v); fillProdSel(); renderCheck(); if (!$("#v-hist").hidden) renderHist(); if (!$("#v-lib").hidden){ renderLibList(); renderLibEd(); } }
+  }
+});
+
+fillProdSel();
+renderCheck();
+</script>
+</body>
+</html>

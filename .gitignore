@@ -3,6 +3,7 @@
 !.gitignore
 !.gitattributes
 !index.html
+!coa.html
 !news.json
 !news_fetch.py
 !DEPLOY_PORTAL.md
