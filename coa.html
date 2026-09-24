@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TDS vs COA Check</title>
+<title>Document Compliance Check</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -75,30 +75,26 @@ button,input,select,textarea{font:inherit;color:inherit}
 .card-b{padding:16px}
 .lbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:5px}
 .inp{width:100%;padding:8px 10px;border:1px solid var(--border-strong);border-radius:var(--radius-s);background:var(--surface);font-size:13.5px}
-textarea.inp{font-family:var(--mono);font-size:12px;min-height:120px;resize:vertical}
+textarea.inp{font-family:var(--mono);font-size:12px;min-height:130px;resize:vertical}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
 .step{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin-bottom:10px}
 .step b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:12px;font-family:var(--mono)}
-.step .hint{font-weight:400;font-size:12px;color:var(--ink-muted);margin-left:auto}
+.step-note{font-size:12px;color:var(--ink-muted);margin:-4px 0 10px}
 
-.docs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-@media (max-width:800px){.docs{grid-template-columns:1fr}}
-.doc.loaded{border-color:var(--accent)}
-.drop{border:1.5px dashed var(--border-strong);border-radius:var(--radius-m);padding:20px 14px;text-align:center;cursor:pointer;background:var(--surface-2);transition:border-color .15s,background .15s}
+.check-grid{display:grid;grid-template-columns:minmax(280px,360px) 1fr;gap:18px;align-items:start}
+@media (max-width:900px){.check-grid{grid-template-columns:1fr}}
+.side>.card+.card{margin-top:14px}
+
+.drop{border:1.5px dashed var(--border-strong);border-radius:var(--radius-m);padding:22px 14px;text-align:center;cursor:pointer;background:var(--surface-2);transition:border-color .15s,background .15s}
 .drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
 .drop .big{font-weight:600;font-size:14px}
 .drop .small{font-size:12px;color:var(--ink-muted);margin-top:4px}
 .drop svg{color:var(--accent);margin-bottom:6px}
-.doc.loaded .drop{padding:10px 12px}
-.doc.loaded .drop svg,.doc.loaded .drop .small{display:none}
-.doc.loaded .drop .big{font-size:12.5px;font-weight:500;color:var(--ink-secondary)}
-.filechip{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;background:var(--accent-soft);border-radius:var(--radius-s);padding:8px 10px;word-break:break-all}
-.filechip b{font-weight:600}
+.filechip{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;background:var(--surface-2);border-radius:var(--radius-s);padding:7px 10px;word-break:break-all}
 .progress{height:4px;background:var(--surface-3);border-radius:4px;overflow:hidden;margin-top:10px}
 .progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
-.links{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 16px}
-.linkbtn{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px;text-decoration:underline}
-.pastebox{margin-top:8px}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px;text-decoration:underline;text-align:left}
+.links{margin-top:10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 
 .verdict{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:var(--radius-m);border:1px solid;margin-bottom:14px}
 .verdict .ic{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:22px}
@@ -132,19 +128,21 @@ tr.row-bad td{background:color-mix(in srgb,var(--bad-soft) 55%,transparent)}
 tr.speaking td{background:var(--accent-soft)!important;box-shadow:inset 0 1px 0 var(--accent),inset 0 -1px 0 var(--accent)}
 tr.speaking td:first-child{box-shadow:inset 3px 0 0 var(--accent),inset 0 1px 0 var(--accent),inset 0 -1px 0 var(--accent)}
 .src{font-size:11px;color:var(--ink-muted);font-family:var(--mono);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
-details.raw summary{cursor:pointer;font-size:12.5px;color:var(--ink-secondary);padding:8px 0 0}
-details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);padding:10px;font-size:11.5px;max-height:300px;overflow:auto;white-space:pre-wrap}
+details.raw summary{cursor:pointer;font-size:12.5px;color:var(--ink-secondary);padding:10px 0}
+details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);padding:10px;font-size:11.5px;max-height:320px;overflow:auto;white-space:pre-wrap}
 .legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:12px;color:var(--ink-secondary);margin-top:12px}
-.empty{padding:36px 20px;text-align:center;color:var(--ink-muted)}
+.empty{padding:40px 20px;text-align:center;color:var(--ink-muted)}
 .empty .big{font-size:15px;color:var(--ink-secondary);font-weight:600;margin-bottom:4px}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 
-details.limits{margin-top:16px}
-details.limits>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:14px 16px;font-weight:600;font-size:14px}
-details.limits>summary::-webkit-details-marker{display:none}
-details.limits>summary::before{content:"▸";color:var(--accent);transition:transform .15s}
-details.limits[open]>summary::before{transform:rotate(90deg)}
-details.limits>summary .psub{font-weight:400}
+.lib-grid{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:18px;align-items:start}
+@media (max-width:900px){.lib-grid{grid-template-columns:1fr}}
+.lib-list{max-height:640px;overflow:auto}
+.lib-item{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--border);padding:10px 14px;cursor:pointer}
+.lib-item:hover{background:var(--surface-2)}
+.lib-item[aria-current="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.lib-item .c{font-family:var(--mono);font-size:11px;color:var(--ink-muted)}
+.search{min-width:0;flex:1}
 .ed td{padding:5px 6px}
 .ed input,.ed select{width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;background:var(--surface);font-size:12.5px}
 .ed input.n{font-family:var(--mono);width:84px}
@@ -206,127 +204,132 @@ details.limits>summary .psub{font-weight:400}
 <header class="mast">
   <div>
     <div class="eyebrow">Anatrica · Quality Control</div>
-    <h1>TDS ↔ COA Compliance Check</h1>
-    <div class="sub">Load two documents — the product's <b>TDS</b> (specification) and the delivery's <b>COA</b> (certificate of analysis). Every parameter is compared and you get a clear verdict. <b>Your documents and reports stay in your own browser</b> and are never shared.</div>
+    <h1>Document Compliance Check</h1>
+    <div class="sub"><b>Document 1</b> holds the limits (for example a specification). <b>Document 2</b> holds the measured values (for example an analysis certificate). Every parameter is compared and you get a clear verdict. <b>Your documents and reports stay in your own browser</b> and are never shared.</div>
   </div>
   <div class="mast-tools">
+    <button class="btn primary" data-adddoc1>＋ Add Document 1</button>
     <button class="btn ghost sm" id="btnTheme" title="Theme">◐ Theme</button>
   </div>
 </header>
 
 <nav class="tabs" role="tablist">
-  <button class="tab" role="tab" data-tab="check" aria-selected="true">Compare</button>
+  <button class="tab" role="tab" data-tab="check" aria-selected="true">Check</button>
+  <button class="tab" role="tab" data-tab="lib" aria-selected="false">Document 1 library <span class="n" id="nLib">0</span></button>
   <button class="tab" role="tab" data-tab="hist" aria-selected="false">Reports <span class="n" id="nHist">0</span></button>
 </nav>
 
-<!-- ============ COMPARE ============ -->
+<!-- ============ CHECK ============ -->
 <section id="v-check">
-  <div class="docs">
-    <!-- document 1: TDS -->
-    <div class="card doc" id="tdsCard"><div class="card-b">
-      <div class="step"><b>1</b> TDS — specification</div>
-      <div class="drop" id="tdsDrop" tabindex="0" role="button" aria-label="Upload TDS file">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
-        <div class="big" id="tdsDropTxt">Drop the TDS here or click to choose</div>
-        <div class="small">PDF · JPG · PNG (scanned documents are read with OCR)</div>
-      </div>
-      <input type="file" id="tdsFile" accept=".pdf,image/*,.txt" hidden>
-      <div class="progress" id="tdsProg" hidden><i></i></div>
-      <div id="tdsChip" class="filechip" hidden></div>
-      <div class="grid2" id="tdsMeta" hidden style="margin-top:10px">
-        <div><label class="lbl" for="tdsName">Product</label><input class="inp" id="tdsName"></div>
-        <div><label class="lbl" for="tdsCode">TDS code / grade</label><input class="inp" id="tdsCode"></div>
-      </div>
-      <div class="links">
-        <button class="linkbtn" id="tdsPasteBtn">Paste TDS text</button>
-        <button class="linkbtn" id="tdsManualBtn">✎ Enter TDS limits manually</button>
-      </div>
-      <div class="pastebox" id="tdsPasteBox" hidden>
-        <textarea class="inp" id="tdsPaste" placeholder="One parameter per line: Parameter · Unit · Limit&#10;Purity	% min	99.0&#10;Moisture	% max	0.5&#10;Fe	ppm max	10"></textarea>
-        <button class="btn sm primary" id="tdsPasteGo" style="margin-top:6px">Read TDS text</button>
-      </div>
-    </div></div>
+  <div class="check-grid">
+    <div class="side">
+      <div class="card"><div class="card-b">
+        <div class="step"><b>1</b> Select Document 1</div>
+        <div class="step-note">The document with the limits.</div>
+        <select class="inp" id="prodSel" aria-label="Document 1"></select>
+        <div class="psub" id="autoNote" style="margin-top:6px"></div>
+        <div style="margin-top:8px"><button class="linkbtn" data-adddoc1>＋ Add Document 1 (upload, paste or type)</button></div>
+      </div></div>
 
-    <!-- document 2: COA -->
-    <div class="card doc" id="coaCard"><div class="card-b">
-      <div class="step"><b>2</b> COA — certificate of analysis</div>
-      <div class="drop" id="coaDrop" tabindex="0" role="button" aria-label="Upload COA file">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 15l2 2 4-4"/></svg>
-        <div class="big" id="coaDropTxt">Drop the COA here or click to choose</div>
-        <div class="small">PDF · JPG · PNG (scanned documents are read with OCR)</div>
-      </div>
-      <input type="file" id="coaFile" accept=".pdf,image/*,.txt" hidden>
-      <div class="progress" id="coaProg" hidden><i></i></div>
-      <div id="coaChip" class="filechip" hidden></div>
-      <div class="links">
-        <button class="linkbtn" id="coaPasteBtn">Paste COA text</button>
-        <button class="linkbtn" id="coaManualBtn">✎ Type COA values manually</button>
-      </div>
-      <div class="pastebox" id="coaPasteBox" hidden>
-        <textarea class="inp" id="coaPaste" placeholder="Paste the COA table here (from e-mail, Word, Excel)…"></textarea>
-        <button class="btn sm primary" id="coaPasteGo" style="margin-top:6px">Read COA text</button>
-      </div>
-    </div></div>
-  </div>
+      <div class="card"><div class="card-b">
+        <div class="step"><b>2</b> Upload Document 2 or type its values</div>
+        <div class="step-note">The document with the measured values.</div>
+        <div class="drop" id="coaDrop" tabindex="0" role="button" aria-label="Upload Document 2">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v6M9 15l3-3 3 3"/></svg>
+          <div class="big">Drop Document 2 here or click to choose</div>
+          <div class="small">PDF · JPG · PNG (scanned documents are read with OCR)</div>
+        </div>
+        <input type="file" id="coaFile" accept=".pdf,image/*,.txt" hidden>
+        <div id="coaChip" class="filechip" hidden></div>
+        <div class="progress" id="coaProg" hidden><i></i></div>
+        <div class="links">
+          <button class="linkbtn" id="btnManual">✎ Type Document 2 values into the table</button>
+          <button class="linkbtn" id="btnPaste">…or paste Document 2 text</button>
+        </div>
+        <div id="pasteBox" hidden style="margin-top:8px">
+          <textarea class="inp" id="pasteTxt" placeholder="Paste the table here (from e-mail, Word, Excel)…"></textarea>
+          <button class="btn sm primary" id="btnPasteGo" style="margin-top:6px">Read text</button>
+        </div>
+      </div></div>
 
-  <div class="card" style="margin-bottom:16px"><div class="card-b" style="padding-top:12px;padding-bottom:12px">
-    <div class="grid2">
-      <div><label class="lbl" for="fSup">Supplier</label><input class="inp" id="fSup"></div>
-      <div><label class="lbl" for="fLot">Lot / batch</label><input class="inp" id="fLot"></div>
-      <div><label class="lbl" for="fDate">COA date</label><input class="inp" id="fDate"></div>
-      <div><label class="lbl" for="fRef">Shipment / container</label><input class="inp" id="fRef"></div>
-      <div><label class="lbl" for="fNote">Note</label><input class="inp" id="fNote"></div>
+      <div class="card"><div class="card-b">
+        <div class="step"><b>3</b> Details</div>
+        <div class="grid2">
+          <div><label class="lbl" for="fSup">Supplier / source</label><input class="inp" id="fSup"></div>
+          <div><label class="lbl" for="fLot">Lot / batch</label><input class="inp" id="fLot"></div>
+          <div><label class="lbl" for="fDate">Document 2 date</label><input class="inp" id="fDate"></div>
+          <div><label class="lbl" for="fRef">Reference / shipment</label><input class="inp" id="fRef"></div>
+        </div>
+        <label class="lbl" for="fNote" style="margin-top:12px">Note</label>
+        <input class="inp" id="fNote">
+      </div></div>
     </div>
-  </div></div>
 
-  <div id="verdict" class="verdict v-none"></div>
-
-  <div class="ttsbar" id="ttsBar" hidden>
-    <span class="ttl">🔊 Read aloud</span>
-    <label><input type="checkbox" id="ttsAuto"> Read automatically when a comparison is done</label>
-    <label>Read: <select id="ttsMode"><option value="all">All values</option><option value="issues">Issues only</option></select></label>
-    <label>Speed: <select id="ttsRate"><option value="0.8">Slow</option><option value="1">Normal</option><option value="1.2">Fast</option><option value="1.5">Very fast</option></select></label>
-    <label>Voice: <select id="ttsVoice"></select></label>
-  </div>
-
-  <div class="card">
-    <div class="card-h">
-      <h2 id="resTitle">Parameter comparison</h2>
-      <div class="toolbar">
-        <span class="saved idle" id="saveState">The report is saved automatically</span>
-        <button class="btn sm ghost" id="btnSpeak" hidden>🔊 Read aloud</button>
-        <button class="btn sm ghost" id="btnPrint">Print / PDF</button>
-        <button class="btn sm primary" id="btnClear">＋ New comparison</button>
+    <div>
+      <div id="verdict" class="verdict v-none"></div>
+      <div class="ttsbar" id="ttsBar" hidden>
+        <span class="ttl">🔊 Read aloud</span>
+        <label><input type="checkbox" id="ttsAuto"> Read automatically when a check is done</label>
+        <label>Read: <select id="ttsMode"><option value="all">All values</option><option value="issues">Issues only</option></select></label>
+        <label>Speed: <select id="ttsRate"><option value="0.8">Slow</option><option value="1">Normal</option><option value="1.2">Fast</option><option value="1.5">Very fast</option></select></label>
+        <label>Voice: <select id="ttsVoice"></select></label>
       </div>
-    </div>
-    <div class="card-b" style="padding-top:8px">
-      <div class="stats" id="stats"></div>
-      <div class="tbl-wrap">
-        <table id="resTbl">
-          <thead><tr><th>Parameter</th><th>TDS limit</th><th>COA value</th><th>Status</th></tr></thead>
-          <tbody></tbody>
-        </table>
+      <div class="card">
+        <div class="card-h">
+          <h2 id="resTitle">Parameter comparison</h2>
+          <div class="toolbar">
+            <span class="saved idle" id="saveState">The report is saved automatically</span>
+            <button class="btn sm ghost" id="btnSpeak" hidden>🔊 Read aloud</button>
+            <button class="btn sm ghost" id="btnPrint">Print / PDF</button>
+            <button class="btn sm primary" id="btnClear">＋ New check</button>
+          </div>
+        </div>
+        <div class="card-b" style="padding-top:8px">
+          <div class="stats" id="stats"></div>
+          <div class="tbl-wrap">
+            <table id="resTbl">
+              <thead><tr><th>Parameter</th><th>Document 1 limit</th><th>Document 2 value</th><th>Status</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="legend">
+            <span><span class="pill p-ok">PASS</span> within limit</span>
+            <span><span class="pill p-warn">BORDERLINE</span> within limit but very close (max/range: last 5 % of the limit · min: at most 0.5 points above)</span>
+            <span><span class="pill p-bad">FAIL</span> out of limit</span>
+            <span><span class="pill p-miss">MISSING</span> not in Document 2</span>
+            <span><span class="pill p-info">INFO</span> not evaluated</span>
+          </div>
+          <details class="raw" id="rawBox" hidden><summary>Text read from Document 2</summary><pre id="rawTxt"></pre></details>
+        </div>
       </div>
-      <div class="legend">
-        <span><span class="pill p-ok">PASS</span> within limit</span>
-        <span><span class="pill p-warn">BORDERLINE</span> within limit but very close (max/range: last 5 % of the limit · min: at most 0.5 points above)</span>
-        <span><span class="pill p-bad">FAIL</span> out of specification</span>
-        <span><span class="pill p-miss">MISSING</span> not on the COA</span>
-        <span><span class="pill p-info">INFO</span> not evaluated</span>
-      </div>
-      <details class="raw" id="coaRawBox" hidden><summary>Text read from the COA</summary><pre id="coaRaw"></pre></details>
     </div>
   </div>
+</section>
 
-  <details class="card limits" id="limitsBox" hidden>
-    <summary>TDS limits <span class="psub" id="limitsSum"></span></summary>
-    <div class="card-b" style="border-top:1px solid var(--border)">
-      <div id="edTbl"><div class="tbl-wrap"><table class="ed"><thead><tr><th>Parameter</th><th>Unit</th><th>Limit type</th><th>Min</th><th>Max</th><th>Text</th><th></th></tr></thead><tbody></tbody></table></div></div>
-      <div class="toolbar" style="margin-top:10px"><button class="btn sm ghost" id="edAdd">＋ Add row</button>
-        <span class="psub">Min / Max / Range rows are evaluated automatically; "Text" rows need a manual check; "Info" rows (origin, appearance…) are not evaluated. Fix anything the reader got wrong here.</span></div>
-      <details class="raw" id="tdsRawBox" hidden><summary>Text read from the TDS</summary><pre id="tdsRaw"></pre></details>
+<!-- ============ LIBRARY ============ -->
+<section id="v-lib" hidden>
+  <div class="lib-grid">
+    <div class="card">
+      <div class="card-h" style="gap:8px">
+        <input class="inp search" id="libSearch" placeholder="Search name / code…" aria-label="Search the library">
+      </div>
+      <div class="lib-list" id="libList"></div>
+      <div class="card-b" style="border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px">
+        <div class="drop" id="tdsDrop" tabindex="0" role="button" aria-label="Upload Document 1 files" style="padding:16px 12px">
+          <div class="big">＋ Add Document 1</div>
+          <div class="small">Drop files here or click (several at once is fine)</div>
+        </div>
+        <input type="file" id="tdsFile" accept=".pdf,image/*,.txt" multiple hidden>
+        <button class="btn ghost" id="btnTdsBlank">＋ Create Document 1 manually</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn ghost sm" id="btnExport" style="flex:1" title="Download your library and reports as a file — to move them to another computer or share with a colleague">Download backup</button>
+          <button class="btn ghost sm" id="btnImport" style="flex:1" title="Add a backup / shared library file (nothing existing is deleted)">Add backup file</button>
+          <input type="file" id="impFile" accept=".json" hidden>
+        </div>
+      </div>
     </div>
-  </details>
+    <div class="card" id="libEd"></div>
+  </div>
 </section>
 
 <!-- ============ REPORTS ============ -->
@@ -336,18 +339,15 @@ details.limits>summary .psub{font-weight:400}
     <div class="card-h">
       <h2>Compliance reports</h2>
       <div class="toolbar">
-        <select class="inp" id="histVerdict" style="width:auto">
+        <select class="inp" id="histVerdict" style="width:auto" aria-label="Filter by result">
           <option value="">All results</option><option value="ok">Compliant</option><option value="warn">Conditional</option><option value="bad">Not compliant</option>
         </select>
-        <input class="inp" id="histSearch" placeholder="Product, supplier, lot, report no…" style="width:230px">
+        <input class="inp" id="histSearch" placeholder="Name, supplier, lot, report no…" style="width:230px" aria-label="Search reports">
         <button class="btn sm ghost" id="btnCsv">Download CSV</button>
-        <button class="btn sm ghost" id="btnExport" title="Download all reports as a backup file">Backup</button>
-        <button class="btn sm ghost" id="btnImport" title="Add reports from a backup file (existing reports are kept)">Restore</button>
-        <input type="file" id="impFile" accept=".json" hidden>
       </div>
     </div>
     <div class="tbl-wrap"><table id="histTbl">
-      <thead><tr><th>Report no</th><th>Date</th><th>Product</th><th>Supplier</th><th>Lot</th><th>Result</th><th>Issues</th><th></th></tr></thead>
+      <thead><tr><th>Report no</th><th>Date</th><th>Document 1</th><th>Supplier</th><th>Lot</th><th>Result</th><th>Issues</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div>
   </div>
@@ -428,7 +428,7 @@ function limitText(p){
 }
 
 /* ================= state + storage ================= */
-const state = { hist: [], tds: null, tdsLines: [], coaLines: [], coaFile: "" };
+const state = { lib: [], hist: [], cur: null, libSel: null, coaLines: [], coaFile: "" };
 const coaVals = {}; // param index → {value, auto, line, conv}
 // Storage: this page's localStorage; inside the portal (srcdoc iframe, where that can throw)
 // fall back to the portal shell's localStorage via postMessage.
@@ -436,17 +436,21 @@ const STORAGE = (function(){
   try { localStorage.setItem("__coa_t","1"); localStorage.removeItem("__coa_t"); return "local"; }
   catch(e){ return window.parent !== window ? "parent" : "none"; }
 })();
-function applyStored(d){ state.hist = (d && Array.isArray(d.hist)) ? d.hist : []; }
+function applyStored(d){
+  state.lib = (d && Array.isArray(d.lib)) ? d.lib.filter(t => t && !t.builtin && Array.isArray(t.params)) : [];
+  state.hist = (d && Array.isArray(d.hist)) ? d.hist : [];
+}
 applyStored(STORAGE === "local" ? lsGet(STORE_KEY) : null);
 if (STORAGE === "parent") try { window.parent.postMessage({__coaStoreGet: STORE_KEY}, "*"); } catch(e){}
 let warnedStore = false;
 function persist(){
-  const data = {v:2, hist:state.hist};
+  const data = {v:3, lib:state.lib, hist:state.hist};
   if (STORAGE === "local" && lsSet(STORE_KEY, data)) return;
   if (STORAGE === "parent"){ try { window.parent.postMessage({__coaStoreSet:{key:STORE_KEY, val:JSON.stringify(data)}}, "*"); return; } catch(e){} }
-  if (!warnedStore){ warnedStore = true; toast("Warning: browser storage is off — reports will not be kept. Use Reports → Backup."); }
+  if (!warnedStore){ warnedStore = true; toast("Warning: browser storage is off — nothing will be kept. Use Library → Download backup."); }
 }
-const tdsLabel = t => t ? ((t.name || "Unnamed product") + (t.code ? " · " + t.code : "")) : "";
+const tdsById = id => state.lib.find(t => t.id === id);
+const tdsLabel = t => t ? ((t.name || "Unnamed") + (t.code ? " · " + t.code : "")) : "";
 
 /* ================= file → text lines ================= */
 async function pdfLines(buf, onProg){
@@ -502,15 +506,15 @@ async function ocr(img, onProg){
   await w.terminate();
   return data.text.split(/\n/).map(l => l.replace(/\s+/g," ").trim()).filter(Boolean);
 }
+const textLines = t => String(t||"").split(/\r?\n/).map(l=>l.replace(/\t/g,"  |  ").replace(/\s+/g," ").trim()).filter(Boolean);
 async function fileLines(file, onProg){
   const n = file.name.toLowerCase();
   if (n.endsWith(".pdf") || file.type === "application/pdf") return pdfLines(await file.arrayBuffer(), onProg);
   if (file.type.startsWith("image/")) return {lines: await ocr(file, onProg), ocr:true};
   return {lines: textLines(await file.text()), ocr:false};
 }
-const textLines = t => String(t||"").split(/\r?\n/).map(l=>l.replace(/\t/g,"  |  ").replace(/\s+/g," ").trim()).filter(Boolean);
 
-/* ================= TDS text → spec rows ================= */
+/* ================= Document 1 text → limit rows ================= */
 const ADDR_RX = /(maslak|meydan sk|veko giz|no:3 kat|34398|istanbul|türkiye|\+90 ?850|info@|www\.|anatrica\.net)/i;
 function parseTdsLines(lines, fname){
   const clean = lines.map(l => l.split("|").map(x=>x.trim()).filter(x => x && !ADDR_RX.test(x)).join(" | ")).filter(Boolean);
@@ -533,11 +537,11 @@ function parseTdsLines(lines, fname){
   const code = (/(ANT-[A-Z]{2}-\d{3})/.exec(fname||"") || /(ANT-[A-Z]{2}-\d{3})/.exec(text) || [,""])[1];
   const specIdx = clean.findIndex(l => /product specification|technical data|specification/i.test(l));
   const grade = specIdx >= 0 && clean[specIdx+1] ? clean[specIdx+1].split(" | ")[0] : "";
-  const name = (fname||"").replace(/\.[^.]+$/,"").replace(code,"").replace(/[_-]+/g," ").trim() || grade || "";
+  const name = (fname||"").replace(/\.[^.]+$/,"").replace(code,"").replace(/[_-]+/g," ").trim() || grade || "New item";
   return {name, code, grade, rows: filt};
 }
 
-/* ================= COA matching ================= */
+/* ================= Document 2 matching ================= */
 const SYN = [
   ["moisture","water","h2o","loss on drying","free moisture","water content","humidity"],
   ["iron","fe"],["chloride","cl","chlorides","cl-"],["sulfate","sulphate","so4","sulfates","sulphates"],
@@ -592,7 +596,7 @@ function extractValue(line, fromIdx, p){
   s = s.replace(/\d+(?:[.,]\d+)?\s*(?:μ|µ|um|mesh)\w*/gi," ");              // sieve sizes
   s = s.replace(/(?:≥|≤|>=|<=|=>|=<|\bmin\.?|\bmax\.?|\bnlt\b|\bnmt\b|not less than|not more than)\s*:?\s*-?\d+(?:[.,]\d+)*/gi," ");
   s = s.replace(/-?\d+(?:[.,]\d+)*\s*(?:%\s*)?(?:min|max)\b\.?/gi," ");
-  s = s.replace(/\d+(?:[.,]\d+)*\s*[-–—~]\s*\d+(?:[.,]\d+)*/g," ");        // spec ranges
+  s = s.replace(/\d+(?:[.,]\d+)*\s*[-–—~]\s*\d+(?:[.,]\d+)*/g," ");        // limit ranges
   const tokens = []; let m; const rx = /(<|>)?\s*(-?\d+(?:[.,]\d+)*)/g;
   while ((m = rx.exec(s))) tokens.push({pre:m[1]||"", v:normNum(m[2])});
   const ctxU = s.toLowerCase();
@@ -635,6 +639,24 @@ function matchCoa(tds, lines){
   }
   return res;
 }
+function detectProduct(lines){
+  const txt = normTxt(lines.join(" \n "));
+  let best = null;
+  for (const t of state.lib){
+    let sc = 0;
+    const nm = normTxt(t.name), gr = normTxt(t.grade||"");
+    if (nm && txt.includes(nm)) sc += 20 + nm.length/4;
+    else { const words = nm.split(" ").filter(w=>w.length>3); const hit = words.filter(w=>txt.includes(w)).length; sc += words.length ? 10*hit/words.length : 0; }
+    if (gr && txt.includes(gr)) sc += 12;
+    else if (gr){ const gt = gr.replace(/[()]/g," ").split(" ").filter(w => w.length >= 2); sc += gt.length ? 10 * gt.filter(w => txt.includes(w)).length / gt.length : 0; }
+    if (t.code && txt.includes(normTxt(t.code))) sc += 30;
+    const m = matchCoa(t, lines); const k = Object.keys(m).length;
+    const tot = t.params.filter(p=>p.type!=="info").length || 1;
+    sc += 12 * k / tot + k*0.5;
+    if (!best || sc > best.sc) best = {t, sc};
+  }
+  return best && best.sc > 6 ? best.t : null;
+}
 function detectMeta(lines){
   const txt = lines.join("\n"), o = {};
   let m = /(?:batch|lot)\s*(?:no\.?|number|nr\.?|#)?\s*[:.\-|]?\s*\|?\s*([A-Z0-9][A-Z0-9\-\/.]{2,})/i.exec(txt);
@@ -643,19 +665,17 @@ function detectMeta(lines){
   if (m) o.date = m[1];
   return o;
 }
-// Do the two documents look like the same product? (product-name words from the TDS found in the COA)
-const GENERIC = new Set(["grade","technical","tech","industrial","powder","feed","food","high","end","solution","flakes","pearl","pearls","light","dense"]);
+// Do the two documents look like they belong together?
+const GENERIC = new Set(["grade","technical","tech","industrial","powder","feed","food","high","end","solution","flakes","pearl","pearls","light","dense","new","item"]);
 function productMismatch(){
-  const t = state.tds; if (!t || !state.coaLines.length) return "";
+  const t = tdsById(state.cur); if (!t || !state.coaLines.length) return "";
   const txt = normTxt(state.coaLines.join(" "));
-  // every distinctive word of the product name should appear ("Soda Ash Light" vs a "Caustic Soda" COA → "ash" missing)
   const words = normTxt(t.name).split(/[^a-z0-9]+/).filter(w => w.length >= 3 && !GENERIC.has(w));
   const missing = words.filter(w => !new RegExp("(^|[^a-z0-9])" + w + "(?![a-z])").test(txt));
-  if (words.length && missing.length) return `The COA text does not mention “${t.name}”. Make sure both documents are for the same product.`;
-  // second signal: most TDS parameters could not be found on the COA
+  if (words.length && missing.length) return `Document 2 does not mention “${t.name}”. Make sure both documents belong together.`;
   const evals = t.params.filter(p => p.type !== "info" && p.type !== "nominal" && p.name).length;
   const found = Object.values(coaVals).filter(v => v && v.auto).length;
-  if (evals >= 3 && found < evals / 2) return `Only ${found} of ${evals} TDS parameters were found on the COA — check that the two documents belong together.`;
+  if (evals >= 3 && found < evals / 2) return `Only ${found} of ${evals} Document 1 parameters were found in Document 2 — check that the two documents belong together.`;
   return "";
 }
 
@@ -682,7 +702,7 @@ function evalParam(p, raw){
     case "min": {
       if (lt) return {st:"bad"};
       if (v < p.lo) return {st:"bad", v};
-      // "close to limit": for high-purity % specs a quarter of the headroom to 100 % (max 0.5 pt), otherwise 0.5 % of the limit
+      // "close to limit": for high-purity % limits a quarter of the headroom to 100 % (max 0.5 pt), otherwise 0.5 % of the limit
       const band = (/%/.test(p.unit||"") && p.lo > 50 && p.lo < 100) ? Math.min((100 - p.lo) * 0.25, 0.5) : Math.abs(p.lo) * 0.005;
       return {st: (!gt && v < p.lo + band) ? "warn" : "ok", v};
     }
@@ -714,58 +734,42 @@ function overall(results){
   return {c, v};
 }
 
-/* ================= compare view ================= */
+/* ================= CHECK view ================= */
+const hasCoaData = () => state.coaLines.length > 0 || Object.values(coaVals).some(v => v && String(v.value||"").trim());
+function fillProdSel(){
+  const sel = $("#prodSel"), cur = state.cur;
+  const sorted = [...state.lib].sort((a,b)=>tdsLabel(a).localeCompare(tdsLabel(b)));
+  sel.innerHTML = (state.lib.length ? '<option value="">— Select Document 1 —</option>' : '<option value="">— Add a Document 1 first —</option>') +
+    sorted.map(t => `<option value="${esc(t.id)}">${esc(tdsLabel(t))}${t.grade?" — "+esc(t.grade):""}</option>`).join("");
+  sel.value = cur || "";
+  $("#nLib").textContent = state.lib.length;
+  $("#nHist").textContent = state.hist.length;
+}
 function currentResults(){
-  const t = state.tds; if (!t) return [];
+  const t = tdsById(state.cur); if (!t) return [];
   return t.params.map((p,pi) => { const cv = coaVals[pi]||{}; return Object.assign({p, pi, value:cv.value||"", auto:!!cv.auto, line:cv.line||"", conv:cv.conv}, evalParam(p, cv.value)); });
 }
-const hasCoaData = () => state.coaLines.length > 0 || Object.values(coaVals).some(v => v && String(v.value||"").trim());
-function renderDocs(){
-  const t = state.tds;
-  $("#tdsCard").classList.toggle("loaded", !!t);
-  $("#tdsDropTxt").textContent = t ? "Replace TDS — drop or click" : "Drop the TDS here or click to choose";
-  $("#tdsMeta").hidden = !t;
-  if (t){
-    const n = t.params.filter(p => p.type !== "info").length;
-    $("#tdsChip").hidden = false;
-    $("#tdsChip").innerHTML = `📄 <span><b>${esc(t.file || "TDS")}</b> · ${n} limit${n===1?"":"s"} read</span>`;
-    if (document.activeElement !== $("#tdsName")) $("#tdsName").value = t.name || "";
-    if (document.activeElement !== $("#tdsCode")) $("#tdsCode").value = [t.code, t.grade].filter(Boolean).join(" · ");
-  } else $("#tdsChip").hidden = true;
-  const hasCoa = state.coaLines.length > 0;
-  $("#coaCard").classList.toggle("loaded", hasCoa || hasCoaData());
-  $("#coaDropTxt").textContent = hasCoa ? "Replace COA — drop or click" : "Drop the COA here or click to choose";
-  $("#coaChip").hidden = !state.coaFile;
-  if (state.coaFile) $("#coaChip").innerHTML = `📄 <span><b>${esc(state.coaFile)}</b> · ${Object.keys(coaVals).length} value${Object.keys(coaVals).length===1?"":"s"} matched</span>`;
-  $("#coaRawBox").hidden = !hasCoa; $("#coaRaw").textContent = state.coaLines.join("\n");
-  $("#tdsRawBox").hidden = !state.tdsLines.length; $("#tdsRaw").textContent = state.tdsLines.join("\n");
-}
-function renderLimits(){
-  const t = state.tds, box = $("#limitsBox");
-  box.hidden = !t;
-  if (!t) return;
-  $("#limitsSum").textContent = `· ${t.params.length} row${t.params.length===1?"":"s"} — click to review or correct`;
-  $("#edTbl tbody").innerHTML = paramEditorRows(t.params);
-}
 function renderCheck(){
-  renderDocs();
-  const t = state.tds, tb = $("#resTbl tbody");
+  const t = tdsById(state.cur);
+  const tb = $("#resTbl tbody");
   if (!t){
-    tb.innerHTML = `<tr><td colspan="4"><div class="empty"><div class="big">Load the two documents</div>1 · TDS (the specification) &nbsp;→&nbsp; 2 · COA (the delivery's certificate). You can also type either one manually.</div></td></tr>`;
+    tb.innerHTML = state.lib.length
+      ? `<tr><td colspan="4"><div class="empty"><div class="big">No Document 1 selected</div>Select Document 1 on the left, then upload Document 2 or type its values into the table.</div></td></tr>`
+      : `<tr><td colspan="4"><div class="empty"><div class="big">No Document 1 yet</div>Add the document that holds the limits first — upload it, paste its table or type it.<br><br><button class="btn primary" data-adddoc1>＋ Add the first Document 1</button></div></td></tr>`;
     $("#stats").innerHTML = ""; setVerdict(null); $("#resTitle").textContent = "Parameter comparison"; return;
   }
-  $("#resTitle").textContent = tdsLabel(t) + (t.grade && !t.code ? " — " + t.grade : "");
+  $("#resTitle").textContent = tdsLabel(t) + (t.grade ? " — " + t.grade : "");
   const R = currentResults();
   tb.innerHTML = R.length ? R.map(r => {
     const p = r.p, [lab, cls] = ST[r.st];
     const note = [r.note, p.inferred ? "limit direction inferred" : "", r.conv ? "unit converted "+r.conv : ""].filter(Boolean).join(" · ");
-    const input = p.type === "info" ? `<span class="muted">—</span>` : `<input class="vin${r.auto?" auto":""}" data-pi="${r.pi}" value="${esc(r.value)}" placeholder="value" aria-label="COA value for ${esc(p.name)}" title="${r.auto?"Read from the COA — you can correct it":"Type the COA value"}">`;
+    const input = p.type === "info" ? `<span class="muted">—</span>` : `<input class="vin${r.auto?" auto":""}" data-pi="${r.pi}" value="${esc(r.value)}" placeholder="value" aria-label="Document 2 value for ${esc(p.name)}" title="${r.auto?"Read from Document 2 — you can correct it":"Type the Document 2 value"}">`;
     return `<tr data-row="${r.pi}" class="${r.st==="bad"?"row-bad":""}">
       <td><div class="pname">${esc(p.name || "(unnamed)")}</div>${r.line?`<span class="src" title="${esc(r.line)}">↳ ${esc(r.line)}</span>`:""}</td>
       <td class="num">${esc(limitText(p))}</td>
       <td>${input}</td>
       <td><span class="pill ${cls}">${lab}</span>${note?`<div class="psub">${esc(note)}</div>`:""}</td></tr>`;
-  }).join("") : `<tr><td colspan="4"><div class="empty"><div class="big">No limits yet</div>Add the TDS limits in the "TDS limits" section below.</div></td></tr>`;
+  }).join("") : `<tr><td colspan="4"><div class="empty"><div class="big">This Document 1 has no limits</div>Add them in the Document 1 library.</div></td></tr>`;
   const o = overall(R);
   $("#stats").innerHTML = [["ok","Pass"],["warn","Borderline"],["bad","Fail"],["miss","Missing"],["manual","Manual"],["info","Info"]]
     .filter(([k])=>o.c[k]).map(([k,l])=>`<span class="stat ${ST[k][1]}">${l}: ${o.c[k]}</span>`).join("");
@@ -775,141 +779,87 @@ function renderCheck(){
 function setVerdict(o, R){
   const el = $("#verdict");
   let cls, ic, h, p;
-  if (!o){ cls="v-none"; ic="?"; h="No comparison yet"; p="Load the TDS and the COA above. Values are matched automatically; you can also type or correct them in the table."; }
-  else if (o.v === "wait"){ cls="v-none"; ic="2"; h="TDS loaded — now add the COA"; p="Upload or paste the COA, or type its values into the table below."; }
+  if (!o){ cls="v-none"; ic="?"; h="No check yet"; p="Select Document 1 (the limits), then upload Document 2 (the values). Values are matched automatically; you can also type or correct them in the table."; }
+  else if (o.v === "wait"){ cls="v-none"; ic="2"; h="Document 1 selected — now add Document 2"; p="Upload or paste Document 2, or type its values into the table."; }
   else {
     const names = st => R.filter(r=>r.st===st).map(r=>r.p.name);
-    if (o.v === "bad"){ cls="v-bad"; ic="✕"; h="NOT COMPLIANT"; p="Out of specification: " + names("bad").join(", ") + ". Talk to the supplier / request a sample analysis before accepting the shipment."; }
-    else if (o.v === "ok"){ cls="v-ok"; ic="✓"; h="COMPLIANT"; p=`All ${o.c.ok} evaluated parameters are within the TDS limits.`; }
+    if (o.v === "bad"){ cls="v-bad"; ic="✕"; h="NOT COMPLIANT"; p="Out of limit: " + names("bad").join(", ") + ". Talk to the supplier / request a re-test before accepting."; }
+    else if (o.v === "ok"){ cls="v-ok"; ic="✓"; h="COMPLIANT"; p=`All ${o.c.ok} evaluated parameters are within the Document 1 limits.`; }
     else if (o.v === "warn"){
       cls="v-warn"; ic="!"; h="CONDITIONALLY COMPLIANT";
       const parts = [];
       if (o.c.warn) parts.push("close to the limit: " + names("warn").join(", "));
-      if (o.c.miss) parts.push("missing on the COA: " + names("miss").join(", "));
+      if (o.c.miss) parts.push("missing in Document 2: " + names("miss").join(", "));
       if (o.c.manual) parts.push("manual check: " + names("manual").join(", "));
-      p = "Nothing is out of specification, but " + parts.join(" · ") + ".";
-    } else { cls="v-none"; ic="?"; h="Waiting for values"; p="No COA value could be evaluated yet — upload the COA or type the values."; }
+      p = "Nothing is out of limit, but " + parts.join(" · ") + ".";
+    } else { cls="v-none"; ic="?"; h="Waiting for values"; p="No Document 2 value could be evaluated yet — upload Document 2 or type the values."; }
   }
   const mm = o && o.v !== "wait" ? productMismatch() : "";
   el.className = "verdict " + cls;
   el.innerHTML = `<div class="ic">${ic}</div><div><h3>${h}</h3><p>${esc(p)}</p>${mm ? `<p class="mismatch">⚠ ${esc(mm)}</p>` : ""}</div>`;
 }
-function runMatch(){
-  for (const k in coaVals) delete coaVals[k];
-  if (state.tds && state.coaLines.length){
-    const m = matchCoa(state.tds, state.coaLines);
-    for (const pi in m) coaVals[pi] = {value:m[pi].value, auto:true, line:m[pi].line, conv:m[pi].conv};
-  }
-  renderLimits(); renderCheck();
-}
-function setTds(t, lines){
-  state.tds = t; state.tdsLines = lines || [];
-  runMatch();
-  if (!t.params.length) $("#limitsBox").open = true;
-}
 function applyCoa(lines, fname, isOcr){
   stopSpeak();
-  recId = null; setSaved(null);   // each new COA = a new report, so start its shipment fields fresh
+  recId = null; setSaved(null);   // each new Document 2 = a new report, so start its detail fields fresh
   ["#fSup","#fLot","#fDate","#fRef","#fNote"].forEach(s => $(s).value = "");
   state.coaLines = lines; state.coaFile = fname;
+  $("#rawBox").hidden = !lines.length; $("#rawTxt").textContent = lines.join("\n");
   const meta = detectMeta(lines);
   if (meta.lot) $("#fLot").value = meta.lot;
   if (meta.date) $("#fDate").value = meta.date;
+  const det = detectProduct(lines);
+  if (det){ state.cur = det.id; $("#prodSel").value = det.id; $("#autoNote").textContent = "Matched automatically — change it if it is wrong."; }
+  else if (!state.cur) $("#autoNote").textContent = state.lib.length ? "No matching Document 1 found — select one or add it." : "Document 2 read. Add its Document 1 (the limits) to compare.";
   runMatch();
-  if (!state.tds){ toast("COA read — now load the TDS (step 1) to compare"); return; }
-  toast((isOcr?"Read with OCR · ":"") + Object.keys(coaVals).length + " of " + state.tds.params.filter(p=>p.type!=="info").length + " parameters matched on the COA");
-  if (TTS.ok && TTS.auto) speakCurrent();
+  const t = tdsById(state.cur);
+  if (t) toast((isOcr?"Read with OCR · ":"") + Object.keys(coaVals).length + " of " + t.params.filter(p=>p.type!=="info").length + " parameters matched in Document 2");
+  if (t && TTS.ok && TTS.auto) speakCurrent();
 }
-async function readFile(file, which){
-  const prog = $("#" + which + "Prog"), chip = $("#" + which + "Chip");
-  chip.hidden = false; chip.textContent = "📄 " + file.name + " — reading…";
-  prog.hidden = false; prog.firstElementChild.style.width = "5%";
-  try {
-    const res = await fileLines(file, f => { if (isFinite(f)) prog.firstElementChild.style.width = Math.max(5, f*100) + "%"; });
-    return res;
-  } catch(e){ chip.textContent = "📄 " + file.name + " — could not be read"; toast("Could not read " + file.name + ": " + e.message); console.error(e); return null; }
-  finally { setTimeout(() => prog.hidden = true, 400); }
-}
-async function handleTdsFile(file){
-  const r = await readFile(file, "tds"); if (!r) return;
-  const pr = parseTdsLines(r.lines, file.name);
-  setTds({name:pr.name, code:pr.code, grade:pr.grade, file:file.name, params:pr.rows.map(x => parseSpec(x[0], x[1], x[2]))}, r.lines);
-  toast(pr.rows.length ? `TDS read${r.ocr?" with OCR":""}: ${pr.rows.length} rows — check them under "TDS limits" if needed` : "No specification table found in the TDS — add the limits manually under \"TDS limits\"");
+function runMatch(){
+  for (const k in coaVals) delete coaVals[k];
+  const t = tdsById(state.cur);
+  if (t && state.coaLines.length){
+    const m = matchCoa(t, state.coaLines);
+    for (const pi in m) coaVals[pi] = {value:m[pi].value, auto:true, line:m[pi].line, conv:m[pi].conv};
+  }
+  renderCheck();
 }
 async function handleCoaFile(file){
-  const r = await readFile(file, "coa"); if (!r) return;
-  applyCoa(r.lines, file.name, r.ocr);
+  const chip = $("#coaChip"), prog = $("#coaProg");
+  chip.hidden = false; chip.innerHTML = `📄 <span>${esc(file.name)}</span> <span class="muted" id="coaStat">reading…</span>`;
+  prog.hidden = false; prog.firstElementChild.style.width = "5%";
+  try{
+    const {lines, ocr:isOcr} = await fileLines(file, f => { prog.firstElementChild.style.width = Math.max(5, f*100)+"%"; const s=$("#coaStat"); if (s && isFinite(f)) s.textContent = Math.round(f*100)+"%"; });
+    $("#coaStat").textContent = lines.length + " lines" + (isOcr ? " · OCR" : "");
+    applyCoa(lines, file.name, isOcr);
+  } catch(e){ $("#coaStat").textContent = "error"; toast("Could not read the file: " + e.message); console.error(e); }
+  finally { setTimeout(()=>prog.hidden = true, 500); }
 }
 function clearCheck(){
   stopSpeak();
   recId = null; setSaved(null);
   for (const k in coaVals) delete coaVals[k];
-  state.tds = null; state.tdsLines = []; state.coaLines = []; state.coaFile = "";
-  ["#fSup","#fLot","#fDate","#fRef","#fNote","#tdsPaste","#coaPaste"].forEach(s => $(s).value = "");
-  $("#tdsPasteBox").hidden = true; $("#coaPasteBox").hidden = true;
-  renderLimits(); renderCheck();
+  state.coaLines = []; state.coaFile = "";
+  ["#fSup","#fLot","#fDate","#fRef","#fNote","#pasteTxt"].forEach(s => $(s).value = "");
+  $("#coaChip").hidden = true; $("#rawBox").hidden = true; $("#autoNote").textContent = "";
+  renderCheck();
 }
 
-/* ================= TDS limits editor ================= */
-const TYPES = [["min","Min (≥)"],["max","Max (≤)"],["range","Range"],["text","Text"],["nominal","Typical"],["info","Info"]];
-function paramEditorRows(params){
-  return params.map((p,i)=>`<tr data-i="${i}">
-    <td><input data-f="name" value="${esc(p.name)}" aria-label="Parameter"></td>
-    <td><input data-f="unit" value="${esc(p.unit)}" style="width:80px" aria-label="Unit"></td>
-    <td><select data-f="type" aria-label="Limit type">${TYPES.map(([v,l])=>`<option value="${v}"${p.type===v?" selected":""}>${l}</option>`).join("")}</select></td>
-    <td><input class="n" data-f="lo" value="${p.lo==null?"":fmt(p.lo)}" ${["min","range","nominal"].includes(p.type)?"":"disabled"} aria-label="Min"></td>
-    <td><input class="n" data-f="hi" value="${p.hi==null?"":fmt(p.hi)}" ${["max","range"].includes(p.type)?"":"disabled"} aria-label="Max"></td>
-    <td><input data-f="text" value="${esc(p.text)}" ${["text","info"].includes(p.type)?"":"disabled"} aria-label="Text"></td>
-    <td><button class="x" data-del="${i}" title="Delete row">×</button></td></tr>`).join("");
-}
-(function bindEditor(){
-  const root = $("#edTbl");
-  const changed = () => { $("#limitsSum").textContent = `· ${state.tds.params.length} rows — edited`; renderCheck(); };
-  root.addEventListener("input", e => {
-    const tr = e.target.closest("tr[data-i]"); if (!tr || !state.tds) return;
-    const p = state.tds.params[+tr.dataset.i], f = e.target.dataset.f;
-    if (f === "type") return;
-    if (f === "lo" || f === "hi"){ const n = nums(e.target.value); p[f] = n.length ? n[0].v : null; }
-    else p[f] = e.target.value;
-    p.inferred = false; changed();
-  });
-  root.addEventListener("change", e => {
-    if (e.target.dataset.f !== "type" || !state.tds) return;
-    const p = state.tds.params[+e.target.closest("tr[data-i]").dataset.i];
-    p.type = e.target.value; p.inferred = false;
-    root.querySelector("tbody").innerHTML = paramEditorRows(state.tds.params); changed();
-  });
-  root.addEventListener("click", e => {
-    const d = e.target.closest("[data-del]"); if (!d || !state.tds) return;
-    const i = +d.dataset.del;
-    state.tds.params.splice(i, 1);
-    // COA values are keyed by row index — shift the ones after the deleted row
-    const keys = Object.keys(coaVals).map(Number).sort((a,b)=>a-b);
-    for (const k of keys){ if (k === i) delete coaVals[k]; else if (k > i){ coaVals[k-1] = coaVals[k]; delete coaVals[k]; } }
-    root.querySelector("tbody").innerHTML = paramEditorRows(state.tds.params); changed();
-  });
-  $("#edAdd").onclick = () => {
-    if (!state.tds) return;
-    state.tds.params.push({name:"", unit:"%", type:"max", lo:null, hi:null, text:"", inferred:false});
-    root.querySelector("tbody").innerHTML = paramEditorRows(state.tds.params); changed();
-    const inp = root.querySelector(`tr[data-i="${state.tds.params.length-1}"] input`); if (inp) inp.focus();
-  };
-})();
-
-/* ================= reports: every comparison is kept as a numbered report ================= */
+/* ================= reports: every check is kept as a numbered report ================= */
 let recId = null, saveTimer = null;
 function snapshot(){
-  const t = state.tds; if (!t) return null;
+  const t = tdsById(state.cur); if (!t) return null;
   const R = currentResults(), o = overall(R);
-  return { id: uid(), ts: new Date().toISOString(), product: tdsLabel(t), grade: t.grade||"",
+  return { id: uid(), ts: new Date().toISOString(), tdsId: t.id, product: tdsLabel(t), grade: t.grade||"",
     sup: $("#fSup").value.trim(), lot: $("#fLot").value.trim(), coaDate: $("#fDate").value.trim(), ref: $("#fRef").value.trim(), note: $("#fNote").value.trim(),
-    tdsFile: t.file || "", file: state.coaFile, verdict: o.v, coaLines: state.coaLines.slice(0, 300),
-    tds: {name:t.name, code:t.code, grade:t.grade, file:t.file, params:t.params},
+    tdsFile: t.src || "", file: state.coaFile, verdict: o.v, coaLines: state.coaLines.slice(0, 300),
+    tds: {id:t.id, name:t.name, code:t.code, grade:t.grade, src:t.src, params:t.params},
     rows: R.map(r => ({name:r.p.name, limit:limitText(r.p), value:r.value, st:r.st, note:r.note||"", line:r.line||""})) };
 }
 const VLAB = {ok:["COMPLIANT","p-ok"], bad:["NOT COMPLIANT","p-bad"], warn:["CONDITIONAL","p-warn"], none:["—","p-miss"]};
+const vKey = v => VLAB[v] ? v : "none";
 function nextNo(){
-  const y = new Date().getFullYear(), pre = "COA-" + y + "-";
+  const y = new Date().getFullYear(), pre = "RPT-" + y + "-";
   const max = state.hist.reduce((m,h) => (h.no && h.no.startsWith(pre)) ? Math.max(m, parseInt(h.no.slice(pre.length),10)||0) : m, 0);
   return pre + String(max + 1).padStart(4, "0");
 }
@@ -928,46 +878,43 @@ function setSaved(rec){
   el.className = "saved";
   el.innerHTML = `✓ ${esc(rec.no)} saved · <button class="linkbtn" data-open="${esc(rec.id)}">open report</button>`;
 }
-const vKey = v => VLAB[v] ? v : "none";
 function reportHTML(rec){
   const d = new Date(rec.ts), v = vKey(rec.verdict);
   return `<div class="rep">
-    <div class="rep-head"><div><div class="eyebrow">Anatrica · Quality Control</div><h2 style="font-size:19px;margin-top:3px">COA Compliance Report</h2></div>
+    <div class="rep-head"><div><div class="eyebrow">Anatrica · Quality Control</div><h2 style="font-size:19px;margin-top:3px">Compliance Report</h2></div>
       <div class="rep-no">${esc(rec.no||"")}<br>${d.toLocaleString(DATE_LOCALE)}${rec.updated?"<br>updated "+new Date(rec.updated).toLocaleString(DATE_LOCALE):""}</div></div>
     <table class="meta"><tbody>
-      <tr><td>Product</td><td>${esc(rec.product)} ${rec.grade && !/·/.test(rec.product)?"— "+esc(rec.grade):""}</td></tr>
-      <tr><td>Supplier</td><td>${esc(rec.sup||"—")}</td></tr>
+      <tr><td>Document 1</td><td>${esc(rec.product)} ${rec.grade && !/·/.test(rec.product)?"— "+esc(rec.grade):""}${rec.tdsFile?` <span class="psub">(${esc(rec.tdsFile)})</span>`:""}</td></tr>
+      <tr><td>Document 2</td><td>${esc(rec.file||"—")}</td></tr>
+      <tr><td>Supplier / source</td><td>${esc(rec.sup||"—")}</td></tr>
       <tr><td>Lot / batch</td><td>${esc(rec.lot||"—")}</td></tr>
-      <tr><td>COA date</td><td>${esc(rec.coaDate||"—")}</td></tr>
-      <tr><td>Shipment</td><td>${esc(rec.ref||"—")}</td></tr>
-      <tr><td>TDS document</td><td>${esc(rec.tdsFile||"—")}</td></tr>
-      <tr><td>COA document</td><td>${esc(rec.file||"—")}</td></tr>
+      <tr><td>Document 2 date</td><td>${esc(rec.coaDate||"—")}</td></tr>
+      <tr><td>Reference</td><td>${esc(rec.ref||"—")}</td></tr>
     </tbody></table>
     <div class="rep-v ${v}">RESULT: ${VLAB[v][0]}</div>
-    <div class="tbl-wrap"><table><thead><tr><th>Parameter</th><th>TDS limit</th><th>COA value</th><th>Status</th><th>Note</th></tr></thead><tbody>
+    <div class="tbl-wrap"><table><thead><tr><th>Parameter</th><th>Document 1 limit</th><th>Document 2 value</th><th>Status</th><th>Note</th></tr></thead><tbody>
       ${rec.rows.map(r=>{ const st = ST[r.st] || ST.manual; return `<tr class="${r.st==="bad"?"row-bad":""}"><td>${esc(r.name)}</td><td class="num">${esc(r.limit)}</td><td class="num">${esc(r.value||"—")}</td><td><span class="pill ${st[1]}">${st[0]}</span></td><td class="psub">${esc(r.note)}</td></tr>`; }).join("")}
     </tbody></table></div>
     ${rec.note?`<p><b>Note:</b> ${esc(rec.note)}</p>`:""}
     <div class="rep-sign"><div>Checked by / signature</div><div>Approved by / signature</div></div></div>`;
 }
 function printReport(rec){
-  if (!rec){ toast("Load the TDS and the COA first"); return; }
+  if (!rec){ toast("Select Document 1 and add Document 2 first"); return; }
   $("#report").innerHTML = reportHTML(rec);
   window.print();
 }
-function closeModal(){ if (TTS.btn && TTS.btn.id === "rpSpeak") stopSpeak(); const m = $("#modal"); m.hidden = true; m.innerHTML = ""; }
 function openReport(rec){
   if (!rec) return;
   const m = $("#modal"); m.hidden = false;
   m.innerHTML = `<div class="card" role="dialog" aria-modal="true" aria-label="Report ${esc(rec.no||"")}">
     <div class="card-h"><div class="toolbar">
         <button class="btn sm primary" id="rpPrint">Print / PDF</button>
-        <button class="btn sm ghost" id="rpEdit">Open in Compare / edit</button>
+        <button class="btn sm ghost" id="rpEdit">Open in Check / edit</button>
         <button class="btn sm ghost" id="rpSpeak" ${TTS.ok?"":"hidden"}>🔊 Read aloud</button>
         <button class="btn sm danger" id="rpDel">Delete</button></div>
-      <button class="x" id="rpClose" title="Close">×</button></div>
+      <button class="x" id="mClose" title="Close">×</button></div>
     <div class="card-b">${reportHTML(rec)}</div></div>`;
-  $("#rpClose").onclick = closeModal;
+  $("#mClose").onclick = closeModal;
   $("#rpPrint").onclick = () => printReport(rec);
   $("#rpEdit").onclick = () => { closeModal(); loadReport(rec); };
   $("#rpSpeak").onclick = () => speakRows(rec.product, vKey(rec.verdict), rec.rows.map(r => ({name:r.name, limit:r.limit, value:r.value, st:r.st})), $("#rpSpeak"));
@@ -976,16 +923,23 @@ function openReport(rec){
 function deleteReport(id){
   state.hist = state.hist.filter(h => h.id !== id);
   if (recId === id){ recId = null; setSaved(null); }
-  persist(); $("#nHist").textContent = state.hist.length; renderHist();
+  persist(); fillProdSel(); renderHist();
 }
 function loadReport(rec){
-  if (!rec.tds){ toast("This report was saved by an older version — it can be viewed and printed, not edited"); openReport(rec); return; }
+  let t = tdsById(rec.tdsId) || (rec.tds && tdsById(rec.tds.id));
+  if (!t && rec.tds){   // Document 1 was deleted from the library — bring it back from the report
+    t = JSON.parse(JSON.stringify(rec.tds)); t.id = t.id || uid(); t.builtin = false;
+    state.lib.push(t); persist(); toast("Document 1 “" + t.name + "” was restored to your library from this report");
+  }
+  if (!t){ toast("This report's Document 1 is not available — it can be viewed and printed, not edited"); openReport(rec); return; }
   clearCheck(); clearTimeout(saveTimer);
-  state.tds = JSON.parse(JSON.stringify(rec.tds)); state.coaLines = rec.coaLines || []; state.coaFile = rec.file || "";
+  state.cur = t.id; state.coaLines = rec.coaLines || []; state.coaFile = rec.file || "";
   $("#fSup").value = rec.sup||""; $("#fLot").value = rec.lot||""; $("#fDate").value = rec.coaDate||""; $("#fRef").value = rec.ref||""; $("#fNote").value = rec.note||"";
-  state.tds.params.forEach((p, pi) => { const r = rec.rows.find(x => x.name === p.name); if (r && r.value) coaVals[pi] = {value:r.value, auto:false, line:r.line||""}; });
-  recId = rec.id; setSaved(rec);
-  showTab("check"); renderLimits(); renderCheck(); clearTimeout(saveTimer);
+  $("#rawBox").hidden = !state.coaLines.length; $("#rawTxt").textContent = state.coaLines.join("\n");
+  if (state.coaFile){ $("#coaChip").hidden = false; $("#coaChip").textContent = "📄 " + state.coaFile; }
+  t.params.forEach((p, pi) => { const r = rec.rows.find(x => x.name === p.name); if (r && r.value) coaVals[pi] = {value:r.value, auto:false, line:r.line||""}; });
+  fillProdSel(); recId = rec.id; setSaved(rec);
+  showTab("check"); renderCheck(); clearTimeout(saveTimer);
   toast("Editing " + rec.no + " — changes are saved to this report");
 }
 function renderHist(){
@@ -1003,17 +957,181 @@ function renderHist(){
       <td><span class="pill ${VLAB[v][1]}">${VLAB[v][0]}</span></td>
       <td class="psub" style="max-width:320px">${esc(issues.join(", ")||"—")}</td>
       <td style="white-space:nowrap"><button class="btn sm ghost" data-open="${esc(h.id)}">Open</button> <button class="btn sm ghost" data-rep="${esc(h.id)}">Print</button> <button class="x" data-hdel="${esc(h.id)}" title="Delete">×</button></td></tr>`;
-  }).join("") || `<tr><td colspan="8"><div class="empty"><div class="big">${H.length ? "No reports match the filter" : "No reports yet"}</div>${H.length ? "" : "Every comparison you make on the Compare tab is saved here automatically as a numbered report."}</div></td></tr>`;
+  }).join("") || `<tr><td colspan="8"><div class="empty"><div class="big">${H.length ? "No reports match the filter" : "No reports yet"}</div>${H.length ? "" : "Every check you make on the Check tab is saved here automatically as a numbered report."}</div></td></tr>`;
 }
 function csv(){
-  const head = ["Report no","Date","Product","Supplier","Lot","COA date","Shipment","TDS document","COA document","Result","Parameter","TDS limit","COA value","Status","Note"];
+  const head = ["Report no","Date","Document 1","Document 2","Supplier","Lot","Document 2 date","Reference","Result","Parameter","Document 1 limit","Document 2 value","Status","Note"];
   const out = [head];
-  state.hist.forEach(h => h.rows.forEach(r => out.push([h.no||"", h.ts, h.product, h.sup, h.lot, h.coaDate, h.ref, h.tdsFile||"", h.file||"", VLAB[vKey(h.verdict)][0], r.name, r.limit, r.value, (ST[r.st]||ST.manual)[0], r.note])));
+  state.hist.forEach(h => h.rows.forEach(r => out.push([h.no||"", h.ts, h.product, h.file||"", h.sup, h.lot, h.coaDate, h.ref, VLAB[vKey(h.verdict)][0], r.name, r.limit, r.value, (ST[r.st]||ST.manual)[0], r.note])));
   const s = "﻿" + out.map(r => r.map(c => '"' + String(c==null?"":c).replace(/"/g,'""') + '"').join(",")).join("\r\n");
-  download("coa_reports.csv", s, "text/csv");
+  download("compliance_reports.csv", s, "text/csv");
 }
 function download(name, content, type){
   const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([content], {type})); a.download = name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+/* ================= Document 1 library ================= */
+function renderLibList(){
+  const q = normTxt($("#libSearch").value);
+  const items = [...state.lib].sort((a,b)=>tdsLabel(a).localeCompare(tdsLabel(b))).filter(t => !q || normTxt(tdsLabel(t)+" "+(t.grade||"")).includes(q));
+  $("#libList").innerHTML = items.map(t => `<button class="lib-item" data-id="${esc(t.id)}" aria-current="${t.id===state.libSel}">
+      <div class="pname">${esc(t.name || "Unnamed")}</div>
+      <div class="c">${esc(t.code||"")} ${t.grade?"· "+esc(t.grade):""} · ${t.params.length} row${t.params.length===1?"":"s"}</div></button>`).join("")
+    || `<div class="empty">${state.lib.length ? "No match" : "Library is empty"}</div>`;
+}
+const TYPES = [["min","Min (≥)"],["max","Max (≤)"],["range","Range"],["text","Text"],["nominal","Typical"],["info","Info"]];
+function paramEditorRows(params){
+  return params.map((p,i)=>`<tr data-i="${i}">
+    <td><input data-f="name" value="${esc(p.name)}" aria-label="Parameter"></td>
+    <td><input data-f="unit" value="${esc(p.unit)}" style="width:80px" aria-label="Unit"></td>
+    <td><select data-f="type" aria-label="Limit type">${TYPES.map(([v,l])=>`<option value="${v}"${p.type===v?" selected":""}>${l}</option>`).join("")}</select></td>
+    <td><input class="n" data-f="lo" value="${p.lo==null?"":fmt(p.lo)}" ${["min","range","nominal"].includes(p.type)?"":"disabled"} aria-label="Min"></td>
+    <td><input class="n" data-f="hi" value="${p.hi==null?"":fmt(p.hi)}" ${["max","range"].includes(p.type)?"":"disabled"} aria-label="Max"></td>
+    <td><input data-f="text" value="${esc(p.text)}" ${["text","info"].includes(p.type)?"":"disabled"} aria-label="Text"></td>
+    <td><button class="x" data-del="${i}" title="Delete row">×</button></td></tr>`).join("");
+}
+function paramTable(params){
+  return `<div class="tbl-wrap"><table class="ed"><thead><tr><th>Parameter</th><th>Unit</th><th>Limit type</th><th>Min</th><th>Max</th><th>Text</th><th></th></tr></thead>
+    <tbody>${paramEditorRows(params)}</tbody></table></div>`;
+}
+function bindParamTable(root, params, onChange){
+  root.addEventListener("input", e => {
+    const tr = e.target.closest("tr[data-i]"); if (!tr) return;
+    const p = params[+tr.dataset.i], f = e.target.dataset.f;
+    if (f === "type") return;
+    if (f === "lo" || f === "hi"){ const n = nums(e.target.value); p[f] = n.length ? n[0].v : null; }
+    else p[f] = e.target.value;
+    p.inferred = false; onChange();
+  });
+  root.addEventListener("change", e => {
+    if (e.target.dataset.f !== "type") return;
+    const p = params[+e.target.closest("tr[data-i]").dataset.i];
+    p.type = e.target.value; p.inferred = false;
+    root.querySelector("tbody").innerHTML = paramEditorRows(params); onChange();
+  });
+  root.addEventListener("click", e => {
+    const d = e.target.closest("[data-del]"); if (!d) return;
+    params.splice(+d.dataset.del, 1);
+    root.querySelector("tbody").innerHTML = paramEditorRows(params); onChange(+d.dataset.del);
+  });
+}
+const LIB_HELP = `"Min / Max / Range" rows are evaluated automatically; "Text" rows need a manual check; "Info" rows (origin, appearance…) are not evaluated.`;
+function renderLibEd(){
+  const t = tdsById(state.libSel), el = $("#libEd");
+  if (!t){ el.innerHTML = `<div class="empty"><div class="big">${state.lib.length ? "Select a Document 1" : "Your library is empty"}</div>${state.lib.length ? "Pick an item on the left or add a new Document 1." : "Upload a Document 1 on the left, paste its table or create it manually. A colleague's shared library file can be added with 'Add backup file'."} The limits can be edited here; the Check tab uses them.</div>`; return; }
+  el.innerHTML = `<div class="card-h"><div><h2>${esc(tdsLabel(t))}</h2><div class="psub">${esc(t.grade||"")} ${t.src?"· source: "+esc(t.src):""}</div></div>
+    <div class="toolbar"><button class="btn sm primary" id="edUse">Check with this Document 1 →</button><button class="btn sm danger" id="edDel">Delete</button></div></div>
+    <div class="card-b">
+      <div class="grid2" style="margin-bottom:14px">
+        <div><label class="lbl" for="edName">Name</label><input class="inp" id="edName" value="${esc(t.name)}"></div>
+        <div><label class="lbl" for="edCode">Code</label><input class="inp" id="edCode" value="${esc(t.code||"")}"></div>
+        <div><label class="lbl" for="edGrade">Grade / version</label><input class="inp" id="edGrade" value="${esc(t.grade||"")}"></div>
+      </div>
+      <div id="edTbl">${paramTable(t.params)}</div>
+      <div class="toolbar" style="margin-top:10px"><button class="btn sm ghost" id="edAdd">＋ Add row</button><span class="psub">${LIB_HELP}</span></div>
+    </div>`;
+  const save = delIdx => {
+    if (state.cur === t.id && delIdx != null){   // values are keyed by row index — shift those after a deleted row
+      const keys = Object.keys(coaVals).map(Number).sort((a,b)=>a-b);
+      for (const k of keys){ if (k === delIdx) delete coaVals[k]; else if (k > delIdx){ coaVals[k-1] = coaVals[k]; delete coaVals[k]; } }
+    }
+    persist(); fillProdSel(); renderLibList(); if (state.cur === t.id) renderCheck();
+  };
+  bindParamTable($("#edTbl"), t.params, save);
+  $("#edName").oninput = e => { t.name = e.target.value; save(); };
+  $("#edCode").oninput = e => { t.code = e.target.value; save(); };
+  $("#edGrade").oninput = e => { t.grade = e.target.value; save(); };
+  $("#edAdd").onclick = () => { t.params.push({name:"",unit:"%",type:"max",lo:null,hi:null,text:"",inferred:false}); $("#edTbl tbody").innerHTML = paramEditorRows(t.params); save(); };
+  $("#edDel").onclick = () => { if (!confirm("Delete " + tdsLabel(t) + "?")) return; state.lib = state.lib.filter(x=>x!==t); if (state.cur===t.id){ state.cur=null; renderCheck(); } state.libSel=null; persist(); fillProdSel(); renderLibList(); renderLibEd(); };
+  $("#edUse").onclick = () => { state.cur = t.id; fillProdSel(); runMatch(); showTab("check"); };
+}
+
+/* adding a Document 1: upload / paste / manual → review → save */
+let addFromCheck = false;
+function closeModal(){ if (TTS.btn && TTS.btn.id === "rpSpeak") stopSpeak(); const m = $("#modal"); m.hidden = true; m.innerHTML = ""; }
+function blankDoc1(){ return {name:"New item", code:"", grade:"", rows:[["","% min",""],["","% max",""]], file:"entered manually", lines:[]}; }
+function bindDrop(el, onFiles){
+  ["dragenter","dragover"].forEach(ev => el.addEventListener(ev, e => { e.preventDefault(); el.classList.add("over"); }));
+  ["dragleave","drop"].forEach(ev => el.addEventListener(ev, e => { e.preventDefault(); el.classList.remove("over"); }));
+  el.addEventListener("drop", e => { const fs = [...e.dataTransfer.files]; if (fs.length) onFiles(fs); });
+}
+function openAddDoc1(){
+  addFromCheck = !$("#v-check").hidden;
+  const m = $("#modal"); m.hidden = false;
+  m.innerHTML = `<div class="card" role="dialog" aria-modal="true" aria-labelledby="atTitle" style="width:min(620px,100%)">
+    <div class="card-h"><h2 id="atTitle">Add Document 1</h2><button class="x" id="mClose" title="Close">×</button></div>
+    <div class="card-b">
+      <p class="psub" style="margin-top:0">Document 1 is the document that holds the limits.</p>
+      <div class="drop" id="atDrop" tabindex="0" role="button" aria-label="Choose a Document 1 file">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v6M9 15l3-3 3 3"/></svg>
+        <div class="big">Drop the file here or click to choose</div>
+        <div class="small">PDF · JPG · PNG — several files at once is fine. The table is read automatically and you review it before saving.</div>
+      </div>
+      <label class="lbl" for="atPaste" style="margin-top:16px">…or paste the table (one line each: Parameter · Unit · Limit)</label>
+      <textarea class="inp" id="atPaste" placeholder="Purity&#9;% min&#9;99.0&#10;Moisture&#9;% max&#9;0.5&#10;Fe&#9;ppm max&#9;10"></textarea>
+      <div class="toolbar" style="justify-content:space-between;margin-top:10px">
+        <button class="btn ghost" id="atBlank">Type it manually</button>
+        <button class="btn primary" id="atPasteGo">Read pasted text</button>
+      </div>
+    </div></div>`;
+  const pick = () => $("#tdsFile").click();
+  $("#mClose").onclick = closeModal;
+  $("#atDrop").onclick = pick;
+  $("#atDrop").onkeydown = e => { if (e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(); } };
+  bindDrop($("#atDrop"), fs => { closeModal(); handleTdsFiles(fs); });
+  $("#atBlank").onclick = () => { closeModal(); openImportReview([blankDoc1()]); };
+  $("#atPasteGo").onclick = () => {
+    const lines = textLines($("#atPaste").value);
+    if (!lines.length) return toast("The text box is empty");
+    const r = parseTdsLines(["Properties | Unit | Result"].concat(lines), "");
+    closeModal(); openImportReview([Object.assign(r, {name:"New item", file:"pasted text", lines})]);
+  };
+  setTimeout(() => $("#atDrop").focus(), 30);
+}
+function openImportReview(queue){
+  if (!queue.length) return;
+  const item = queue.shift();
+  const t = {id: uid(), name:item.name, code:item.code, grade:item.grade, src:item.file, builtin:false, params: item.rows.map(r=>parseSpec(r[0],r[1],r[2]))};
+  const m = $("#modal");
+  m.hidden = false;
+  m.innerHTML = `<div class="card" role="dialog" aria-modal="true" aria-label="Review Document 1">
+    <div class="card-h"><div><h2>Review Document 1</h2><div class="psub">${esc(item.file)} · ${item.rows.length} row${item.rows.length===1?"":"s"} read${item.ocr?" (OCR)":""}${queue.length?" · "+queue.length+" more file(s) waiting":""}</div></div></div>
+    <div class="card-b">
+      <div class="grid2" style="margin-bottom:12px">
+        <div><label class="lbl" for="imName">Name</label><input class="inp" id="imName" value="${esc(t.name)}"></div>
+        <div><label class="lbl" for="imCode">Code</label><input class="inp" id="imCode" value="${esc(t.code)}"></div>
+        <div><label class="lbl" for="imGrade">Grade / version</label><input class="inp" id="imGrade" value="${esc(t.grade)}"></div>
+      </div>
+      ${item.rows.length ? "" : `<p class="psub" style="color:var(--warn)">No limit table was found automatically — add the rows manually or copy them from the raw text.</p>`}
+      <div id="imTbl">${paramTable(t.params)}</div>
+      <div class="toolbar" style="margin-top:10px"><button class="btn sm ghost" id="imAdd">＋ Add row</button><span class="psub">${LIB_HELP}</span></div>
+      ${item.lines.length ? `<details class="raw"><summary>Raw text</summary><pre>${esc(item.lines.join("\n"))}</pre></details>` : ""}
+      <div class="toolbar" style="justify-content:flex-end;margin-top:12px">
+        <button class="btn ghost" id="imCancel">Cancel</button>
+        <button class="btn primary" id="imSave">Save to library</button>
+      </div>
+    </div></div>`;
+  bindParamTable($("#imTbl"), t.params, ()=>{});
+  $("#imAdd").onclick = () => { t.params.push({name:"",unit:"%",type:"max",lo:null,hi:null,text:"",inferred:false}); $("#imTbl tbody").innerHTML = paramEditorRows(t.params); };
+  const next = () => { m.hidden = true; m.innerHTML = ""; openImportReview(queue); };
+  $("#imCancel").onclick = next;
+  $("#imSave").onclick = () => {
+    t.name = $("#imName").value.trim() || "New item"; t.code = $("#imCode").value.trim(); t.grade = $("#imGrade").value.trim();
+    t.params = t.params.filter(p => p.name.trim());
+    state.lib.push(t); state.libSel = t.id;
+    if (addFromCheck){ state.cur = t.id; $("#autoNote").textContent = "The new Document 1 is selected."; runMatch(); }
+    persist(); fillProdSel(); renderLibList(); renderLibEd(); toast("Saved: " + tdsLabel(t) + (addFromCheck ? " — selected for the check" : "")); next();
+  };
+  const first = $("#imName"); if (first) setTimeout(() => first.focus(), 30);
+}
+async function handleTdsFiles(files){
+  const queue = [];
+  for (const f of files){
+    toast("Reading " + f.name + "…");
+    try { const {lines, ocr:isOcr} = await fileLines(f); const r = parseTdsLines(lines, f.name); queue.push(Object.assign(r, {file:f.name, lines, ocr:isOcr})); }
+    catch(e){ toast("Could not read " + f.name + ": " + e.message); }
+  }
+  openImportReview(queue);
 }
 
 /* ================= voice read-out (Web Speech API, OS / browser voices) ================= */
@@ -1048,13 +1166,13 @@ function sayValue(v){
   return v.replace(/\bn\.?d\.?(?=\s|$)/i, "not detected");
 }
 const sayName = n => String(n||"").replace(/[（(][^）)]*[）)]/g, " ").replace(/[{][^}]*[}]/g, " ").replace(/_/g, " ").replace(/\s+/g, " ").trim();
-const SAY_ST = { ok:"Pass.", warn:"Pass, but very close to the limit.", bad:"Fail!", miss:"Not reported on the COA.", manual:"Needs a manual check.", info:"" };
+const SAY_ST = { ok:"Pass.", warn:"Pass, but very close to the limit.", bad:"Fail!", miss:"Not reported in Document 2.", manual:"Needs a manual check.", info:"" };
 const SAY_V = { ok:"compliant", warn:"conditionally compliant", bad:"not compliant", none:"waiting for values" };
 function buildSpeech(product, verdict, rows, mode){
   const S = [], ev = rows.filter(r => r.st !== "info");
   const bad = ev.filter(r => r.st === "bad").length, open = ev.filter(r => ["warn","miss","manual"].includes(r.st)).length;
-  let head = "Result for " + (sayName(product).replace(/·.*$/, "").trim() || "this product") + ": " + (SAY_V[verdict] || SAY_V.none) + ".";
-  if (bad) head += " " + bad + (bad === 1 ? " parameter is" : " parameters are") + " out of specification.";
+  let head = "Result for " + (sayName(product).replace(/·.*$/, "").trim() || "this item") + ": " + (SAY_V[verdict] || SAY_V.none) + ".";
+  if (bad) head += " " + bad + (bad === 1 ? " parameter is" : " parameters are") + " out of limit.";
   else if (open) head += " " + open + (open === 1 ? " parameter needs" : " parameters need") + " attention.";
   S.push({text: head, row: null});
   const list = mode === "issues" ? ev.filter(r => r.st !== "ok") : ev;
@@ -1062,11 +1180,11 @@ function buildSpeech(product, verdict, rows, mode){
   for (const r of list){
     const parts = [sayName(r.name) + "."];
     const lim = sayLimit(r.limit); if (lim) parts.push("Limit " + lim + ".");
-    const val = sayValue(r.value); if (val) parts.push("COA value " + val + ".");
+    const val = sayValue(r.value); if (val) parts.push("Value " + val + ".");
     if (SAY_ST[r.st]) parts.push(SAY_ST[r.st]);
     S.push({text: parts.join(" "), row: r.pi == null ? null : r.pi});
   }
-  S.push({text: "Comparison complete.", row: null});
+  S.push({text: "Check complete.", row: null});
   return S;
 }
 const isEn = v => /^en/i.test(v.lang);
@@ -1114,8 +1232,8 @@ function speakRows(product, verdict, rows, btn){
   });
 }
 function speakCurrent(btn){
-  const t = state.tds;
-  if (!t || !hasCoaData()) return toast("Load the TDS and the COA first");
+  const t = tdsById(state.cur);
+  if (!t || !hasCoaData()) return toast("Select Document 1 and add Document 2 first");
   const R = currentResults(), o = overall(R);
   speakRows(tdsLabel(t), o.v, R.map(r => ({name:r.p.name, limit:limitText(r.p), value:r.value, st:r.st, pi:r.pi})), btn || $("#btnSpeak"));
 }
@@ -1136,55 +1254,32 @@ if (TTS.ok){
 /* ================= wiring ================= */
 function showTab(k){
   $$(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === k));
-  ["check","hist"].forEach(x => $("#v-"+x).hidden = x !== k);
+  ["check","lib","hist"].forEach(x => $("#v-"+x).hidden = x !== k);
+  if (k === "lib"){ renderLibList(); renderLibEd(); }
   if (k === "hist") renderHist();
 }
 $$(".tab").forEach(b => b.onclick = () => showTab(b.dataset.tab));
 
-function bindDrop(el, input, onFile){
-  el.onclick = () => input.click();
-  el.onkeydown = e => { if (e.key==="Enter"||e.key===" "){ e.preventDefault(); input.click(); } };
-  ["dragenter","dragover"].forEach(ev => el.addEventListener(ev, e => { e.preventDefault(); el.classList.add("over"); }));
-  ["dragleave","drop"].forEach(ev => el.addEventListener(ev, e => { e.preventDefault(); el.classList.remove("over"); }));
-  el.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) onFile(f); });
-  input.onchange = e => { const f = e.target.files[0]; e.target.value = ""; if (f) onFile(f); };
-}
-bindDrop($("#tdsDrop"), $("#tdsFile"), handleTdsFile);
-bindDrop($("#coaDrop"), $("#coaFile"), handleCoaFile);
-
-$("#tdsPasteBtn").onclick = () => { $("#tdsPasteBox").hidden = !$("#tdsPasteBox").hidden; if (!$("#tdsPasteBox").hidden) $("#tdsPaste").focus(); };
-$("#tdsPasteGo").onclick = () => {
-  const lines = textLines($("#tdsPaste").value);
-  if (!lines.length) return toast("The text box is empty");
-  const pr = parseTdsLines(["Properties | Unit | Result"].concat(lines), "");
-  setTds({name: state.tds ? state.tds.name : "", code:"", grade:"", file:"pasted TDS text", params: pr.rows.map(x => parseSpec(x[0], x[1], x[2]))}, lines);
-  $("#tdsPasteBox").hidden = true;
-  toast(pr.rows.length + " TDS rows read");
-  if (!state.tds.name) $("#tdsName").focus();
-};
-$("#tdsManualBtn").onclick = () => {
-  if (!state.tds) setTds({name:"", code:"", grade:"", file:"entered manually", params:[
-    {name:"", unit:"%", type:"min", lo:null, hi:null, text:"", inferred:false},
-    {name:"", unit:"%", type:"max", lo:null, hi:null, text:"", inferred:false}]}, []);
-  const box = $("#limitsBox"); box.open = true; box.scrollIntoView({block:"start", behavior:"smooth"});
-  const inp = $("#edTbl tbody input"); if (inp) setTimeout(() => inp.focus(), 300);
-};
-$("#tdsName").addEventListener("input", e => { if (state.tds){ state.tds.name = e.target.value; $("#resTitle").textContent = tdsLabel(state.tds); if (hasCoaData()) autoSave(); } });
-$("#tdsCode").addEventListener("input", e => { if (state.tds){ state.tds.code = e.target.value; state.tds.grade = ""; $("#resTitle").textContent = tdsLabel(state.tds); if (hasCoaData()) autoSave(); } });
-
-$("#coaPasteBtn").onclick = () => { $("#coaPasteBox").hidden = !$("#coaPasteBox").hidden; if (!$("#coaPasteBox").hidden) $("#coaPaste").focus(); };
-$("#coaPasteGo").onclick = () => {
-  const lines = textLines($("#coaPaste").value);
-  if (!lines.length) return toast("The text box is empty");
-  $("#coaPasteBox").hidden = true;
-  applyCoa(lines, "pasted COA text", false);
-};
-$("#coaManualBtn").onclick = () => {
-  if (!state.tds) return toast("Load or enter the TDS first (step 1) — then type the COA values next to each limit");
+const drop = $("#coaDrop");
+drop.onclick = () => $("#coaFile").click();
+drop.onkeydown = e => { if (e.key==="Enter"||e.key===" "){ e.preventDefault(); $("#coaFile").click(); } };
+bindDrop(drop, fs => handleCoaFile(fs[0]));
+$("#coaFile").onchange = e => { const f = e.target.files[0]; e.target.value = ""; if (f) handleCoaFile(f); };
+$("#btnManual").onclick = () => {
+  if (!state.lib.length) return openAddDoc1();
+  if (!state.cur){ toast("Select Document 1 in step 1 first"); $("#prodSel").focus(); return; }
   const v = $("#resTbl .vin"); if (v){ v.scrollIntoView({block:"center", behavior:"smooth"}); v.focus(); }
-  toast("Type each value from the COA into the table — the verdict and report update as you type");
+  toast("Type each value from Document 2 into the table — the verdict and report update as you type");
 };
-
+$("#btnPaste").onclick = () => { $("#pasteBox").hidden = !$("#pasteBox").hidden; if (!$("#pasteBox").hidden) $("#pasteTxt").focus(); };
+$("#btnPasteGo").onclick = () => {
+  const lines = textLines($("#pasteTxt").value);
+  if (!lines.length) return toast("The text box is empty");
+  $("#pasteBox").hidden = true;
+  $("#coaChip").hidden = false; $("#coaChip").textContent = "📋 Pasted text · " + lines.length + " lines";
+  applyCoa(lines, "pasted text", false);
+};
+$("#prodSel").onchange = e => { state.cur = e.target.value || null; $("#autoNote").textContent = ""; runMatch(); };
 $("#resTbl").addEventListener("input", e => {
   const pi = e.target.dataset.pi; if (pi == null) return;
   coaVals[pi] = Object.assign(coaVals[pi]||{}, {value:e.target.value, auto:false, conv:null});
@@ -1192,37 +1287,48 @@ $("#resTbl").addEventListener("input", e => {
   renderCheck();
   const el = $(`#resTbl .vin[data-pi="${pi}"]`); if (el){ el.focus(); try{ el.setSelectionRange(pos,pos); }catch(_){} }
 });
-["#fSup","#fLot","#fDate","#fRef","#fNote"].forEach(id => $(id).addEventListener("input", () => { if (state.tds && hasCoaData()) autoSave(); }));
+["#fSup","#fLot","#fDate","#fRef","#fNote"].forEach(id => $(id).addEventListener("input", () => { if (state.cur && hasCoaData()) autoSave(); }));
 $("#btnClear").onclick = clearCheck;
 $("#btnPrint").onclick = () => { const s = snapshot(); if (s && recId){ const r = state.hist.find(h=>h.id===recId); if (r){ s.no = r.no; s.ts = r.ts; } } printReport(s && hasCoaData() ? s : null); };
 document.addEventListener("click", e => {
+  if (e.target.closest("[data-adddoc1]")) return openAddDoc1();
   if (e.target.closest("[data-rep],[data-hdel]")) return;
   const b = e.target.closest("[data-open]"); if (b) openReport(state.hist.find(h => h.id === b.dataset.open));
 });
 
-$("#histSearch").oninput = renderHist;
-$("#histVerdict").onchange = renderHist;
-$("#btnCsv").onclick = csv;
-$("#btnExport").onclick = () => download("coa_reports_backup_" + new Date().toISOString().slice(0,10) + ".json", JSON.stringify({v:2, hist:state.hist}, null, 1), "application/json");
+$("#libSearch").oninput = renderLibList;
+$("#libList").onclick = e => { const b = e.target.closest(".lib-item"); if (!b) return; state.libSel = b.dataset.id; renderLibList(); renderLibEd(); };
+const tdsDrop = $("#tdsDrop");
+tdsDrop.onclick = () => { addFromCheck = false; $("#tdsFile").click(); };
+tdsDrop.onkeydown = e => { if (e.key==="Enter"||e.key===" "){ e.preventDefault(); tdsDrop.click(); } };
+bindDrop(tdsDrop, fs => { addFromCheck = false; handleTdsFiles(fs); });
+$("#tdsFile").onchange = e => { const fs = [...e.target.files]; e.target.value = ""; if (fs.length){ closeModal(); handleTdsFiles(fs); } };
+$("#btnTdsBlank").onclick = () => { addFromCheck = false; openImportReview([blankDoc1()]); };
+$("#btnExport").onclick = () => download("compliance_backup_" + new Date().toISOString().slice(0,10) + ".json", JSON.stringify({v:3, lib:state.lib, hist:state.hist}, null, 1), "application/json");
 $("#btnImport").onclick = () => $("#impFile").click();
 $("#impFile").onchange = async e => {
   const f = e.target.files[0]; e.target.value = ""; if (!f) return;
   try {
     const d = JSON.parse(await f.text());
-    const list = Array.isArray(d.hist) ? d.hist : null; if (!list) throw new Error("not a report backup file");
-    const have = new Set(state.hist.map(h => h.id));
-    const add = list.filter(h => h && h.id && Array.isArray(h.rows) && !have.has(h.id));
-    state.hist = state.hist.concat(add).sort((a,b) => String(b.ts).localeCompare(String(a.ts)));
-    persist(); $("#nHist").textContent = state.hist.length; renderHist();
-    toast("Added " + add.length + " report" + (add.length===1?"":"s") + ((list.length - add.length) ? " · " + (list.length - add.length) + " already present" : ""));
+    if (!Array.isArray(d.lib) && !Array.isArray(d.hist)) throw new Error("not a backup file");
+    const libIds = new Set(state.lib.map(t => t.id)), histIds = new Set(state.hist.map(h => h.id));
+    const addL = (d.lib||[]).filter(t => t && t.id && Array.isArray(t.params) && !libIds.has(t.id)).map(t => Object.assign(t, {builtin:false}));
+    const addH = (d.hist||[]).filter(h => h && h.id && Array.isArray(h.rows) && !histIds.has(h.id));
+    state.lib = state.lib.concat(addL); state.hist = state.hist.concat(addH).sort((a,b) => String(b.ts).localeCompare(String(a.ts)));
+    persist(); fillProdSel(); renderLibList(); renderLibEd(); renderCheck();
+    toast("Added " + addL.length + " Document 1 item" + (addL.length===1?"":"s") + " and " + addH.length + " report" + (addH.length===1?"":"s"));
   } catch(err){ toast("Could not read the backup: " + err.message); }
 };
+$("#histSearch").oninput = renderHist;
+$("#histVerdict").onchange = renderHist;
+$("#btnCsv").onclick = csv;
 $("#histTbl").onclick = e => {
   const r = e.target.closest("[data-rep]"); if (r) return printReport(state.hist.find(h=>h.id===r.dataset.rep));
   const d = e.target.closest("[data-hdel]"); if (d && confirm("Delete this report?")) deleteReport(d.dataset.hdel);
 };
-$("#modal").addEventListener("click", e => { if (e.target.id === "modal") closeModal(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#modal").hidden) closeModal(); });
+function dismissModal(){ if ($("#imCancel")) $("#imCancel").click(); else closeModal(); }
+$("#modal").addEventListener("click", e => { if (e.target.id === "modal") dismissModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#modal").hidden) dismissModal(); });
 
 // theme
 const THEMES = ["light","dark","system"];
@@ -1235,12 +1341,11 @@ window.addEventListener("message", e => {
   if (d.__portalTheme) applyTheme(d.__portalTheme);
   if (d.__coaStoreData && d.__coaStoreData.key === STORE_KEY && STORAGE === "parent"){
     let v = null; try { v = JSON.parse(d.__coaStoreData.val); } catch(_){}
-    if (v){ applyStored(v); $("#nHist").textContent = state.hist.length; if (!$("#v-hist").hidden) renderHist(); }
+    if (v){ applyStored(v); fillProdSel(); renderCheck(); if (!$("#v-hist").hidden) renderHist(); if (!$("#v-lib").hidden){ renderLibList(); renderLibEd(); } }
   }
 });
 
-$("#nHist").textContent = state.hist.length;
-renderLimits();
+fillProdSel();
 renderCheck();
 </script>
 </body>

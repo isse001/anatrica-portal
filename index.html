@@ -232,7 +232,7 @@ body{
     <button id="tab_proc" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--good)"><span class="dot"></span>Process</button>
     <button id="tab_copper" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--exports)"><span class="dot"></span>Copper LME</button>
     <button id="tab_fin" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--imports)"><span class="dot"></span>Finance</button>
-    <button id="tab_coa" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--good)"><span class="dot"></span>COA Check</button>
+    <button id="tab_coa" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--good)"><span class="dot"></span>Document Check</button>
   </div>
 </div>
 
@@ -307,9 +307,9 @@ body{
       </button>
       <button class="tile" type="button" data-go="coa" style="--pane:var(--good)">
         <span class="tile-ico"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M9 15l2 2 4-4"/></svg></span>
-        <span class="tile-name">COA Check</span>
-        <span class="tile-desc">Load two documents &mdash; the product TDS and the delivery COA &rarr; COMPLIANT / CONDITIONAL / NOT COMPLIANT, read aloud. Reports stay in your own browser.</span>
-        <span class="tile-foot"><span class="tile-stamp">TDS + COA</span><span class="tile-arrow"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span>
+        <span class="tile-name">Document Check</span>
+        <span class="tile-desc">Compare Document 1 (the limits) with Document 2 (the measured values) &rarr; COMPLIANT / CONDITIONAL / NOT COMPLIANT, read aloud. Library &amp; reports stay in your own browser.</span>
+        <span class="tile-foot"><span class="tile-stamp">Doc 1 vs Doc 2</span><span class="tile-arrow"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span>
       </button>
     </div>
   </div>
@@ -8014,12 +8014,12 @@ draw();
 &lt;/body&gt;
 &lt;/html&gt;
 "></iframe>
-  <iframe id="f_coa" title="COA Check" srcdoc="&lt;!DOCTYPE html&gt;
+  <iframe id="f_coa" title="Document Check" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-&lt;title&gt;TDS vs COA Check&lt;/title&gt;
+&lt;title&gt;Document Compliance Check&lt;/title&gt;
 &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
 &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot;&gt;
@@ -8091,30 +8091,26 @@ button,input,select,textarea{font:inherit;color:inherit}
 .card-b{padding:16px}
 .lbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:5px}
 .inp{width:100%;padding:8px 10px;border:1px solid var(--border-strong);border-radius:var(--radius-s);background:var(--surface);font-size:13.5px}
-textarea.inp{font-family:var(--mono);font-size:12px;min-height:120px;resize:vertical}
+textarea.inp{font-family:var(--mono);font-size:12px;min-height:130px;resize:vertical}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
 .step{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin-bottom:10px}
 .step b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:12px;font-family:var(--mono)}
-.step .hint{font-weight:400;font-size:12px;color:var(--ink-muted);margin-left:auto}
+.step-note{font-size:12px;color:var(--ink-muted);margin:-4px 0 10px}
 
-.docs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-@media (max-width:800px){.docs{grid-template-columns:1fr}}
-.doc.loaded{border-color:var(--accent)}
-.drop{border:1.5px dashed var(--border-strong);border-radius:var(--radius-m);padding:20px 14px;text-align:center;cursor:pointer;background:var(--surface-2);transition:border-color .15s,background .15s}
+.check-grid{display:grid;grid-template-columns:minmax(280px,360px) 1fr;gap:18px;align-items:start}
+@media (max-width:900px){.check-grid{grid-template-columns:1fr}}
+.side&gt;.card+.card{margin-top:14px}
+
+.drop{border:1.5px dashed var(--border-strong);border-radius:var(--radius-m);padding:22px 14px;text-align:center;cursor:pointer;background:var(--surface-2);transition:border-color .15s,background .15s}
 .drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
 .drop .big{font-weight:600;font-size:14px}
 .drop .small{font-size:12px;color:var(--ink-muted);margin-top:4px}
 .drop svg{color:var(--accent);margin-bottom:6px}
-.doc.loaded .drop{padding:10px 12px}
-.doc.loaded .drop svg,.doc.loaded .drop .small{display:none}
-.doc.loaded .drop .big{font-size:12.5px;font-weight:500;color:var(--ink-secondary)}
-.filechip{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;background:var(--accent-soft);border-radius:var(--radius-s);padding:8px 10px;word-break:break-all}
-.filechip b{font-weight:600}
+.filechip{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;background:var(--surface-2);border-radius:var(--radius-s);padding:7px 10px;word-break:break-all}
 .progress{height:4px;background:var(--surface-3);border-radius:4px;overflow:hidden;margin-top:10px}
 .progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
-.links{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 16px}
-.linkbtn{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px;text-decoration:underline}
-.pastebox{margin-top:8px}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px;text-decoration:underline;text-align:left}
+.links{margin-top:10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 
 .verdict{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:var(--radius-m);border:1px solid;margin-bottom:14px}
 .verdict .ic{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:22px}
@@ -8148,19 +8144,21 @@ tr.row-bad td{background:color-mix(in srgb,var(--bad-soft) 55%,transparent)}
 tr.speaking td{background:var(--accent-soft)!important;box-shadow:inset 0 1px 0 var(--accent),inset 0 -1px 0 var(--accent)}
 tr.speaking td:first-child{box-shadow:inset 3px 0 0 var(--accent),inset 0 1px 0 var(--accent),inset 0 -1px 0 var(--accent)}
 .src{font-size:11px;color:var(--ink-muted);font-family:var(--mono);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
-details.raw summary{cursor:pointer;font-size:12.5px;color:var(--ink-secondary);padding:8px 0 0}
-details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);padding:10px;font-size:11.5px;max-height:300px;overflow:auto;white-space:pre-wrap}
+details.raw summary{cursor:pointer;font-size:12.5px;color:var(--ink-secondary);padding:10px 0}
+details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);padding:10px;font-size:11.5px;max-height:320px;overflow:auto;white-space:pre-wrap}
 .legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:12px;color:var(--ink-secondary);margin-top:12px}
-.empty{padding:36px 20px;text-align:center;color:var(--ink-muted)}
+.empty{padding:40px 20px;text-align:center;color:var(--ink-muted)}
 .empty .big{font-size:15px;color:var(--ink-secondary);font-weight:600;margin-bottom:4px}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 
-details.limits{margin-top:16px}
-details.limits&gt;summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:14px 16px;font-weight:600;font-size:14px}
-details.limits&gt;summary::-webkit-details-marker{display:none}
-details.limits&gt;summary::before{content:&quot;▸&quot;;color:var(--accent);transition:transform .15s}
-details.limits[open]&gt;summary::before{transform:rotate(90deg)}
-details.limits&gt;summary .psub{font-weight:400}
+.lib-grid{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:18px;align-items:start}
+@media (max-width:900px){.lib-grid{grid-template-columns:1fr}}
+.lib-list{max-height:640px;overflow:auto}
+.lib-item{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--border);padding:10px 14px;cursor:pointer}
+.lib-item:hover{background:var(--surface-2)}
+.lib-item[aria-current=&quot;true&quot;]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.lib-item .c{font-family:var(--mono);font-size:11px;color:var(--ink-muted)}
+.search{min-width:0;flex:1}
 .ed td{padding:5px 6px}
 .ed input,.ed select{width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;background:var(--surface);font-size:12.5px}
 .ed input.n{font-family:var(--mono);width:84px}
@@ -8222,127 +8220,132 @@ details.limits&gt;summary .psub{font-weight:400}
 &lt;header class=&quot;mast&quot;&gt;
   &lt;div&gt;
     &lt;div class=&quot;eyebrow&quot;&gt;Anatrica · Quality Control&lt;/div&gt;
-    &lt;h1&gt;TDS ↔ COA Compliance Check&lt;/h1&gt;
-    &lt;div class=&quot;sub&quot;&gt;Load two documents — the product's &lt;b&gt;TDS&lt;/b&gt; (specification) and the delivery's &lt;b&gt;COA&lt;/b&gt; (certificate of analysis). Every parameter is compared and you get a clear verdict. &lt;b&gt;Your documents and reports stay in your own browser&lt;/b&gt; and are never shared.&lt;/div&gt;
+    &lt;h1&gt;Document Compliance Check&lt;/h1&gt;
+    &lt;div class=&quot;sub&quot;&gt;&lt;b&gt;Document 1&lt;/b&gt; holds the limits (for example a specification). &lt;b&gt;Document 2&lt;/b&gt; holds the measured values (for example an analysis certificate). Every parameter is compared and you get a clear verdict. &lt;b&gt;Your documents and reports stay in your own browser&lt;/b&gt; and are never shared.&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;mast-tools&quot;&gt;
+    &lt;button class=&quot;btn primary&quot; data-adddoc1&gt;＋ Add Document 1&lt;/button&gt;
     &lt;button class=&quot;btn ghost sm&quot; id=&quot;btnTheme&quot; title=&quot;Theme&quot;&gt;◐ Theme&lt;/button&gt;
   &lt;/div&gt;
 &lt;/header&gt;
 
 &lt;nav class=&quot;tabs&quot; role=&quot;tablist&quot;&gt;
-  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; data-tab=&quot;check&quot; aria-selected=&quot;true&quot;&gt;Compare&lt;/button&gt;
+  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; data-tab=&quot;check&quot; aria-selected=&quot;true&quot;&gt;Check&lt;/button&gt;
+  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; data-tab=&quot;lib&quot; aria-selected=&quot;false&quot;&gt;Document 1 library &lt;span class=&quot;n&quot; id=&quot;nLib&quot;&gt;0&lt;/span&gt;&lt;/button&gt;
   &lt;button class=&quot;tab&quot; role=&quot;tab&quot; data-tab=&quot;hist&quot; aria-selected=&quot;false&quot;&gt;Reports &lt;span class=&quot;n&quot; id=&quot;nHist&quot;&gt;0&lt;/span&gt;&lt;/button&gt;
 &lt;/nav&gt;
 
-&lt;!-- ============ COMPARE ============ --&gt;
+&lt;!-- ============ CHECK ============ --&gt;
 &lt;section id=&quot;v-check&quot;&gt;
-  &lt;div class=&quot;docs&quot;&gt;
-    &lt;!-- document 1: TDS --&gt;
-    &lt;div class=&quot;card doc&quot; id=&quot;tdsCard&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
-      &lt;div class=&quot;step&quot;&gt;&lt;b&gt;1&lt;/b&gt; TDS — specification&lt;/div&gt;
-      &lt;div class=&quot;drop&quot; id=&quot;tdsDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Upload TDS file&quot;&gt;
-        &lt;svg width=&quot;28&quot; height=&quot;28&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z&quot;/&gt;&lt;path d=&quot;M14 3v5h5&quot;/&gt;&lt;path d=&quot;M9 13h6M9 17h4&quot;/&gt;&lt;/svg&gt;
-        &lt;div class=&quot;big&quot; id=&quot;tdsDropTxt&quot;&gt;Drop the TDS here or click to choose&lt;/div&gt;
-        &lt;div class=&quot;small&quot;&gt;PDF · JPG · PNG (scanned documents are read with OCR)&lt;/div&gt;
-      &lt;/div&gt;
-      &lt;input type=&quot;file&quot; id=&quot;tdsFile&quot; accept=&quot;.pdf,image/*,.txt&quot; hidden&gt;
-      &lt;div class=&quot;progress&quot; id=&quot;tdsProg&quot; hidden&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
-      &lt;div id=&quot;tdsChip&quot; class=&quot;filechip&quot; hidden&gt;&lt;/div&gt;
-      &lt;div class=&quot;grid2&quot; id=&quot;tdsMeta&quot; hidden style=&quot;margin-top:10px&quot;&gt;
-        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;tdsName&quot;&gt;Product&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;tdsName&quot;&gt;&lt;/div&gt;
-        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;tdsCode&quot;&gt;TDS code / grade&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;tdsCode&quot;&gt;&lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;links&quot;&gt;
-        &lt;button class=&quot;linkbtn&quot; id=&quot;tdsPasteBtn&quot;&gt;Paste TDS text&lt;/button&gt;
-        &lt;button class=&quot;linkbtn&quot; id=&quot;tdsManualBtn&quot;&gt;✎ Enter TDS limits manually&lt;/button&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;pastebox&quot; id=&quot;tdsPasteBox&quot; hidden&gt;
-        &lt;textarea class=&quot;inp&quot; id=&quot;tdsPaste&quot; placeholder=&quot;One parameter per line: Parameter · Unit · Limit&amp;#10;Purity	% min	99.0&amp;#10;Moisture	% max	0.5&amp;#10;Fe	ppm max	10&quot;&gt;&lt;/textarea&gt;
-        &lt;button class=&quot;btn sm primary&quot; id=&quot;tdsPasteGo&quot; style=&quot;margin-top:6px&quot;&gt;Read TDS text&lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;check-grid&quot;&gt;
+    &lt;div class=&quot;side&quot;&gt;
+      &lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
+        &lt;div class=&quot;step&quot;&gt;&lt;b&gt;1&lt;/b&gt; Select Document 1&lt;/div&gt;
+        &lt;div class=&quot;step-note&quot;&gt;The document with the limits.&lt;/div&gt;
+        &lt;select class=&quot;inp&quot; id=&quot;prodSel&quot; aria-label=&quot;Document 1&quot;&gt;&lt;/select&gt;
+        &lt;div class=&quot;psub&quot; id=&quot;autoNote&quot; style=&quot;margin-top:6px&quot;&gt;&lt;/div&gt;
+        &lt;div style=&quot;margin-top:8px&quot;&gt;&lt;button class=&quot;linkbtn&quot; data-adddoc1&gt;＋ Add Document 1 (upload, paste or type)&lt;/button&gt;&lt;/div&gt;
+      &lt;/div&gt;&lt;/div&gt;
 
-    &lt;!-- document 2: COA --&gt;
-    &lt;div class=&quot;card doc&quot; id=&quot;coaCard&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
-      &lt;div class=&quot;step&quot;&gt;&lt;b&gt;2&lt;/b&gt; COA — certificate of analysis&lt;/div&gt;
-      &lt;div class=&quot;drop&quot; id=&quot;coaDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Upload COA file&quot;&gt;
-        &lt;svg width=&quot;28&quot; height=&quot;28&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z&quot;/&gt;&lt;path d=&quot;M14 3v5h5&quot;/&gt;&lt;path d=&quot;M9 15l2 2 4-4&quot;/&gt;&lt;/svg&gt;
-        &lt;div class=&quot;big&quot; id=&quot;coaDropTxt&quot;&gt;Drop the COA here or click to choose&lt;/div&gt;
-        &lt;div class=&quot;small&quot;&gt;PDF · JPG · PNG (scanned documents are read with OCR)&lt;/div&gt;
-      &lt;/div&gt;
-      &lt;input type=&quot;file&quot; id=&quot;coaFile&quot; accept=&quot;.pdf,image/*,.txt&quot; hidden&gt;
-      &lt;div class=&quot;progress&quot; id=&quot;coaProg&quot; hidden&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
-      &lt;div id=&quot;coaChip&quot; class=&quot;filechip&quot; hidden&gt;&lt;/div&gt;
-      &lt;div class=&quot;links&quot;&gt;
-        &lt;button class=&quot;linkbtn&quot; id=&quot;coaPasteBtn&quot;&gt;Paste COA text&lt;/button&gt;
-        &lt;button class=&quot;linkbtn&quot; id=&quot;coaManualBtn&quot;&gt;✎ Type COA values manually&lt;/button&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;pastebox&quot; id=&quot;coaPasteBox&quot; hidden&gt;
-        &lt;textarea class=&quot;inp&quot; id=&quot;coaPaste&quot; placeholder=&quot;Paste the COA table here (from e-mail, Word, Excel)…&quot;&gt;&lt;/textarea&gt;
-        &lt;button class=&quot;btn sm primary&quot; id=&quot;coaPasteGo&quot; style=&quot;margin-top:6px&quot;&gt;Read COA text&lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;&lt;/div&gt;
-  &lt;/div&gt;
+      &lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
+        &lt;div class=&quot;step&quot;&gt;&lt;b&gt;2&lt;/b&gt; Upload Document 2 or type its values&lt;/div&gt;
+        &lt;div class=&quot;step-note&quot;&gt;The document with the measured values.&lt;/div&gt;
+        &lt;div class=&quot;drop&quot; id=&quot;coaDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Upload Document 2&quot;&gt;
+          &lt;svg width=&quot;28&quot; height=&quot;28&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z&quot;/&gt;&lt;path d=&quot;M14 3v5h5&quot;/&gt;&lt;path d=&quot;M12 12v6M9 15l3-3 3 3&quot;/&gt;&lt;/svg&gt;
+          &lt;div class=&quot;big&quot;&gt;Drop Document 2 here or click to choose&lt;/div&gt;
+          &lt;div class=&quot;small&quot;&gt;PDF · JPG · PNG (scanned documents are read with OCR)&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;input type=&quot;file&quot; id=&quot;coaFile&quot; accept=&quot;.pdf,image/*,.txt&quot; hidden&gt;
+        &lt;div id=&quot;coaChip&quot; class=&quot;filechip&quot; hidden&gt;&lt;/div&gt;
+        &lt;div class=&quot;progress&quot; id=&quot;coaProg&quot; hidden&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+        &lt;div class=&quot;links&quot;&gt;
+          &lt;button class=&quot;linkbtn&quot; id=&quot;btnManual&quot;&gt;✎ Type Document 2 values into the table&lt;/button&gt;
+          &lt;button class=&quot;linkbtn&quot; id=&quot;btnPaste&quot;&gt;…or paste Document 2 text&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;pasteBox&quot; hidden style=&quot;margin-top:8px&quot;&gt;
+          &lt;textarea class=&quot;inp&quot; id=&quot;pasteTxt&quot; placeholder=&quot;Paste the table here (from e-mail, Word, Excel)…&quot;&gt;&lt;/textarea&gt;
+          &lt;button class=&quot;btn sm primary&quot; id=&quot;btnPasteGo&quot; style=&quot;margin-top:6px&quot;&gt;Read text&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;&lt;/div&gt;
 
-  &lt;div class=&quot;card&quot; style=&quot;margin-bottom:16px&quot;&gt;&lt;div class=&quot;card-b&quot; style=&quot;padding-top:12px;padding-bottom:12px&quot;&gt;
-    &lt;div class=&quot;grid2&quot;&gt;
-      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fSup&quot;&gt;Supplier&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fSup&quot;&gt;&lt;/div&gt;
-      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fLot&quot;&gt;Lot / batch&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fLot&quot;&gt;&lt;/div&gt;
-      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fDate&quot;&gt;COA date&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fDate&quot;&gt;&lt;/div&gt;
-      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fRef&quot;&gt;Shipment / container&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fRef&quot;&gt;&lt;/div&gt;
-      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fNote&quot;&gt;Note&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fNote&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
+        &lt;div class=&quot;step&quot;&gt;&lt;b&gt;3&lt;/b&gt; Details&lt;/div&gt;
+        &lt;div class=&quot;grid2&quot;&gt;
+          &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fSup&quot;&gt;Supplier / source&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fSup&quot;&gt;&lt;/div&gt;
+          &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fLot&quot;&gt;Lot / batch&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fLot&quot;&gt;&lt;/div&gt;
+          &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fDate&quot;&gt;Document 2 date&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fDate&quot;&gt;&lt;/div&gt;
+          &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fRef&quot;&gt;Reference / shipment&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fRef&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;label class=&quot;lbl&quot; for=&quot;fNote&quot; style=&quot;margin-top:12px&quot;&gt;Note&lt;/label&gt;
+        &lt;input class=&quot;inp&quot; id=&quot;fNote&quot;&gt;
+      &lt;/div&gt;&lt;/div&gt;
     &lt;/div&gt;
-  &lt;/div&gt;&lt;/div&gt;
 
-  &lt;div id=&quot;verdict&quot; class=&quot;verdict v-none&quot;&gt;&lt;/div&gt;
-
-  &lt;div class=&quot;ttsbar&quot; id=&quot;ttsBar&quot; hidden&gt;
-    &lt;span class=&quot;ttl&quot;&gt;🔊 Read aloud&lt;/span&gt;
-    &lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;ttsAuto&quot;&gt; Read automatically when a comparison is done&lt;/label&gt;
-    &lt;label&gt;Read: &lt;select id=&quot;ttsMode&quot;&gt;&lt;option value=&quot;all&quot;&gt;All values&lt;/option&gt;&lt;option value=&quot;issues&quot;&gt;Issues only&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
-    &lt;label&gt;Speed: &lt;select id=&quot;ttsRate&quot;&gt;&lt;option value=&quot;0.8&quot;&gt;Slow&lt;/option&gt;&lt;option value=&quot;1&quot;&gt;Normal&lt;/option&gt;&lt;option value=&quot;1.2&quot;&gt;Fast&lt;/option&gt;&lt;option value=&quot;1.5&quot;&gt;Very fast&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
-    &lt;label&gt;Voice: &lt;select id=&quot;ttsVoice&quot;&gt;&lt;/select&gt;&lt;/label&gt;
-  &lt;/div&gt;
-
-  &lt;div class=&quot;card&quot;&gt;
-    &lt;div class=&quot;card-h&quot;&gt;
-      &lt;h2 id=&quot;resTitle&quot;&gt;Parameter comparison&lt;/h2&gt;
-      &lt;div class=&quot;toolbar&quot;&gt;
-        &lt;span class=&quot;saved idle&quot; id=&quot;saveState&quot;&gt;The report is saved automatically&lt;/span&gt;
-        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnSpeak&quot; hidden&gt;🔊 Read aloud&lt;/button&gt;
-        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnPrint&quot;&gt;Print / PDF&lt;/button&gt;
-        &lt;button class=&quot;btn sm primary&quot; id=&quot;btnClear&quot;&gt;＋ New comparison&lt;/button&gt;
+    &lt;div&gt;
+      &lt;div id=&quot;verdict&quot; class=&quot;verdict v-none&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;ttsbar&quot; id=&quot;ttsBar&quot; hidden&gt;
+        &lt;span class=&quot;ttl&quot;&gt;🔊 Read aloud&lt;/span&gt;
+        &lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;ttsAuto&quot;&gt; Read automatically when a check is done&lt;/label&gt;
+        &lt;label&gt;Read: &lt;select id=&quot;ttsMode&quot;&gt;&lt;option value=&quot;all&quot;&gt;All values&lt;/option&gt;&lt;option value=&quot;issues&quot;&gt;Issues only&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+        &lt;label&gt;Speed: &lt;select id=&quot;ttsRate&quot;&gt;&lt;option value=&quot;0.8&quot;&gt;Slow&lt;/option&gt;&lt;option value=&quot;1&quot;&gt;Normal&lt;/option&gt;&lt;option value=&quot;1.2&quot;&gt;Fast&lt;/option&gt;&lt;option value=&quot;1.5&quot;&gt;Very fast&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+        &lt;label&gt;Voice: &lt;select id=&quot;ttsVoice&quot;&gt;&lt;/select&gt;&lt;/label&gt;
       &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;card-b&quot; style=&quot;padding-top:8px&quot;&gt;
-      &lt;div class=&quot;stats&quot; id=&quot;stats&quot;&gt;&lt;/div&gt;
-      &lt;div class=&quot;tbl-wrap&quot;&gt;
-        &lt;table id=&quot;resTbl&quot;&gt;
-          &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;TDS limit&lt;/th&gt;&lt;th&gt;COA value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
-          &lt;tbody&gt;&lt;/tbody&gt;
-        &lt;/table&gt;
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;card-h&quot;&gt;
+          &lt;h2 id=&quot;resTitle&quot;&gt;Parameter comparison&lt;/h2&gt;
+          &lt;div class=&quot;toolbar&quot;&gt;
+            &lt;span class=&quot;saved idle&quot; id=&quot;saveState&quot;&gt;The report is saved automatically&lt;/span&gt;
+            &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnSpeak&quot; hidden&gt;🔊 Read aloud&lt;/button&gt;
+            &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnPrint&quot;&gt;Print / PDF&lt;/button&gt;
+            &lt;button class=&quot;btn sm primary&quot; id=&quot;btnClear&quot;&gt;＋ New check&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;card-b&quot; style=&quot;padding-top:8px&quot;&gt;
+          &lt;div class=&quot;stats&quot; id=&quot;stats&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;tbl-wrap&quot;&gt;
+            &lt;table id=&quot;resTbl&quot;&gt;
+              &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;Document 1 limit&lt;/th&gt;&lt;th&gt;Document 2 value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+              &lt;tbody&gt;&lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;legend&quot;&gt;
+            &lt;span&gt;&lt;span class=&quot;pill p-ok&quot;&gt;PASS&lt;/span&gt; within limit&lt;/span&gt;
+            &lt;span&gt;&lt;span class=&quot;pill p-warn&quot;&gt;BORDERLINE&lt;/span&gt; within limit but very close (max/range: last 5 % of the limit · min: at most 0.5 points above)&lt;/span&gt;
+            &lt;span&gt;&lt;span class=&quot;pill p-bad&quot;&gt;FAIL&lt;/span&gt; out of limit&lt;/span&gt;
+            &lt;span&gt;&lt;span class=&quot;pill p-miss&quot;&gt;MISSING&lt;/span&gt; not in Document 2&lt;/span&gt;
+            &lt;span&gt;&lt;span class=&quot;pill p-info&quot;&gt;INFO&lt;/span&gt; not evaluated&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;details class=&quot;raw&quot; id=&quot;rawBox&quot; hidden&gt;&lt;summary&gt;Text read from Document 2&lt;/summary&gt;&lt;pre id=&quot;rawTxt&quot;&gt;&lt;/pre&gt;&lt;/details&gt;
+        &lt;/div&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;legend&quot;&gt;
-        &lt;span&gt;&lt;span class=&quot;pill p-ok&quot;&gt;PASS&lt;/span&gt; within limit&lt;/span&gt;
-        &lt;span&gt;&lt;span class=&quot;pill p-warn&quot;&gt;BORDERLINE&lt;/span&gt; within limit but very close (max/range: last 5 % of the limit · min: at most 0.5 points above)&lt;/span&gt;
-        &lt;span&gt;&lt;span class=&quot;pill p-bad&quot;&gt;FAIL&lt;/span&gt; out of specification&lt;/span&gt;
-        &lt;span&gt;&lt;span class=&quot;pill p-miss&quot;&gt;MISSING&lt;/span&gt; not on the COA&lt;/span&gt;
-        &lt;span&gt;&lt;span class=&quot;pill p-info&quot;&gt;INFO&lt;/span&gt; not evaluated&lt;/span&gt;
-      &lt;/div&gt;
-      &lt;details class=&quot;raw&quot; id=&quot;coaRawBox&quot; hidden&gt;&lt;summary&gt;Text read from the COA&lt;/summary&gt;&lt;pre id=&quot;coaRaw&quot;&gt;&lt;/pre&gt;&lt;/details&gt;
     &lt;/div&gt;
   &lt;/div&gt;
+&lt;/section&gt;
 
-  &lt;details class=&quot;card limits&quot; id=&quot;limitsBox&quot; hidden&gt;
-    &lt;summary&gt;TDS limits &lt;span class=&quot;psub&quot; id=&quot;limitsSum&quot;&gt;&lt;/span&gt;&lt;/summary&gt;
-    &lt;div class=&quot;card-b&quot; style=&quot;border-top:1px solid var(--border)&quot;&gt;
-      &lt;div id=&quot;edTbl&quot;&gt;&lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table class=&quot;ed&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;Unit&lt;/th&gt;&lt;th&gt;Limit type&lt;/th&gt;&lt;th&gt;Min&lt;/th&gt;&lt;th&gt;Max&lt;/th&gt;&lt;th&gt;Text&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;
-      &lt;div class=&quot;toolbar&quot; style=&quot;margin-top:10px&quot;&gt;&lt;button class=&quot;btn sm ghost&quot; id=&quot;edAdd&quot;&gt;＋ Add row&lt;/button&gt;
-        &lt;span class=&quot;psub&quot;&gt;Min / Max / Range rows are evaluated automatically; &quot;Text&quot; rows need a manual check; &quot;Info&quot; rows (origin, appearance…) are not evaluated. Fix anything the reader got wrong here.&lt;/span&gt;&lt;/div&gt;
-      &lt;details class=&quot;raw&quot; id=&quot;tdsRawBox&quot; hidden&gt;&lt;summary&gt;Text read from the TDS&lt;/summary&gt;&lt;pre id=&quot;tdsRaw&quot;&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;!-- ============ LIBRARY ============ --&gt;
+&lt;section id=&quot;v-lib&quot; hidden&gt;
+  &lt;div class=&quot;lib-grid&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;div class=&quot;card-h&quot; style=&quot;gap:8px&quot;&gt;
+        &lt;input class=&quot;inp search&quot; id=&quot;libSearch&quot; placeholder=&quot;Search name / code…&quot; aria-label=&quot;Search the library&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;lib-list&quot; id=&quot;libList&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;card-b&quot; style=&quot;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px&quot;&gt;
+        &lt;div class=&quot;drop&quot; id=&quot;tdsDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Upload Document 1 files&quot; style=&quot;padding:16px 12px&quot;&gt;
+          &lt;div class=&quot;big&quot;&gt;＋ Add Document 1&lt;/div&gt;
+          &lt;div class=&quot;small&quot;&gt;Drop files here or click (several at once is fine)&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;input type=&quot;file&quot; id=&quot;tdsFile&quot; accept=&quot;.pdf,image/*,.txt&quot; multiple hidden&gt;
+        &lt;button class=&quot;btn ghost&quot; id=&quot;btnTdsBlank&quot;&gt;＋ Create Document 1 manually&lt;/button&gt;
+        &lt;div style=&quot;display:flex;gap:8px&quot;&gt;
+          &lt;button class=&quot;btn ghost sm&quot; id=&quot;btnExport&quot; style=&quot;flex:1&quot; title=&quot;Download your library and reports as a file — to move them to another computer or share with a colleague&quot;&gt;Download backup&lt;/button&gt;
+          &lt;button class=&quot;btn ghost sm&quot; id=&quot;btnImport&quot; style=&quot;flex:1&quot; title=&quot;Add a backup / shared library file (nothing existing is deleted)&quot;&gt;Add backup file&lt;/button&gt;
+          &lt;input type=&quot;file&quot; id=&quot;impFile&quot; accept=&quot;.json&quot; hidden&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
-  &lt;/details&gt;
+    &lt;div class=&quot;card&quot; id=&quot;libEd&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
 &lt;/section&gt;
 
 &lt;!-- ============ REPORTS ============ --&gt;
@@ -8352,18 +8355,15 @@ details.limits&gt;summary .psub{font-weight:400}
     &lt;div class=&quot;card-h&quot;&gt;
       &lt;h2&gt;Compliance reports&lt;/h2&gt;
       &lt;div class=&quot;toolbar&quot;&gt;
-        &lt;select class=&quot;inp&quot; id=&quot;histVerdict&quot; style=&quot;width:auto&quot;&gt;
+        &lt;select class=&quot;inp&quot; id=&quot;histVerdict&quot; style=&quot;width:auto&quot; aria-label=&quot;Filter by result&quot;&gt;
           &lt;option value=&quot;&quot;&gt;All results&lt;/option&gt;&lt;option value=&quot;ok&quot;&gt;Compliant&lt;/option&gt;&lt;option value=&quot;warn&quot;&gt;Conditional&lt;/option&gt;&lt;option value=&quot;bad&quot;&gt;Not compliant&lt;/option&gt;
         &lt;/select&gt;
-        &lt;input class=&quot;inp&quot; id=&quot;histSearch&quot; placeholder=&quot;Product, supplier, lot, report no…&quot; style=&quot;width:230px&quot;&gt;
+        &lt;input class=&quot;inp&quot; id=&quot;histSearch&quot; placeholder=&quot;Name, supplier, lot, report no…&quot; style=&quot;width:230px&quot; aria-label=&quot;Search reports&quot;&gt;
         &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnCsv&quot;&gt;Download CSV&lt;/button&gt;
-        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnExport&quot; title=&quot;Download all reports as a backup file&quot;&gt;Backup&lt;/button&gt;
-        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnImport&quot; title=&quot;Add reports from a backup file (existing reports are kept)&quot;&gt;Restore&lt;/button&gt;
-        &lt;input type=&quot;file&quot; id=&quot;impFile&quot; accept=&quot;.json&quot; hidden&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table id=&quot;histTbl&quot;&gt;
-      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Report no&lt;/th&gt;&lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Product&lt;/th&gt;&lt;th&gt;Supplier&lt;/th&gt;&lt;th&gt;Lot&lt;/th&gt;&lt;th&gt;Result&lt;/th&gt;&lt;th&gt;Issues&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Report no&lt;/th&gt;&lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Document 1&lt;/th&gt;&lt;th&gt;Supplier&lt;/th&gt;&lt;th&gt;Lot&lt;/th&gt;&lt;th&gt;Result&lt;/th&gt;&lt;th&gt;Issues&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
       &lt;tbody&gt;&lt;/tbody&gt;
     &lt;/table&gt;&lt;/div&gt;
   &lt;/div&gt;
@@ -8444,7 +8444,7 @@ function limitText(p){
 }
 
 /* ================= state + storage ================= */
-const state = { hist: [], tds: null, tdsLines: [], coaLines: [], coaFile: &quot;&quot; };
+const state = { lib: [], hist: [], cur: null, libSel: null, coaLines: [], coaFile: &quot;&quot; };
 const coaVals = {}; // param index → {value, auto, line, conv}
 // Storage: this page's localStorage; inside the portal (srcdoc iframe, where that can throw)
 // fall back to the portal shell's localStorage via postMessage.
@@ -8452,17 +8452,21 @@ const STORAGE = (function(){
   try { localStorage.setItem(&quot;__coa_t&quot;,&quot;1&quot;); localStorage.removeItem(&quot;__coa_t&quot;); return &quot;local&quot;; }
   catch(e){ return window.parent !== window ? &quot;parent&quot; : &quot;none&quot;; }
 })();
-function applyStored(d){ state.hist = (d &amp;&amp; Array.isArray(d.hist)) ? d.hist : []; }
+function applyStored(d){
+  state.lib = (d &amp;&amp; Array.isArray(d.lib)) ? d.lib.filter(t =&gt; t &amp;&amp; !t.builtin &amp;&amp; Array.isArray(t.params)) : [];
+  state.hist = (d &amp;&amp; Array.isArray(d.hist)) ? d.hist : [];
+}
 applyStored(STORAGE === &quot;local&quot; ? lsGet(STORE_KEY) : null);
 if (STORAGE === &quot;parent&quot;) try { window.parent.postMessage({__coaStoreGet: STORE_KEY}, &quot;*&quot;); } catch(e){}
 let warnedStore = false;
 function persist(){
-  const data = {v:2, hist:state.hist};
+  const data = {v:3, lib:state.lib, hist:state.hist};
   if (STORAGE === &quot;local&quot; &amp;&amp; lsSet(STORE_KEY, data)) return;
   if (STORAGE === &quot;parent&quot;){ try { window.parent.postMessage({__coaStoreSet:{key:STORE_KEY, val:JSON.stringify(data)}}, &quot;*&quot;); return; } catch(e){} }
-  if (!warnedStore){ warnedStore = true; toast(&quot;Warning: browser storage is off — reports will not be kept. Use Reports → Backup.&quot;); }
+  if (!warnedStore){ warnedStore = true; toast(&quot;Warning: browser storage is off — nothing will be kept. Use Library → Download backup.&quot;); }
 }
-const tdsLabel = t =&gt; t ? ((t.name || &quot;Unnamed product&quot;) + (t.code ? &quot; · &quot; + t.code : &quot;&quot;)) : &quot;&quot;;
+const tdsById = id =&gt; state.lib.find(t =&gt; t.id === id);
+const tdsLabel = t =&gt; t ? ((t.name || &quot;Unnamed&quot;) + (t.code ? &quot; · &quot; + t.code : &quot;&quot;)) : &quot;&quot;;
 
 /* ================= file → text lines ================= */
 async function pdfLines(buf, onProg){
@@ -8518,15 +8522,15 @@ async function ocr(img, onProg){
   await w.terminate();
   return data.text.split(/\n/).map(l =&gt; l.replace(/\s+/g,&quot; &quot;).trim()).filter(Boolean);
 }
+const textLines = t =&gt; String(t||&quot;&quot;).split(/\r?\n/).map(l=&gt;l.replace(/\t/g,&quot;  |  &quot;).replace(/\s+/g,&quot; &quot;).trim()).filter(Boolean);
 async function fileLines(file, onProg){
   const n = file.name.toLowerCase();
   if (n.endsWith(&quot;.pdf&quot;) || file.type === &quot;application/pdf&quot;) return pdfLines(await file.arrayBuffer(), onProg);
   if (file.type.startsWith(&quot;image/&quot;)) return {lines: await ocr(file, onProg), ocr:true};
   return {lines: textLines(await file.text()), ocr:false};
 }
-const textLines = t =&gt; String(t||&quot;&quot;).split(/\r?\n/).map(l=&gt;l.replace(/\t/g,&quot;  |  &quot;).replace(/\s+/g,&quot; &quot;).trim()).filter(Boolean);
 
-/* ================= TDS text → spec rows ================= */
+/* ================= Document 1 text → limit rows ================= */
 const ADDR_RX = /(maslak|meydan sk|veko giz|no:3 kat|34398|istanbul|türkiye|\+90 ?850|info@|www\.|anatrica\.net)/i;
 function parseTdsLines(lines, fname){
   const clean = lines.map(l =&gt; l.split(&quot;|&quot;).map(x=&gt;x.trim()).filter(x =&gt; x &amp;&amp; !ADDR_RX.test(x)).join(&quot; | &quot;)).filter(Boolean);
@@ -8549,11 +8553,11 @@ function parseTdsLines(lines, fname){
   const code = (/(ANT-[A-Z]{2}-\d{3})/.exec(fname||&quot;&quot;) || /(ANT-[A-Z]{2}-\d{3})/.exec(text) || [,&quot;&quot;])[1];
   const specIdx = clean.findIndex(l =&gt; /product specification|technical data|specification/i.test(l));
   const grade = specIdx &gt;= 0 &amp;&amp; clean[specIdx+1] ? clean[specIdx+1].split(&quot; | &quot;)[0] : &quot;&quot;;
-  const name = (fname||&quot;&quot;).replace(/\.[^.]+$/,&quot;&quot;).replace(code,&quot;&quot;).replace(/[_-]+/g,&quot; &quot;).trim() || grade || &quot;&quot;;
+  const name = (fname||&quot;&quot;).replace(/\.[^.]+$/,&quot;&quot;).replace(code,&quot;&quot;).replace(/[_-]+/g,&quot; &quot;).trim() || grade || &quot;New item&quot;;
   return {name, code, grade, rows: filt};
 }
 
-/* ================= COA matching ================= */
+/* ================= Document 2 matching ================= */
 const SYN = [
   [&quot;moisture&quot;,&quot;water&quot;,&quot;h2o&quot;,&quot;loss on drying&quot;,&quot;free moisture&quot;,&quot;water content&quot;,&quot;humidity&quot;],
   [&quot;iron&quot;,&quot;fe&quot;],[&quot;chloride&quot;,&quot;cl&quot;,&quot;chlorides&quot;,&quot;cl-&quot;],[&quot;sulfate&quot;,&quot;sulphate&quot;,&quot;so4&quot;,&quot;sulfates&quot;,&quot;sulphates&quot;],
@@ -8608,7 +8612,7 @@ function extractValue(line, fromIdx, p){
   s = s.replace(/\d+(?:[.,]\d+)?\s*(?:μ|µ|um|mesh)\w*/gi,&quot; &quot;);              // sieve sizes
   s = s.replace(/(?:≥|≤|&gt;=|&lt;=|=&gt;|=&lt;|\bmin\.?|\bmax\.?|\bnlt\b|\bnmt\b|not less than|not more than)\s*:?\s*-?\d+(?:[.,]\d+)*/gi,&quot; &quot;);
   s = s.replace(/-?\d+(?:[.,]\d+)*\s*(?:%\s*)?(?:min|max)\b\.?/gi,&quot; &quot;);
-  s = s.replace(/\d+(?:[.,]\d+)*\s*[-–—~]\s*\d+(?:[.,]\d+)*/g,&quot; &quot;);        // spec ranges
+  s = s.replace(/\d+(?:[.,]\d+)*\s*[-–—~]\s*\d+(?:[.,]\d+)*/g,&quot; &quot;);        // limit ranges
   const tokens = []; let m; const rx = /(&lt;|&gt;)?\s*(-?\d+(?:[.,]\d+)*)/g;
   while ((m = rx.exec(s))) tokens.push({pre:m[1]||&quot;&quot;, v:normNum(m[2])});
   const ctxU = s.toLowerCase();
@@ -8651,6 +8655,24 @@ function matchCoa(tds, lines){
   }
   return res;
 }
+function detectProduct(lines){
+  const txt = normTxt(lines.join(&quot; \n &quot;));
+  let best = null;
+  for (const t of state.lib){
+    let sc = 0;
+    const nm = normTxt(t.name), gr = normTxt(t.grade||&quot;&quot;);
+    if (nm &amp;&amp; txt.includes(nm)) sc += 20 + nm.length/4;
+    else { const words = nm.split(&quot; &quot;).filter(w=&gt;w.length&gt;3); const hit = words.filter(w=&gt;txt.includes(w)).length; sc += words.length ? 10*hit/words.length : 0; }
+    if (gr &amp;&amp; txt.includes(gr)) sc += 12;
+    else if (gr){ const gt = gr.replace(/[()]/g,&quot; &quot;).split(&quot; &quot;).filter(w =&gt; w.length &gt;= 2); sc += gt.length ? 10 * gt.filter(w =&gt; txt.includes(w)).length / gt.length : 0; }
+    if (t.code &amp;&amp; txt.includes(normTxt(t.code))) sc += 30;
+    const m = matchCoa(t, lines); const k = Object.keys(m).length;
+    const tot = t.params.filter(p=&gt;p.type!==&quot;info&quot;).length || 1;
+    sc += 12 * k / tot + k*0.5;
+    if (!best || sc &gt; best.sc) best = {t, sc};
+  }
+  return best &amp;&amp; best.sc &gt; 6 ? best.t : null;
+}
 function detectMeta(lines){
   const txt = lines.join(&quot;\n&quot;), o = {};
   let m = /(?:batch|lot)\s*(?:no\.?|number|nr\.?|#)?\s*[:.\-|]?\s*\|?\s*([A-Z0-9][A-Z0-9\-\/.]{2,})/i.exec(txt);
@@ -8659,19 +8681,17 @@ function detectMeta(lines){
   if (m) o.date = m[1];
   return o;
 }
-// Do the two documents look like the same product? (product-name words from the TDS found in the COA)
-const GENERIC = new Set([&quot;grade&quot;,&quot;technical&quot;,&quot;tech&quot;,&quot;industrial&quot;,&quot;powder&quot;,&quot;feed&quot;,&quot;food&quot;,&quot;high&quot;,&quot;end&quot;,&quot;solution&quot;,&quot;flakes&quot;,&quot;pearl&quot;,&quot;pearls&quot;,&quot;light&quot;,&quot;dense&quot;]);
+// Do the two documents look like they belong together?
+const GENERIC = new Set([&quot;grade&quot;,&quot;technical&quot;,&quot;tech&quot;,&quot;industrial&quot;,&quot;powder&quot;,&quot;feed&quot;,&quot;food&quot;,&quot;high&quot;,&quot;end&quot;,&quot;solution&quot;,&quot;flakes&quot;,&quot;pearl&quot;,&quot;pearls&quot;,&quot;light&quot;,&quot;dense&quot;,&quot;new&quot;,&quot;item&quot;]);
 function productMismatch(){
-  const t = state.tds; if (!t || !state.coaLines.length) return &quot;&quot;;
+  const t = tdsById(state.cur); if (!t || !state.coaLines.length) return &quot;&quot;;
   const txt = normTxt(state.coaLines.join(&quot; &quot;));
-  // every distinctive word of the product name should appear (&quot;Soda Ash Light&quot; vs a &quot;Caustic Soda&quot; COA → &quot;ash&quot; missing)
   const words = normTxt(t.name).split(/[^a-z0-9]+/).filter(w =&gt; w.length &gt;= 3 &amp;&amp; !GENERIC.has(w));
   const missing = words.filter(w =&gt; !new RegExp(&quot;(^|[^a-z0-9])&quot; + w + &quot;(?![a-z])&quot;).test(txt));
-  if (words.length &amp;&amp; missing.length) return `The COA text does not mention “${t.name}”. Make sure both documents are for the same product.`;
-  // second signal: most TDS parameters could not be found on the COA
+  if (words.length &amp;&amp; missing.length) return `Document 2 does not mention “${t.name}”. Make sure both documents belong together.`;
   const evals = t.params.filter(p =&gt; p.type !== &quot;info&quot; &amp;&amp; p.type !== &quot;nominal&quot; &amp;&amp; p.name).length;
   const found = Object.values(coaVals).filter(v =&gt; v &amp;&amp; v.auto).length;
-  if (evals &gt;= 3 &amp;&amp; found &lt; evals / 2) return `Only ${found} of ${evals} TDS parameters were found on the COA — check that the two documents belong together.`;
+  if (evals &gt;= 3 &amp;&amp; found &lt; evals / 2) return `Only ${found} of ${evals} Document 1 parameters were found in Document 2 — check that the two documents belong together.`;
   return &quot;&quot;;
 }
 
@@ -8698,7 +8718,7 @@ function evalParam(p, raw){
     case &quot;min&quot;: {
       if (lt) return {st:&quot;bad&quot;};
       if (v &lt; p.lo) return {st:&quot;bad&quot;, v};
-      // &quot;close to limit&quot;: for high-purity % specs a quarter of the headroom to 100 % (max 0.5 pt), otherwise 0.5 % of the limit
+      // &quot;close to limit&quot;: for high-purity % limits a quarter of the headroom to 100 % (max 0.5 pt), otherwise 0.5 % of the limit
       const band = (/%/.test(p.unit||&quot;&quot;) &amp;&amp; p.lo &gt; 50 &amp;&amp; p.lo &lt; 100) ? Math.min((100 - p.lo) * 0.25, 0.5) : Math.abs(p.lo) * 0.005;
       return {st: (!gt &amp;&amp; v &lt; p.lo + band) ? &quot;warn&quot; : &quot;ok&quot;, v};
     }
@@ -8730,58 +8750,42 @@ function overall(results){
   return {c, v};
 }
 
-/* ================= compare view ================= */
+/* ================= CHECK view ================= */
+const hasCoaData = () =&gt; state.coaLines.length &gt; 0 || Object.values(coaVals).some(v =&gt; v &amp;&amp; String(v.value||&quot;&quot;).trim());
+function fillProdSel(){
+  const sel = $(&quot;#prodSel&quot;), cur = state.cur;
+  const sorted = [...state.lib].sort((a,b)=&gt;tdsLabel(a).localeCompare(tdsLabel(b)));
+  sel.innerHTML = (state.lib.length ? '&lt;option value=&quot;&quot;&gt;— Select Document 1 —&lt;/option&gt;' : '&lt;option value=&quot;&quot;&gt;— Add a Document 1 first —&lt;/option&gt;') +
+    sorted.map(t =&gt; `&lt;option value=&quot;${esc(t.id)}&quot;&gt;${esc(tdsLabel(t))}${t.grade?&quot; — &quot;+esc(t.grade):&quot;&quot;}&lt;/option&gt;`).join(&quot;&quot;);
+  sel.value = cur || &quot;&quot;;
+  $(&quot;#nLib&quot;).textContent = state.lib.length;
+  $(&quot;#nHist&quot;).textContent = state.hist.length;
+}
 function currentResults(){
-  const t = state.tds; if (!t) return [];
+  const t = tdsById(state.cur); if (!t) return [];
   return t.params.map((p,pi) =&gt; { const cv = coaVals[pi]||{}; return Object.assign({p, pi, value:cv.value||&quot;&quot;, auto:!!cv.auto, line:cv.line||&quot;&quot;, conv:cv.conv}, evalParam(p, cv.value)); });
 }
-const hasCoaData = () =&gt; state.coaLines.length &gt; 0 || Object.values(coaVals).some(v =&gt; v &amp;&amp; String(v.value||&quot;&quot;).trim());
-function renderDocs(){
-  const t = state.tds;
-  $(&quot;#tdsCard&quot;).classList.toggle(&quot;loaded&quot;, !!t);
-  $(&quot;#tdsDropTxt&quot;).textContent = t ? &quot;Replace TDS — drop or click&quot; : &quot;Drop the TDS here or click to choose&quot;;
-  $(&quot;#tdsMeta&quot;).hidden = !t;
-  if (t){
-    const n = t.params.filter(p =&gt; p.type !== &quot;info&quot;).length;
-    $(&quot;#tdsChip&quot;).hidden = false;
-    $(&quot;#tdsChip&quot;).innerHTML = `📄 &lt;span&gt;&lt;b&gt;${esc(t.file || &quot;TDS&quot;)}&lt;/b&gt; · ${n} limit${n===1?&quot;&quot;:&quot;s&quot;} read&lt;/span&gt;`;
-    if (document.activeElement !== $(&quot;#tdsName&quot;)) $(&quot;#tdsName&quot;).value = t.name || &quot;&quot;;
-    if (document.activeElement !== $(&quot;#tdsCode&quot;)) $(&quot;#tdsCode&quot;).value = [t.code, t.grade].filter(Boolean).join(&quot; · &quot;);
-  } else $(&quot;#tdsChip&quot;).hidden = true;
-  const hasCoa = state.coaLines.length &gt; 0;
-  $(&quot;#coaCard&quot;).classList.toggle(&quot;loaded&quot;, hasCoa || hasCoaData());
-  $(&quot;#coaDropTxt&quot;).textContent = hasCoa ? &quot;Replace COA — drop or click&quot; : &quot;Drop the COA here or click to choose&quot;;
-  $(&quot;#coaChip&quot;).hidden = !state.coaFile;
-  if (state.coaFile) $(&quot;#coaChip&quot;).innerHTML = `📄 &lt;span&gt;&lt;b&gt;${esc(state.coaFile)}&lt;/b&gt; · ${Object.keys(coaVals).length} value${Object.keys(coaVals).length===1?&quot;&quot;:&quot;s&quot;} matched&lt;/span&gt;`;
-  $(&quot;#coaRawBox&quot;).hidden = !hasCoa; $(&quot;#coaRaw&quot;).textContent = state.coaLines.join(&quot;\n&quot;);
-  $(&quot;#tdsRawBox&quot;).hidden = !state.tdsLines.length; $(&quot;#tdsRaw&quot;).textContent = state.tdsLines.join(&quot;\n&quot;);
-}
-function renderLimits(){
-  const t = state.tds, box = $(&quot;#limitsBox&quot;);
-  box.hidden = !t;
-  if (!t) return;
-  $(&quot;#limitsSum&quot;).textContent = `· ${t.params.length} row${t.params.length===1?&quot;&quot;:&quot;s&quot;} — click to review or correct`;
-  $(&quot;#edTbl tbody&quot;).innerHTML = paramEditorRows(t.params);
-}
 function renderCheck(){
-  renderDocs();
-  const t = state.tds, tb = $(&quot;#resTbl tbody&quot;);
+  const t = tdsById(state.cur);
+  const tb = $(&quot;#resTbl tbody&quot;);
   if (!t){
-    tb.innerHTML = `&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;Load the two documents&lt;/div&gt;1 · TDS (the specification) &amp;nbsp;→&amp;nbsp; 2 · COA (the delivery's certificate). You can also type either one manually.&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
+    tb.innerHTML = state.lib.length
+      ? `&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;No Document 1 selected&lt;/div&gt;Select Document 1 on the left, then upload Document 2 or type its values into the table.&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`
+      : `&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;No Document 1 yet&lt;/div&gt;Add the document that holds the limits first — upload it, paste its table or type it.&lt;br&gt;&lt;br&gt;&lt;button class=&quot;btn primary&quot; data-adddoc1&gt;＋ Add the first Document 1&lt;/button&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
     $(&quot;#stats&quot;).innerHTML = &quot;&quot;; setVerdict(null); $(&quot;#resTitle&quot;).textContent = &quot;Parameter comparison&quot;; return;
   }
-  $(&quot;#resTitle&quot;).textContent = tdsLabel(t) + (t.grade &amp;&amp; !t.code ? &quot; — &quot; + t.grade : &quot;&quot;);
+  $(&quot;#resTitle&quot;).textContent = tdsLabel(t) + (t.grade ? &quot; — &quot; + t.grade : &quot;&quot;);
   const R = currentResults();
   tb.innerHTML = R.length ? R.map(r =&gt; {
     const p = r.p, [lab, cls] = ST[r.st];
     const note = [r.note, p.inferred ? &quot;limit direction inferred&quot; : &quot;&quot;, r.conv ? &quot;unit converted &quot;+r.conv : &quot;&quot;].filter(Boolean).join(&quot; · &quot;);
-    const input = p.type === &quot;info&quot; ? `&lt;span class=&quot;muted&quot;&gt;—&lt;/span&gt;` : `&lt;input class=&quot;vin${r.auto?&quot; auto&quot;:&quot;&quot;}&quot; data-pi=&quot;${r.pi}&quot; value=&quot;${esc(r.value)}&quot; placeholder=&quot;value&quot; aria-label=&quot;COA value for ${esc(p.name)}&quot; title=&quot;${r.auto?&quot;Read from the COA — you can correct it&quot;:&quot;Type the COA value&quot;}&quot;&gt;`;
+    const input = p.type === &quot;info&quot; ? `&lt;span class=&quot;muted&quot;&gt;—&lt;/span&gt;` : `&lt;input class=&quot;vin${r.auto?&quot; auto&quot;:&quot;&quot;}&quot; data-pi=&quot;${r.pi}&quot; value=&quot;${esc(r.value)}&quot; placeholder=&quot;value&quot; aria-label=&quot;Document 2 value for ${esc(p.name)}&quot; title=&quot;${r.auto?&quot;Read from Document 2 — you can correct it&quot;:&quot;Type the Document 2 value&quot;}&quot;&gt;`;
     return `&lt;tr data-row=&quot;${r.pi}&quot; class=&quot;${r.st===&quot;bad&quot;?&quot;row-bad&quot;:&quot;&quot;}&quot;&gt;
       &lt;td&gt;&lt;div class=&quot;pname&quot;&gt;${esc(p.name || &quot;(unnamed)&quot;)}&lt;/div&gt;${r.line?`&lt;span class=&quot;src&quot; title=&quot;${esc(r.line)}&quot;&gt;↳ ${esc(r.line)}&lt;/span&gt;`:&quot;&quot;}&lt;/td&gt;
       &lt;td class=&quot;num&quot;&gt;${esc(limitText(p))}&lt;/td&gt;
       &lt;td&gt;${input}&lt;/td&gt;
       &lt;td&gt;&lt;span class=&quot;pill ${cls}&quot;&gt;${lab}&lt;/span&gt;${note?`&lt;div class=&quot;psub&quot;&gt;${esc(note)}&lt;/div&gt;`:&quot;&quot;}&lt;/td&gt;&lt;/tr&gt;`;
-  }).join(&quot;&quot;) : `&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;No limits yet&lt;/div&gt;Add the TDS limits in the &quot;TDS limits&quot; section below.&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
+  }).join(&quot;&quot;) : `&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;This Document 1 has no limits&lt;/div&gt;Add them in the Document 1 library.&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
   const o = overall(R);
   $(&quot;#stats&quot;).innerHTML = [[&quot;ok&quot;,&quot;Pass&quot;],[&quot;warn&quot;,&quot;Borderline&quot;],[&quot;bad&quot;,&quot;Fail&quot;],[&quot;miss&quot;,&quot;Missing&quot;],[&quot;manual&quot;,&quot;Manual&quot;],[&quot;info&quot;,&quot;Info&quot;]]
     .filter(([k])=&gt;o.c[k]).map(([k,l])=&gt;`&lt;span class=&quot;stat ${ST[k][1]}&quot;&gt;${l}: ${o.c[k]}&lt;/span&gt;`).join(&quot;&quot;);
@@ -8791,141 +8795,87 @@ function renderCheck(){
 function setVerdict(o, R){
   const el = $(&quot;#verdict&quot;);
   let cls, ic, h, p;
-  if (!o){ cls=&quot;v-none&quot;; ic=&quot;?&quot;; h=&quot;No comparison yet&quot;; p=&quot;Load the TDS and the COA above. Values are matched automatically; you can also type or correct them in the table.&quot;; }
-  else if (o.v === &quot;wait&quot;){ cls=&quot;v-none&quot;; ic=&quot;2&quot;; h=&quot;TDS loaded — now add the COA&quot;; p=&quot;Upload or paste the COA, or type its values into the table below.&quot;; }
+  if (!o){ cls=&quot;v-none&quot;; ic=&quot;?&quot;; h=&quot;No check yet&quot;; p=&quot;Select Document 1 (the limits), then upload Document 2 (the values). Values are matched automatically; you can also type or correct them in the table.&quot;; }
+  else if (o.v === &quot;wait&quot;){ cls=&quot;v-none&quot;; ic=&quot;2&quot;; h=&quot;Document 1 selected — now add Document 2&quot;; p=&quot;Upload or paste Document 2, or type its values into the table.&quot;; }
   else {
     const names = st =&gt; R.filter(r=&gt;r.st===st).map(r=&gt;r.p.name);
-    if (o.v === &quot;bad&quot;){ cls=&quot;v-bad&quot;; ic=&quot;✕&quot;; h=&quot;NOT COMPLIANT&quot;; p=&quot;Out of specification: &quot; + names(&quot;bad&quot;).join(&quot;, &quot;) + &quot;. Talk to the supplier / request a sample analysis before accepting the shipment.&quot;; }
-    else if (o.v === &quot;ok&quot;){ cls=&quot;v-ok&quot;; ic=&quot;✓&quot;; h=&quot;COMPLIANT&quot;; p=`All ${o.c.ok} evaluated parameters are within the TDS limits.`; }
+    if (o.v === &quot;bad&quot;){ cls=&quot;v-bad&quot;; ic=&quot;✕&quot;; h=&quot;NOT COMPLIANT&quot;; p=&quot;Out of limit: &quot; + names(&quot;bad&quot;).join(&quot;, &quot;) + &quot;. Talk to the supplier / request a re-test before accepting.&quot;; }
+    else if (o.v === &quot;ok&quot;){ cls=&quot;v-ok&quot;; ic=&quot;✓&quot;; h=&quot;COMPLIANT&quot;; p=`All ${o.c.ok} evaluated parameters are within the Document 1 limits.`; }
     else if (o.v === &quot;warn&quot;){
       cls=&quot;v-warn&quot;; ic=&quot;!&quot;; h=&quot;CONDITIONALLY COMPLIANT&quot;;
       const parts = [];
       if (o.c.warn) parts.push(&quot;close to the limit: &quot; + names(&quot;warn&quot;).join(&quot;, &quot;));
-      if (o.c.miss) parts.push(&quot;missing on the COA: &quot; + names(&quot;miss&quot;).join(&quot;, &quot;));
+      if (o.c.miss) parts.push(&quot;missing in Document 2: &quot; + names(&quot;miss&quot;).join(&quot;, &quot;));
       if (o.c.manual) parts.push(&quot;manual check: &quot; + names(&quot;manual&quot;).join(&quot;, &quot;));
-      p = &quot;Nothing is out of specification, but &quot; + parts.join(&quot; · &quot;) + &quot;.&quot;;
-    } else { cls=&quot;v-none&quot;; ic=&quot;?&quot;; h=&quot;Waiting for values&quot;; p=&quot;No COA value could be evaluated yet — upload the COA or type the values.&quot;; }
+      p = &quot;Nothing is out of limit, but &quot; + parts.join(&quot; · &quot;) + &quot;.&quot;;
+    } else { cls=&quot;v-none&quot;; ic=&quot;?&quot;; h=&quot;Waiting for values&quot;; p=&quot;No Document 2 value could be evaluated yet — upload Document 2 or type the values.&quot;; }
   }
   const mm = o &amp;&amp; o.v !== &quot;wait&quot; ? productMismatch() : &quot;&quot;;
   el.className = &quot;verdict &quot; + cls;
   el.innerHTML = `&lt;div class=&quot;ic&quot;&gt;${ic}&lt;/div&gt;&lt;div&gt;&lt;h3&gt;${h}&lt;/h3&gt;&lt;p&gt;${esc(p)}&lt;/p&gt;${mm ? `&lt;p class=&quot;mismatch&quot;&gt;⚠ ${esc(mm)}&lt;/p&gt;` : &quot;&quot;}&lt;/div&gt;`;
 }
-function runMatch(){
-  for (const k in coaVals) delete coaVals[k];
-  if (state.tds &amp;&amp; state.coaLines.length){
-    const m = matchCoa(state.tds, state.coaLines);
-    for (const pi in m) coaVals[pi] = {value:m[pi].value, auto:true, line:m[pi].line, conv:m[pi].conv};
-  }
-  renderLimits(); renderCheck();
-}
-function setTds(t, lines){
-  state.tds = t; state.tdsLines = lines || [];
-  runMatch();
-  if (!t.params.length) $(&quot;#limitsBox&quot;).open = true;
-}
 function applyCoa(lines, fname, isOcr){
   stopSpeak();
-  recId = null; setSaved(null);   // each new COA = a new report, so start its shipment fields fresh
+  recId = null; setSaved(null);   // each new Document 2 = a new report, so start its detail fields fresh
   [&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;].forEach(s =&gt; $(s).value = &quot;&quot;);
   state.coaLines = lines; state.coaFile = fname;
+  $(&quot;#rawBox&quot;).hidden = !lines.length; $(&quot;#rawTxt&quot;).textContent = lines.join(&quot;\n&quot;);
   const meta = detectMeta(lines);
   if (meta.lot) $(&quot;#fLot&quot;).value = meta.lot;
   if (meta.date) $(&quot;#fDate&quot;).value = meta.date;
+  const det = detectProduct(lines);
+  if (det){ state.cur = det.id; $(&quot;#prodSel&quot;).value = det.id; $(&quot;#autoNote&quot;).textContent = &quot;Matched automatically — change it if it is wrong.&quot;; }
+  else if (!state.cur) $(&quot;#autoNote&quot;).textContent = state.lib.length ? &quot;No matching Document 1 found — select one or add it.&quot; : &quot;Document 2 read. Add its Document 1 (the limits) to compare.&quot;;
   runMatch();
-  if (!state.tds){ toast(&quot;COA read — now load the TDS (step 1) to compare&quot;); return; }
-  toast((isOcr?&quot;Read with OCR · &quot;:&quot;&quot;) + Object.keys(coaVals).length + &quot; of &quot; + state.tds.params.filter(p=&gt;p.type!==&quot;info&quot;).length + &quot; parameters matched on the COA&quot;);
-  if (TTS.ok &amp;&amp; TTS.auto) speakCurrent();
+  const t = tdsById(state.cur);
+  if (t) toast((isOcr?&quot;Read with OCR · &quot;:&quot;&quot;) + Object.keys(coaVals).length + &quot; of &quot; + t.params.filter(p=&gt;p.type!==&quot;info&quot;).length + &quot; parameters matched in Document 2&quot;);
+  if (t &amp;&amp; TTS.ok &amp;&amp; TTS.auto) speakCurrent();
 }
-async function readFile(file, which){
-  const prog = $(&quot;#&quot; + which + &quot;Prog&quot;), chip = $(&quot;#&quot; + which + &quot;Chip&quot;);
-  chip.hidden = false; chip.textContent = &quot;📄 &quot; + file.name + &quot; — reading…&quot;;
-  prog.hidden = false; prog.firstElementChild.style.width = &quot;5%&quot;;
-  try {
-    const res = await fileLines(file, f =&gt; { if (isFinite(f)) prog.firstElementChild.style.width = Math.max(5, f*100) + &quot;%&quot;; });
-    return res;
-  } catch(e){ chip.textContent = &quot;📄 &quot; + file.name + &quot; — could not be read&quot;; toast(&quot;Could not read &quot; + file.name + &quot;: &quot; + e.message); console.error(e); return null; }
-  finally { setTimeout(() =&gt; prog.hidden = true, 400); }
-}
-async function handleTdsFile(file){
-  const r = await readFile(file, &quot;tds&quot;); if (!r) return;
-  const pr = parseTdsLines(r.lines, file.name);
-  setTds({name:pr.name, code:pr.code, grade:pr.grade, file:file.name, params:pr.rows.map(x =&gt; parseSpec(x[0], x[1], x[2]))}, r.lines);
-  toast(pr.rows.length ? `TDS read${r.ocr?&quot; with OCR&quot;:&quot;&quot;}: ${pr.rows.length} rows — check them under &quot;TDS limits&quot; if needed` : &quot;No specification table found in the TDS — add the limits manually under \&quot;TDS limits\&quot;&quot;);
+function runMatch(){
+  for (const k in coaVals) delete coaVals[k];
+  const t = tdsById(state.cur);
+  if (t &amp;&amp; state.coaLines.length){
+    const m = matchCoa(t, state.coaLines);
+    for (const pi in m) coaVals[pi] = {value:m[pi].value, auto:true, line:m[pi].line, conv:m[pi].conv};
+  }
+  renderCheck();
 }
 async function handleCoaFile(file){
-  const r = await readFile(file, &quot;coa&quot;); if (!r) return;
-  applyCoa(r.lines, file.name, r.ocr);
+  const chip = $(&quot;#coaChip&quot;), prog = $(&quot;#coaProg&quot;);
+  chip.hidden = false; chip.innerHTML = `📄 &lt;span&gt;${esc(file.name)}&lt;/span&gt; &lt;span class=&quot;muted&quot; id=&quot;coaStat&quot;&gt;reading…&lt;/span&gt;`;
+  prog.hidden = false; prog.firstElementChild.style.width = &quot;5%&quot;;
+  try{
+    const {lines, ocr:isOcr} = await fileLines(file, f =&gt; { prog.firstElementChild.style.width = Math.max(5, f*100)+&quot;%&quot;; const s=$(&quot;#coaStat&quot;); if (s &amp;&amp; isFinite(f)) s.textContent = Math.round(f*100)+&quot;%&quot;; });
+    $(&quot;#coaStat&quot;).textContent = lines.length + &quot; lines&quot; + (isOcr ? &quot; · OCR&quot; : &quot;&quot;);
+    applyCoa(lines, file.name, isOcr);
+  } catch(e){ $(&quot;#coaStat&quot;).textContent = &quot;error&quot;; toast(&quot;Could not read the file: &quot; + e.message); console.error(e); }
+  finally { setTimeout(()=&gt;prog.hidden = true, 500); }
 }
 function clearCheck(){
   stopSpeak();
   recId = null; setSaved(null);
   for (const k in coaVals) delete coaVals[k];
-  state.tds = null; state.tdsLines = []; state.coaLines = []; state.coaFile = &quot;&quot;;
-  [&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;,&quot;#tdsPaste&quot;,&quot;#coaPaste&quot;].forEach(s =&gt; $(s).value = &quot;&quot;);
-  $(&quot;#tdsPasteBox&quot;).hidden = true; $(&quot;#coaPasteBox&quot;).hidden = true;
-  renderLimits(); renderCheck();
+  state.coaLines = []; state.coaFile = &quot;&quot;;
+  [&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;,&quot;#pasteTxt&quot;].forEach(s =&gt; $(s).value = &quot;&quot;);
+  $(&quot;#coaChip&quot;).hidden = true; $(&quot;#rawBox&quot;).hidden = true; $(&quot;#autoNote&quot;).textContent = &quot;&quot;;
+  renderCheck();
 }
 
-/* ================= TDS limits editor ================= */
-const TYPES = [[&quot;min&quot;,&quot;Min (≥)&quot;],[&quot;max&quot;,&quot;Max (≤)&quot;],[&quot;range&quot;,&quot;Range&quot;],[&quot;text&quot;,&quot;Text&quot;],[&quot;nominal&quot;,&quot;Typical&quot;],[&quot;info&quot;,&quot;Info&quot;]];
-function paramEditorRows(params){
-  return params.map((p,i)=&gt;`&lt;tr data-i=&quot;${i}&quot;&gt;
-    &lt;td&gt;&lt;input data-f=&quot;name&quot; value=&quot;${esc(p.name)}&quot; aria-label=&quot;Parameter&quot;&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;input data-f=&quot;unit&quot; value=&quot;${esc(p.unit)}&quot; style=&quot;width:80px&quot; aria-label=&quot;Unit&quot;&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;select data-f=&quot;type&quot; aria-label=&quot;Limit type&quot;&gt;${TYPES.map(([v,l])=&gt;`&lt;option value=&quot;${v}&quot;${p.type===v?&quot; selected&quot;:&quot;&quot;}&gt;${l}&lt;/option&gt;`).join(&quot;&quot;)}&lt;/select&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;input class=&quot;n&quot; data-f=&quot;lo&quot; value=&quot;${p.lo==null?&quot;&quot;:fmt(p.lo)}&quot; ${[&quot;min&quot;,&quot;range&quot;,&quot;nominal&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;} aria-label=&quot;Min&quot;&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;input class=&quot;n&quot; data-f=&quot;hi&quot; value=&quot;${p.hi==null?&quot;&quot;:fmt(p.hi)}&quot; ${[&quot;max&quot;,&quot;range&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;} aria-label=&quot;Max&quot;&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;input data-f=&quot;text&quot; value=&quot;${esc(p.text)}&quot; ${[&quot;text&quot;,&quot;info&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;} aria-label=&quot;Text&quot;&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;button class=&quot;x&quot; data-del=&quot;${i}&quot; title=&quot;Delete row&quot;&gt;×&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`).join(&quot;&quot;);
-}
-(function bindEditor(){
-  const root = $(&quot;#edTbl&quot;);
-  const changed = () =&gt; { $(&quot;#limitsSum&quot;).textContent = `· ${state.tds.params.length} rows — edited`; renderCheck(); };
-  root.addEventListener(&quot;input&quot;, e =&gt; {
-    const tr = e.target.closest(&quot;tr[data-i]&quot;); if (!tr || !state.tds) return;
-    const p = state.tds.params[+tr.dataset.i], f = e.target.dataset.f;
-    if (f === &quot;type&quot;) return;
-    if (f === &quot;lo&quot; || f === &quot;hi&quot;){ const n = nums(e.target.value); p[f] = n.length ? n[0].v : null; }
-    else p[f] = e.target.value;
-    p.inferred = false; changed();
-  });
-  root.addEventListener(&quot;change&quot;, e =&gt; {
-    if (e.target.dataset.f !== &quot;type&quot; || !state.tds) return;
-    const p = state.tds.params[+e.target.closest(&quot;tr[data-i]&quot;).dataset.i];
-    p.type = e.target.value; p.inferred = false;
-    root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(state.tds.params); changed();
-  });
-  root.addEventListener(&quot;click&quot;, e =&gt; {
-    const d = e.target.closest(&quot;[data-del]&quot;); if (!d || !state.tds) return;
-    const i = +d.dataset.del;
-    state.tds.params.splice(i, 1);
-    // COA values are keyed by row index — shift the ones after the deleted row
-    const keys = Object.keys(coaVals).map(Number).sort((a,b)=&gt;a-b);
-    for (const k of keys){ if (k === i) delete coaVals[k]; else if (k &gt; i){ coaVals[k-1] = coaVals[k]; delete coaVals[k]; } }
-    root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(state.tds.params); changed();
-  });
-  $(&quot;#edAdd&quot;).onclick = () =&gt; {
-    if (!state.tds) return;
-    state.tds.params.push({name:&quot;&quot;, unit:&quot;%&quot;, type:&quot;max&quot;, lo:null, hi:null, text:&quot;&quot;, inferred:false});
-    root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(state.tds.params); changed();
-    const inp = root.querySelector(`tr[data-i=&quot;${state.tds.params.length-1}&quot;] input`); if (inp) inp.focus();
-  };
-})();
-
-/* ================= reports: every comparison is kept as a numbered report ================= */
+/* ================= reports: every check is kept as a numbered report ================= */
 let recId = null, saveTimer = null;
 function snapshot(){
-  const t = state.tds; if (!t) return null;
+  const t = tdsById(state.cur); if (!t) return null;
   const R = currentResults(), o = overall(R);
-  return { id: uid(), ts: new Date().toISOString(), product: tdsLabel(t), grade: t.grade||&quot;&quot;,
+  return { id: uid(), ts: new Date().toISOString(), tdsId: t.id, product: tdsLabel(t), grade: t.grade||&quot;&quot;,
     sup: $(&quot;#fSup&quot;).value.trim(), lot: $(&quot;#fLot&quot;).value.trim(), coaDate: $(&quot;#fDate&quot;).value.trim(), ref: $(&quot;#fRef&quot;).value.trim(), note: $(&quot;#fNote&quot;).value.trim(),
-    tdsFile: t.file || &quot;&quot;, file: state.coaFile, verdict: o.v, coaLines: state.coaLines.slice(0, 300),
-    tds: {name:t.name, code:t.code, grade:t.grade, file:t.file, params:t.params},
+    tdsFile: t.src || &quot;&quot;, file: state.coaFile, verdict: o.v, coaLines: state.coaLines.slice(0, 300),
+    tds: {id:t.id, name:t.name, code:t.code, grade:t.grade, src:t.src, params:t.params},
     rows: R.map(r =&gt; ({name:r.p.name, limit:limitText(r.p), value:r.value, st:r.st, note:r.note||&quot;&quot;, line:r.line||&quot;&quot;})) };
 }
 const VLAB = {ok:[&quot;COMPLIANT&quot;,&quot;p-ok&quot;], bad:[&quot;NOT COMPLIANT&quot;,&quot;p-bad&quot;], warn:[&quot;CONDITIONAL&quot;,&quot;p-warn&quot;], none:[&quot;—&quot;,&quot;p-miss&quot;]};
+const vKey = v =&gt; VLAB[v] ? v : &quot;none&quot;;
 function nextNo(){
-  const y = new Date().getFullYear(), pre = &quot;COA-&quot; + y + &quot;-&quot;;
+  const y = new Date().getFullYear(), pre = &quot;RPT-&quot; + y + &quot;-&quot;;
   const max = state.hist.reduce((m,h) =&gt; (h.no &amp;&amp; h.no.startsWith(pre)) ? Math.max(m, parseInt(h.no.slice(pre.length),10)||0) : m, 0);
   return pre + String(max + 1).padStart(4, &quot;0&quot;);
 }
@@ -8944,46 +8894,43 @@ function setSaved(rec){
   el.className = &quot;saved&quot;;
   el.innerHTML = `✓ ${esc(rec.no)} saved · &lt;button class=&quot;linkbtn&quot; data-open=&quot;${esc(rec.id)}&quot;&gt;open report&lt;/button&gt;`;
 }
-const vKey = v =&gt; VLAB[v] ? v : &quot;none&quot;;
 function reportHTML(rec){
   const d = new Date(rec.ts), v = vKey(rec.verdict);
   return `&lt;div class=&quot;rep&quot;&gt;
-    &lt;div class=&quot;rep-head&quot;&gt;&lt;div&gt;&lt;div class=&quot;eyebrow&quot;&gt;Anatrica · Quality Control&lt;/div&gt;&lt;h2 style=&quot;font-size:19px;margin-top:3px&quot;&gt;COA Compliance Report&lt;/h2&gt;&lt;/div&gt;
+    &lt;div class=&quot;rep-head&quot;&gt;&lt;div&gt;&lt;div class=&quot;eyebrow&quot;&gt;Anatrica · Quality Control&lt;/div&gt;&lt;h2 style=&quot;font-size:19px;margin-top:3px&quot;&gt;Compliance Report&lt;/h2&gt;&lt;/div&gt;
       &lt;div class=&quot;rep-no&quot;&gt;${esc(rec.no||&quot;&quot;)}&lt;br&gt;${d.toLocaleString(DATE_LOCALE)}${rec.updated?&quot;&lt;br&gt;updated &quot;+new Date(rec.updated).toLocaleString(DATE_LOCALE):&quot;&quot;}&lt;/div&gt;&lt;/div&gt;
     &lt;table class=&quot;meta&quot;&gt;&lt;tbody&gt;
-      &lt;tr&gt;&lt;td&gt;Product&lt;/td&gt;&lt;td&gt;${esc(rec.product)} ${rec.grade &amp;&amp; !/·/.test(rec.product)?&quot;— &quot;+esc(rec.grade):&quot;&quot;}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;Supplier&lt;/td&gt;&lt;td&gt;${esc(rec.sup||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Document 1&lt;/td&gt;&lt;td&gt;${esc(rec.product)} ${rec.grade &amp;&amp; !/·/.test(rec.product)?&quot;— &quot;+esc(rec.grade):&quot;&quot;}${rec.tdsFile?` &lt;span class=&quot;psub&quot;&gt;(${esc(rec.tdsFile)})&lt;/span&gt;`:&quot;&quot;}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Document 2&lt;/td&gt;&lt;td&gt;${esc(rec.file||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Supplier / source&lt;/td&gt;&lt;td&gt;${esc(rec.sup||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
       &lt;tr&gt;&lt;td&gt;Lot / batch&lt;/td&gt;&lt;td&gt;${esc(rec.lot||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;COA date&lt;/td&gt;&lt;td&gt;${esc(rec.coaDate||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;Shipment&lt;/td&gt;&lt;td&gt;${esc(rec.ref||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;TDS document&lt;/td&gt;&lt;td&gt;${esc(rec.tdsFile||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;COA document&lt;/td&gt;&lt;td&gt;${esc(rec.file||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Document 2 date&lt;/td&gt;&lt;td&gt;${esc(rec.coaDate||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Reference&lt;/td&gt;&lt;td&gt;${esc(rec.ref||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
     &lt;/tbody&gt;&lt;/table&gt;
     &lt;div class=&quot;rep-v ${v}&quot;&gt;RESULT: ${VLAB[v][0]}&lt;/div&gt;
-    &lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;TDS limit&lt;/th&gt;&lt;th&gt;COA value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th&gt;Note&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+    &lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;Document 1 limit&lt;/th&gt;&lt;th&gt;Document 2 value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th&gt;Note&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
       ${rec.rows.map(r=&gt;{ const st = ST[r.st] || ST.manual; return `&lt;tr class=&quot;${r.st===&quot;bad&quot;?&quot;row-bad&quot;:&quot;&quot;}&quot;&gt;&lt;td&gt;${esc(r.name)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${esc(r.limit)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${esc(r.value||&quot;—&quot;)}&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;pill ${st[1]}&quot;&gt;${st[0]}&lt;/span&gt;&lt;/td&gt;&lt;td class=&quot;psub&quot;&gt;${esc(r.note)}&lt;/td&gt;&lt;/tr&gt;`; }).join(&quot;&quot;)}
     &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;
     ${rec.note?`&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; ${esc(rec.note)}&lt;/p&gt;`:&quot;&quot;}
     &lt;div class=&quot;rep-sign&quot;&gt;&lt;div&gt;Checked by / signature&lt;/div&gt;&lt;div&gt;Approved by / signature&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`;
 }
 function printReport(rec){
-  if (!rec){ toast(&quot;Load the TDS and the COA first&quot;); return; }
+  if (!rec){ toast(&quot;Select Document 1 and add Document 2 first&quot;); return; }
   $(&quot;#report&quot;).innerHTML = reportHTML(rec);
   window.print();
 }
-function closeModal(){ if (TTS.btn &amp;&amp; TTS.btn.id === &quot;rpSpeak&quot;) stopSpeak(); const m = $(&quot;#modal&quot;); m.hidden = true; m.innerHTML = &quot;&quot;; }
 function openReport(rec){
   if (!rec) return;
   const m = $(&quot;#modal&quot;); m.hidden = false;
   m.innerHTML = `&lt;div class=&quot;card&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Report ${esc(rec.no||&quot;&quot;)}&quot;&gt;
     &lt;div class=&quot;card-h&quot;&gt;&lt;div class=&quot;toolbar&quot;&gt;
         &lt;button class=&quot;btn sm primary&quot; id=&quot;rpPrint&quot;&gt;Print / PDF&lt;/button&gt;
-        &lt;button class=&quot;btn sm ghost&quot; id=&quot;rpEdit&quot;&gt;Open in Compare / edit&lt;/button&gt;
+        &lt;button class=&quot;btn sm ghost&quot; id=&quot;rpEdit&quot;&gt;Open in Check / edit&lt;/button&gt;
         &lt;button class=&quot;btn sm ghost&quot; id=&quot;rpSpeak&quot; ${TTS.ok?&quot;&quot;:&quot;hidden&quot;}&gt;🔊 Read aloud&lt;/button&gt;
         &lt;button class=&quot;btn sm danger&quot; id=&quot;rpDel&quot;&gt;Delete&lt;/button&gt;&lt;/div&gt;
-      &lt;button class=&quot;x&quot; id=&quot;rpClose&quot; title=&quot;Close&quot;&gt;×&lt;/button&gt;&lt;/div&gt;
+      &lt;button class=&quot;x&quot; id=&quot;mClose&quot; title=&quot;Close&quot;&gt;×&lt;/button&gt;&lt;/div&gt;
     &lt;div class=&quot;card-b&quot;&gt;${reportHTML(rec)}&lt;/div&gt;&lt;/div&gt;`;
-  $(&quot;#rpClose&quot;).onclick = closeModal;
+  $(&quot;#mClose&quot;).onclick = closeModal;
   $(&quot;#rpPrint&quot;).onclick = () =&gt; printReport(rec);
   $(&quot;#rpEdit&quot;).onclick = () =&gt; { closeModal(); loadReport(rec); };
   $(&quot;#rpSpeak&quot;).onclick = () =&gt; speakRows(rec.product, vKey(rec.verdict), rec.rows.map(r =&gt; ({name:r.name, limit:r.limit, value:r.value, st:r.st})), $(&quot;#rpSpeak&quot;));
@@ -8992,16 +8939,23 @@ function openReport(rec){
 function deleteReport(id){
   state.hist = state.hist.filter(h =&gt; h.id !== id);
   if (recId === id){ recId = null; setSaved(null); }
-  persist(); $(&quot;#nHist&quot;).textContent = state.hist.length; renderHist();
+  persist(); fillProdSel(); renderHist();
 }
 function loadReport(rec){
-  if (!rec.tds){ toast(&quot;This report was saved by an older version — it can be viewed and printed, not edited&quot;); openReport(rec); return; }
+  let t = tdsById(rec.tdsId) || (rec.tds &amp;&amp; tdsById(rec.tds.id));
+  if (!t &amp;&amp; rec.tds){   // Document 1 was deleted from the library — bring it back from the report
+    t = JSON.parse(JSON.stringify(rec.tds)); t.id = t.id || uid(); t.builtin = false;
+    state.lib.push(t); persist(); toast(&quot;Document 1 “&quot; + t.name + &quot;” was restored to your library from this report&quot;);
+  }
+  if (!t){ toast(&quot;This report's Document 1 is not available — it can be viewed and printed, not edited&quot;); openReport(rec); return; }
   clearCheck(); clearTimeout(saveTimer);
-  state.tds = JSON.parse(JSON.stringify(rec.tds)); state.coaLines = rec.coaLines || []; state.coaFile = rec.file || &quot;&quot;;
+  state.cur = t.id; state.coaLines = rec.coaLines || []; state.coaFile = rec.file || &quot;&quot;;
   $(&quot;#fSup&quot;).value = rec.sup||&quot;&quot;; $(&quot;#fLot&quot;).value = rec.lot||&quot;&quot;; $(&quot;#fDate&quot;).value = rec.coaDate||&quot;&quot;; $(&quot;#fRef&quot;).value = rec.ref||&quot;&quot;; $(&quot;#fNote&quot;).value = rec.note||&quot;&quot;;
-  state.tds.params.forEach((p, pi) =&gt; { const r = rec.rows.find(x =&gt; x.name === p.name); if (r &amp;&amp; r.value) coaVals[pi] = {value:r.value, auto:false, line:r.line||&quot;&quot;}; });
-  recId = rec.id; setSaved(rec);
-  showTab(&quot;check&quot;); renderLimits(); renderCheck(); clearTimeout(saveTimer);
+  $(&quot;#rawBox&quot;).hidden = !state.coaLines.length; $(&quot;#rawTxt&quot;).textContent = state.coaLines.join(&quot;\n&quot;);
+  if (state.coaFile){ $(&quot;#coaChip&quot;).hidden = false; $(&quot;#coaChip&quot;).textContent = &quot;📄 &quot; + state.coaFile; }
+  t.params.forEach((p, pi) =&gt; { const r = rec.rows.find(x =&gt; x.name === p.name); if (r &amp;&amp; r.value) coaVals[pi] = {value:r.value, auto:false, line:r.line||&quot;&quot;}; });
+  fillProdSel(); recId = rec.id; setSaved(rec);
+  showTab(&quot;check&quot;); renderCheck(); clearTimeout(saveTimer);
   toast(&quot;Editing &quot; + rec.no + &quot; — changes are saved to this report&quot;);
 }
 function renderHist(){
@@ -9019,17 +8973,181 @@ function renderHist(){
       &lt;td&gt;&lt;span class=&quot;pill ${VLAB[v][1]}&quot;&gt;${VLAB[v][0]}&lt;/span&gt;&lt;/td&gt;
       &lt;td class=&quot;psub&quot; style=&quot;max-width:320px&quot;&gt;${esc(issues.join(&quot;, &quot;)||&quot;—&quot;)}&lt;/td&gt;
       &lt;td style=&quot;white-space:nowrap&quot;&gt;&lt;button class=&quot;btn sm ghost&quot; data-open=&quot;${esc(h.id)}&quot;&gt;Open&lt;/button&gt; &lt;button class=&quot;btn sm ghost&quot; data-rep=&quot;${esc(h.id)}&quot;&gt;Print&lt;/button&gt; &lt;button class=&quot;x&quot; data-hdel=&quot;${esc(h.id)}&quot; title=&quot;Delete&quot;&gt;×&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`;
-  }).join(&quot;&quot;) || `&lt;tr&gt;&lt;td colspan=&quot;8&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;${H.length ? &quot;No reports match the filter&quot; : &quot;No reports yet&quot;}&lt;/div&gt;${H.length ? &quot;&quot; : &quot;Every comparison you make on the Compare tab is saved here automatically as a numbered report.&quot;}&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
+  }).join(&quot;&quot;) || `&lt;tr&gt;&lt;td colspan=&quot;8&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;${H.length ? &quot;No reports match the filter&quot; : &quot;No reports yet&quot;}&lt;/div&gt;${H.length ? &quot;&quot; : &quot;Every check you make on the Check tab is saved here automatically as a numbered report.&quot;}&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
 }
 function csv(){
-  const head = [&quot;Report no&quot;,&quot;Date&quot;,&quot;Product&quot;,&quot;Supplier&quot;,&quot;Lot&quot;,&quot;COA date&quot;,&quot;Shipment&quot;,&quot;TDS document&quot;,&quot;COA document&quot;,&quot;Result&quot;,&quot;Parameter&quot;,&quot;TDS limit&quot;,&quot;COA value&quot;,&quot;Status&quot;,&quot;Note&quot;];
+  const head = [&quot;Report no&quot;,&quot;Date&quot;,&quot;Document 1&quot;,&quot;Document 2&quot;,&quot;Supplier&quot;,&quot;Lot&quot;,&quot;Document 2 date&quot;,&quot;Reference&quot;,&quot;Result&quot;,&quot;Parameter&quot;,&quot;Document 1 limit&quot;,&quot;Document 2 value&quot;,&quot;Status&quot;,&quot;Note&quot;];
   const out = [head];
-  state.hist.forEach(h =&gt; h.rows.forEach(r =&gt; out.push([h.no||&quot;&quot;, h.ts, h.product, h.sup, h.lot, h.coaDate, h.ref, h.tdsFile||&quot;&quot;, h.file||&quot;&quot;, VLAB[vKey(h.verdict)][0], r.name, r.limit, r.value, (ST[r.st]||ST.manual)[0], r.note])));
+  state.hist.forEach(h =&gt; h.rows.forEach(r =&gt; out.push([h.no||&quot;&quot;, h.ts, h.product, h.file||&quot;&quot;, h.sup, h.lot, h.coaDate, h.ref, VLAB[vKey(h.verdict)][0], r.name, r.limit, r.value, (ST[r.st]||ST.manual)[0], r.note])));
   const s = &quot;﻿&quot; + out.map(r =&gt; r.map(c =&gt; '&quot;' + String(c==null?&quot;&quot;:c).replace(/&quot;/g,'&quot;&quot;') + '&quot;').join(&quot;,&quot;)).join(&quot;\r\n&quot;);
-  download(&quot;coa_reports.csv&quot;, s, &quot;text/csv&quot;);
+  download(&quot;compliance_reports.csv&quot;, s, &quot;text/csv&quot;);
 }
 function download(name, content, type){
   const a = document.createElement(&quot;a&quot;); a.href = URL.createObjectURL(new Blob([content], {type})); a.download = name; document.body.appendChild(a); a.click(); setTimeout(()=&gt;{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+/* ================= Document 1 library ================= */
+function renderLibList(){
+  const q = normTxt($(&quot;#libSearch&quot;).value);
+  const items = [...state.lib].sort((a,b)=&gt;tdsLabel(a).localeCompare(tdsLabel(b))).filter(t =&gt; !q || normTxt(tdsLabel(t)+&quot; &quot;+(t.grade||&quot;&quot;)).includes(q));
+  $(&quot;#libList&quot;).innerHTML = items.map(t =&gt; `&lt;button class=&quot;lib-item&quot; data-id=&quot;${esc(t.id)}&quot; aria-current=&quot;${t.id===state.libSel}&quot;&gt;
+      &lt;div class=&quot;pname&quot;&gt;${esc(t.name || &quot;Unnamed&quot;)}&lt;/div&gt;
+      &lt;div class=&quot;c&quot;&gt;${esc(t.code||&quot;&quot;)} ${t.grade?&quot;· &quot;+esc(t.grade):&quot;&quot;} · ${t.params.length} row${t.params.length===1?&quot;&quot;:&quot;s&quot;}&lt;/div&gt;&lt;/button&gt;`).join(&quot;&quot;)
+    || `&lt;div class=&quot;empty&quot;&gt;${state.lib.length ? &quot;No match&quot; : &quot;Library is empty&quot;}&lt;/div&gt;`;
+}
+const TYPES = [[&quot;min&quot;,&quot;Min (≥)&quot;],[&quot;max&quot;,&quot;Max (≤)&quot;],[&quot;range&quot;,&quot;Range&quot;],[&quot;text&quot;,&quot;Text&quot;],[&quot;nominal&quot;,&quot;Typical&quot;],[&quot;info&quot;,&quot;Info&quot;]];
+function paramEditorRows(params){
+  return params.map((p,i)=&gt;`&lt;tr data-i=&quot;${i}&quot;&gt;
+    &lt;td&gt;&lt;input data-f=&quot;name&quot; value=&quot;${esc(p.name)}&quot; aria-label=&quot;Parameter&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input data-f=&quot;unit&quot; value=&quot;${esc(p.unit)}&quot; style=&quot;width:80px&quot; aria-label=&quot;Unit&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;select data-f=&quot;type&quot; aria-label=&quot;Limit type&quot;&gt;${TYPES.map(([v,l])=&gt;`&lt;option value=&quot;${v}&quot;${p.type===v?&quot; selected&quot;:&quot;&quot;}&gt;${l}&lt;/option&gt;`).join(&quot;&quot;)}&lt;/select&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input class=&quot;n&quot; data-f=&quot;lo&quot; value=&quot;${p.lo==null?&quot;&quot;:fmt(p.lo)}&quot; ${[&quot;min&quot;,&quot;range&quot;,&quot;nominal&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;} aria-label=&quot;Min&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input class=&quot;n&quot; data-f=&quot;hi&quot; value=&quot;${p.hi==null?&quot;&quot;:fmt(p.hi)}&quot; ${[&quot;max&quot;,&quot;range&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;} aria-label=&quot;Max&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input data-f=&quot;text&quot; value=&quot;${esc(p.text)}&quot; ${[&quot;text&quot;,&quot;info&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;} aria-label=&quot;Text&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;button class=&quot;x&quot; data-del=&quot;${i}&quot; title=&quot;Delete row&quot;&gt;×&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`).join(&quot;&quot;);
+}
+function paramTable(params){
+  return `&lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table class=&quot;ed&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;Unit&lt;/th&gt;&lt;th&gt;Limit type&lt;/th&gt;&lt;th&gt;Min&lt;/th&gt;&lt;th&gt;Max&lt;/th&gt;&lt;th&gt;Text&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;${paramEditorRows(params)}&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`;
+}
+function bindParamTable(root, params, onChange){
+  root.addEventListener(&quot;input&quot;, e =&gt; {
+    const tr = e.target.closest(&quot;tr[data-i]&quot;); if (!tr) return;
+    const p = params[+tr.dataset.i], f = e.target.dataset.f;
+    if (f === &quot;type&quot;) return;
+    if (f === &quot;lo&quot; || f === &quot;hi&quot;){ const n = nums(e.target.value); p[f] = n.length ? n[0].v : null; }
+    else p[f] = e.target.value;
+    p.inferred = false; onChange();
+  });
+  root.addEventListener(&quot;change&quot;, e =&gt; {
+    if (e.target.dataset.f !== &quot;type&quot;) return;
+    const p = params[+e.target.closest(&quot;tr[data-i]&quot;).dataset.i];
+    p.type = e.target.value; p.inferred = false;
+    root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(params); onChange();
+  });
+  root.addEventListener(&quot;click&quot;, e =&gt; {
+    const d = e.target.closest(&quot;[data-del]&quot;); if (!d) return;
+    params.splice(+d.dataset.del, 1);
+    root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(params); onChange(+d.dataset.del);
+  });
+}
+const LIB_HELP = `&quot;Min / Max / Range&quot; rows are evaluated automatically; &quot;Text&quot; rows need a manual check; &quot;Info&quot; rows (origin, appearance…) are not evaluated.`;
+function renderLibEd(){
+  const t = tdsById(state.libSel), el = $(&quot;#libEd&quot;);
+  if (!t){ el.innerHTML = `&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;${state.lib.length ? &quot;Select a Document 1&quot; : &quot;Your library is empty&quot;}&lt;/div&gt;${state.lib.length ? &quot;Pick an item on the left or add a new Document 1.&quot; : &quot;Upload a Document 1 on the left, paste its table or create it manually. A colleague's shared library file can be added with 'Add backup file'.&quot;} The limits can be edited here; the Check tab uses them.&lt;/div&gt;`; return; }
+  el.innerHTML = `&lt;div class=&quot;card-h&quot;&gt;&lt;div&gt;&lt;h2&gt;${esc(tdsLabel(t))}&lt;/h2&gt;&lt;div class=&quot;psub&quot;&gt;${esc(t.grade||&quot;&quot;)} ${t.src?&quot;· source: &quot;+esc(t.src):&quot;&quot;}&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;&lt;button class=&quot;btn sm primary&quot; id=&quot;edUse&quot;&gt;Check with this Document 1 →&lt;/button&gt;&lt;button class=&quot;btn sm danger&quot; id=&quot;edDel&quot;&gt;Delete&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;card-b&quot;&gt;
+      &lt;div class=&quot;grid2&quot; style=&quot;margin-bottom:14px&quot;&gt;
+        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;edName&quot;&gt;Name&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;edName&quot; value=&quot;${esc(t.name)}&quot;&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;edCode&quot;&gt;Code&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;edCode&quot; value=&quot;${esc(t.code||&quot;&quot;)}&quot;&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;edGrade&quot;&gt;Grade / version&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;edGrade&quot; value=&quot;${esc(t.grade||&quot;&quot;)}&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div id=&quot;edTbl&quot;&gt;${paramTable(t.params)}&lt;/div&gt;
+      &lt;div class=&quot;toolbar&quot; style=&quot;margin-top:10px&quot;&gt;&lt;button class=&quot;btn sm ghost&quot; id=&quot;edAdd&quot;&gt;＋ Add row&lt;/button&gt;&lt;span class=&quot;psub&quot;&gt;${LIB_HELP}&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;`;
+  const save = delIdx =&gt; {
+    if (state.cur === t.id &amp;&amp; delIdx != null){   // values are keyed by row index — shift those after a deleted row
+      const keys = Object.keys(coaVals).map(Number).sort((a,b)=&gt;a-b);
+      for (const k of keys){ if (k === delIdx) delete coaVals[k]; else if (k &gt; delIdx){ coaVals[k-1] = coaVals[k]; delete coaVals[k]; } }
+    }
+    persist(); fillProdSel(); renderLibList(); if (state.cur === t.id) renderCheck();
+  };
+  bindParamTable($(&quot;#edTbl&quot;), t.params, save);
+  $(&quot;#edName&quot;).oninput = e =&gt; { t.name = e.target.value; save(); };
+  $(&quot;#edCode&quot;).oninput = e =&gt; { t.code = e.target.value; save(); };
+  $(&quot;#edGrade&quot;).oninput = e =&gt; { t.grade = e.target.value; save(); };
+  $(&quot;#edAdd&quot;).onclick = () =&gt; { t.params.push({name:&quot;&quot;,unit:&quot;%&quot;,type:&quot;max&quot;,lo:null,hi:null,text:&quot;&quot;,inferred:false}); $(&quot;#edTbl tbody&quot;).innerHTML = paramEditorRows(t.params); save(); };
+  $(&quot;#edDel&quot;).onclick = () =&gt; { if (!confirm(&quot;Delete &quot; + tdsLabel(t) + &quot;?&quot;)) return; state.lib = state.lib.filter(x=&gt;x!==t); if (state.cur===t.id){ state.cur=null; renderCheck(); } state.libSel=null; persist(); fillProdSel(); renderLibList(); renderLibEd(); };
+  $(&quot;#edUse&quot;).onclick = () =&gt; { state.cur = t.id; fillProdSel(); runMatch(); showTab(&quot;check&quot;); };
+}
+
+/* adding a Document 1: upload / paste / manual → review → save */
+let addFromCheck = false;
+function closeModal(){ if (TTS.btn &amp;&amp; TTS.btn.id === &quot;rpSpeak&quot;) stopSpeak(); const m = $(&quot;#modal&quot;); m.hidden = true; m.innerHTML = &quot;&quot;; }
+function blankDoc1(){ return {name:&quot;New item&quot;, code:&quot;&quot;, grade:&quot;&quot;, rows:[[&quot;&quot;,&quot;% min&quot;,&quot;&quot;],[&quot;&quot;,&quot;% max&quot;,&quot;&quot;]], file:&quot;entered manually&quot;, lines:[]}; }
+function bindDrop(el, onFiles){
+  [&quot;dragenter&quot;,&quot;dragover&quot;].forEach(ev =&gt; el.addEventListener(ev, e =&gt; { e.preventDefault(); el.classList.add(&quot;over&quot;); }));
+  [&quot;dragleave&quot;,&quot;drop&quot;].forEach(ev =&gt; el.addEventListener(ev, e =&gt; { e.preventDefault(); el.classList.remove(&quot;over&quot;); }));
+  el.addEventListener(&quot;drop&quot;, e =&gt; { const fs = [...e.dataTransfer.files]; if (fs.length) onFiles(fs); });
+}
+function openAddDoc1(){
+  addFromCheck = !$(&quot;#v-check&quot;).hidden;
+  const m = $(&quot;#modal&quot;); m.hidden = false;
+  m.innerHTML = `&lt;div class=&quot;card&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;atTitle&quot; style=&quot;width:min(620px,100%)&quot;&gt;
+    &lt;div class=&quot;card-h&quot;&gt;&lt;h2 id=&quot;atTitle&quot;&gt;Add Document 1&lt;/h2&gt;&lt;button class=&quot;x&quot; id=&quot;mClose&quot; title=&quot;Close&quot;&gt;×&lt;/button&gt;&lt;/div&gt;
+    &lt;div class=&quot;card-b&quot;&gt;
+      &lt;p class=&quot;psub&quot; style=&quot;margin-top:0&quot;&gt;Document 1 is the document that holds the limits.&lt;/p&gt;
+      &lt;div class=&quot;drop&quot; id=&quot;atDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Choose a Document 1 file&quot;&gt;
+        &lt;svg width=&quot;28&quot; height=&quot;28&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z&quot;/&gt;&lt;path d=&quot;M14 3v5h5&quot;/&gt;&lt;path d=&quot;M12 12v6M9 15l3-3 3 3&quot;/&gt;&lt;/svg&gt;
+        &lt;div class=&quot;big&quot;&gt;Drop the file here or click to choose&lt;/div&gt;
+        &lt;div class=&quot;small&quot;&gt;PDF · JPG · PNG — several files at once is fine. The table is read automatically and you review it before saving.&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;label class=&quot;lbl&quot; for=&quot;atPaste&quot; style=&quot;margin-top:16px&quot;&gt;…or paste the table (one line each: Parameter · Unit · Limit)&lt;/label&gt;
+      &lt;textarea class=&quot;inp&quot; id=&quot;atPaste&quot; placeholder=&quot;Purity&amp;#9;% min&amp;#9;99.0&amp;#10;Moisture&amp;#9;% max&amp;#9;0.5&amp;#10;Fe&amp;#9;ppm max&amp;#9;10&quot;&gt;&lt;/textarea&gt;
+      &lt;div class=&quot;toolbar&quot; style=&quot;justify-content:space-between;margin-top:10px&quot;&gt;
+        &lt;button class=&quot;btn ghost&quot; id=&quot;atBlank&quot;&gt;Type it manually&lt;/button&gt;
+        &lt;button class=&quot;btn primary&quot; id=&quot;atPasteGo&quot;&gt;Read pasted text&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;&lt;/div&gt;`;
+  const pick = () =&gt; $(&quot;#tdsFile&quot;).click();
+  $(&quot;#mClose&quot;).onclick = closeModal;
+  $(&quot;#atDrop&quot;).onclick = pick;
+  $(&quot;#atDrop&quot;).onkeydown = e =&gt; { if (e.key===&quot;Enter&quot;||e.key===&quot; &quot;){ e.preventDefault(); pick(); } };
+  bindDrop($(&quot;#atDrop&quot;), fs =&gt; { closeModal(); handleTdsFiles(fs); });
+  $(&quot;#atBlank&quot;).onclick = () =&gt; { closeModal(); openImportReview([blankDoc1()]); };
+  $(&quot;#atPasteGo&quot;).onclick = () =&gt; {
+    const lines = textLines($(&quot;#atPaste&quot;).value);
+    if (!lines.length) return toast(&quot;The text box is empty&quot;);
+    const r = parseTdsLines([&quot;Properties | Unit | Result&quot;].concat(lines), &quot;&quot;);
+    closeModal(); openImportReview([Object.assign(r, {name:&quot;New item&quot;, file:&quot;pasted text&quot;, lines})]);
+  };
+  setTimeout(() =&gt; $(&quot;#atDrop&quot;).focus(), 30);
+}
+function openImportReview(queue){
+  if (!queue.length) return;
+  const item = queue.shift();
+  const t = {id: uid(), name:item.name, code:item.code, grade:item.grade, src:item.file, builtin:false, params: item.rows.map(r=&gt;parseSpec(r[0],r[1],r[2]))};
+  const m = $(&quot;#modal&quot;);
+  m.hidden = false;
+  m.innerHTML = `&lt;div class=&quot;card&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Review Document 1&quot;&gt;
+    &lt;div class=&quot;card-h&quot;&gt;&lt;div&gt;&lt;h2&gt;Review Document 1&lt;/h2&gt;&lt;div class=&quot;psub&quot;&gt;${esc(item.file)} · ${item.rows.length} row${item.rows.length===1?&quot;&quot;:&quot;s&quot;} read${item.ocr?&quot; (OCR)&quot;:&quot;&quot;}${queue.length?&quot; · &quot;+queue.length+&quot; more file(s) waiting&quot;:&quot;&quot;}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;card-b&quot;&gt;
+      &lt;div class=&quot;grid2&quot; style=&quot;margin-bottom:12px&quot;&gt;
+        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;imName&quot;&gt;Name&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;imName&quot; value=&quot;${esc(t.name)}&quot;&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;imCode&quot;&gt;Code&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;imCode&quot; value=&quot;${esc(t.code)}&quot;&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;imGrade&quot;&gt;Grade / version&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;imGrade&quot; value=&quot;${esc(t.grade)}&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      ${item.rows.length ? &quot;&quot; : `&lt;p class=&quot;psub&quot; style=&quot;color:var(--warn)&quot;&gt;No limit table was found automatically — add the rows manually or copy them from the raw text.&lt;/p&gt;`}
+      &lt;div id=&quot;imTbl&quot;&gt;${paramTable(t.params)}&lt;/div&gt;
+      &lt;div class=&quot;toolbar&quot; style=&quot;margin-top:10px&quot;&gt;&lt;button class=&quot;btn sm ghost&quot; id=&quot;imAdd&quot;&gt;＋ Add row&lt;/button&gt;&lt;span class=&quot;psub&quot;&gt;${LIB_HELP}&lt;/span&gt;&lt;/div&gt;
+      ${item.lines.length ? `&lt;details class=&quot;raw&quot;&gt;&lt;summary&gt;Raw text&lt;/summary&gt;&lt;pre&gt;${esc(item.lines.join(&quot;\n&quot;))}&lt;/pre&gt;&lt;/details&gt;` : &quot;&quot;}
+      &lt;div class=&quot;toolbar&quot; style=&quot;justify-content:flex-end;margin-top:12px&quot;&gt;
+        &lt;button class=&quot;btn ghost&quot; id=&quot;imCancel&quot;&gt;Cancel&lt;/button&gt;
+        &lt;button class=&quot;btn primary&quot; id=&quot;imSave&quot;&gt;Save to library&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;&lt;/div&gt;`;
+  bindParamTable($(&quot;#imTbl&quot;), t.params, ()=&gt;{});
+  $(&quot;#imAdd&quot;).onclick = () =&gt; { t.params.push({name:&quot;&quot;,unit:&quot;%&quot;,type:&quot;max&quot;,lo:null,hi:null,text:&quot;&quot;,inferred:false}); $(&quot;#imTbl tbody&quot;).innerHTML = paramEditorRows(t.params); };
+  const next = () =&gt; { m.hidden = true; m.innerHTML = &quot;&quot;; openImportReview(queue); };
+  $(&quot;#imCancel&quot;).onclick = next;
+  $(&quot;#imSave&quot;).onclick = () =&gt; {
+    t.name = $(&quot;#imName&quot;).value.trim() || &quot;New item&quot;; t.code = $(&quot;#imCode&quot;).value.trim(); t.grade = $(&quot;#imGrade&quot;).value.trim();
+    t.params = t.params.filter(p =&gt; p.name.trim());
+    state.lib.push(t); state.libSel = t.id;
+    if (addFromCheck){ state.cur = t.id; $(&quot;#autoNote&quot;).textContent = &quot;The new Document 1 is selected.&quot;; runMatch(); }
+    persist(); fillProdSel(); renderLibList(); renderLibEd(); toast(&quot;Saved: &quot; + tdsLabel(t) + (addFromCheck ? &quot; — selected for the check&quot; : &quot;&quot;)); next();
+  };
+  const first = $(&quot;#imName&quot;); if (first) setTimeout(() =&gt; first.focus(), 30);
+}
+async function handleTdsFiles(files){
+  const queue = [];
+  for (const f of files){
+    toast(&quot;Reading &quot; + f.name + &quot;…&quot;);
+    try { const {lines, ocr:isOcr} = await fileLines(f); const r = parseTdsLines(lines, f.name); queue.push(Object.assign(r, {file:f.name, lines, ocr:isOcr})); }
+    catch(e){ toast(&quot;Could not read &quot; + f.name + &quot;: &quot; + e.message); }
+  }
+  openImportReview(queue);
 }
 
 /* ================= voice read-out (Web Speech API, OS / browser voices) ================= */
@@ -9064,13 +9182,13 @@ function sayValue(v){
   return v.replace(/\bn\.?d\.?(?=\s|$)/i, &quot;not detected&quot;);
 }
 const sayName = n =&gt; String(n||&quot;&quot;).replace(/[（(][^）)]*[）)]/g, &quot; &quot;).replace(/[{][^}]*[}]/g, &quot; &quot;).replace(/_/g, &quot; &quot;).replace(/\s+/g, &quot; &quot;).trim();
-const SAY_ST = { ok:&quot;Pass.&quot;, warn:&quot;Pass, but very close to the limit.&quot;, bad:&quot;Fail!&quot;, miss:&quot;Not reported on the COA.&quot;, manual:&quot;Needs a manual check.&quot;, info:&quot;&quot; };
+const SAY_ST = { ok:&quot;Pass.&quot;, warn:&quot;Pass, but very close to the limit.&quot;, bad:&quot;Fail!&quot;, miss:&quot;Not reported in Document 2.&quot;, manual:&quot;Needs a manual check.&quot;, info:&quot;&quot; };
 const SAY_V = { ok:&quot;compliant&quot;, warn:&quot;conditionally compliant&quot;, bad:&quot;not compliant&quot;, none:&quot;waiting for values&quot; };
 function buildSpeech(product, verdict, rows, mode){
   const S = [], ev = rows.filter(r =&gt; r.st !== &quot;info&quot;);
   const bad = ev.filter(r =&gt; r.st === &quot;bad&quot;).length, open = ev.filter(r =&gt; [&quot;warn&quot;,&quot;miss&quot;,&quot;manual&quot;].includes(r.st)).length;
-  let head = &quot;Result for &quot; + (sayName(product).replace(/·.*$/, &quot;&quot;).trim() || &quot;this product&quot;) + &quot;: &quot; + (SAY_V[verdict] || SAY_V.none) + &quot;.&quot;;
-  if (bad) head += &quot; &quot; + bad + (bad === 1 ? &quot; parameter is&quot; : &quot; parameters are&quot;) + &quot; out of specification.&quot;;
+  let head = &quot;Result for &quot; + (sayName(product).replace(/·.*$/, &quot;&quot;).trim() || &quot;this item&quot;) + &quot;: &quot; + (SAY_V[verdict] || SAY_V.none) + &quot;.&quot;;
+  if (bad) head += &quot; &quot; + bad + (bad === 1 ? &quot; parameter is&quot; : &quot; parameters are&quot;) + &quot; out of limit.&quot;;
   else if (open) head += &quot; &quot; + open + (open === 1 ? &quot; parameter needs&quot; : &quot; parameters need&quot;) + &quot; attention.&quot;;
   S.push({text: head, row: null});
   const list = mode === &quot;issues&quot; ? ev.filter(r =&gt; r.st !== &quot;ok&quot;) : ev;
@@ -9078,11 +9196,11 @@ function buildSpeech(product, verdict, rows, mode){
   for (const r of list){
     const parts = [sayName(r.name) + &quot;.&quot;];
     const lim = sayLimit(r.limit); if (lim) parts.push(&quot;Limit &quot; + lim + &quot;.&quot;);
-    const val = sayValue(r.value); if (val) parts.push(&quot;COA value &quot; + val + &quot;.&quot;);
+    const val = sayValue(r.value); if (val) parts.push(&quot;Value &quot; + val + &quot;.&quot;);
     if (SAY_ST[r.st]) parts.push(SAY_ST[r.st]);
     S.push({text: parts.join(&quot; &quot;), row: r.pi == null ? null : r.pi});
   }
-  S.push({text: &quot;Comparison complete.&quot;, row: null});
+  S.push({text: &quot;Check complete.&quot;, row: null});
   return S;
 }
 const isEn = v =&gt; /^en/i.test(v.lang);
@@ -9130,8 +9248,8 @@ function speakRows(product, verdict, rows, btn){
   });
 }
 function speakCurrent(btn){
-  const t = state.tds;
-  if (!t || !hasCoaData()) return toast(&quot;Load the TDS and the COA first&quot;);
+  const t = tdsById(state.cur);
+  if (!t || !hasCoaData()) return toast(&quot;Select Document 1 and add Document 2 first&quot;);
   const R = currentResults(), o = overall(R);
   speakRows(tdsLabel(t), o.v, R.map(r =&gt; ({name:r.p.name, limit:limitText(r.p), value:r.value, st:r.st, pi:r.pi})), btn || $(&quot;#btnSpeak&quot;));
 }
@@ -9152,55 +9270,32 @@ if (TTS.ok){
 /* ================= wiring ================= */
 function showTab(k){
   $$(&quot;.tab&quot;).forEach(b =&gt; b.setAttribute(&quot;aria-selected&quot;, b.dataset.tab === k));
-  [&quot;check&quot;,&quot;hist&quot;].forEach(x =&gt; $(&quot;#v-&quot;+x).hidden = x !== k);
+  [&quot;check&quot;,&quot;lib&quot;,&quot;hist&quot;].forEach(x =&gt; $(&quot;#v-&quot;+x).hidden = x !== k);
+  if (k === &quot;lib&quot;){ renderLibList(); renderLibEd(); }
   if (k === &quot;hist&quot;) renderHist();
 }
 $$(&quot;.tab&quot;).forEach(b =&gt; b.onclick = () =&gt; showTab(b.dataset.tab));
 
-function bindDrop(el, input, onFile){
-  el.onclick = () =&gt; input.click();
-  el.onkeydown = e =&gt; { if (e.key===&quot;Enter&quot;||e.key===&quot; &quot;){ e.preventDefault(); input.click(); } };
-  [&quot;dragenter&quot;,&quot;dragover&quot;].forEach(ev =&gt; el.addEventListener(ev, e =&gt; { e.preventDefault(); el.classList.add(&quot;over&quot;); }));
-  [&quot;dragleave&quot;,&quot;drop&quot;].forEach(ev =&gt; el.addEventListener(ev, e =&gt; { e.preventDefault(); el.classList.remove(&quot;over&quot;); }));
-  el.addEventListener(&quot;drop&quot;, e =&gt; { const f = e.dataTransfer.files[0]; if (f) onFile(f); });
-  input.onchange = e =&gt; { const f = e.target.files[0]; e.target.value = &quot;&quot;; if (f) onFile(f); };
-}
-bindDrop($(&quot;#tdsDrop&quot;), $(&quot;#tdsFile&quot;), handleTdsFile);
-bindDrop($(&quot;#coaDrop&quot;), $(&quot;#coaFile&quot;), handleCoaFile);
-
-$(&quot;#tdsPasteBtn&quot;).onclick = () =&gt; { $(&quot;#tdsPasteBox&quot;).hidden = !$(&quot;#tdsPasteBox&quot;).hidden; if (!$(&quot;#tdsPasteBox&quot;).hidden) $(&quot;#tdsPaste&quot;).focus(); };
-$(&quot;#tdsPasteGo&quot;).onclick = () =&gt; {
-  const lines = textLines($(&quot;#tdsPaste&quot;).value);
-  if (!lines.length) return toast(&quot;The text box is empty&quot;);
-  const pr = parseTdsLines([&quot;Properties | Unit | Result&quot;].concat(lines), &quot;&quot;);
-  setTds({name: state.tds ? state.tds.name : &quot;&quot;, code:&quot;&quot;, grade:&quot;&quot;, file:&quot;pasted TDS text&quot;, params: pr.rows.map(x =&gt; parseSpec(x[0], x[1], x[2]))}, lines);
-  $(&quot;#tdsPasteBox&quot;).hidden = true;
-  toast(pr.rows.length + &quot; TDS rows read&quot;);
-  if (!state.tds.name) $(&quot;#tdsName&quot;).focus();
-};
-$(&quot;#tdsManualBtn&quot;).onclick = () =&gt; {
-  if (!state.tds) setTds({name:&quot;&quot;, code:&quot;&quot;, grade:&quot;&quot;, file:&quot;entered manually&quot;, params:[
-    {name:&quot;&quot;, unit:&quot;%&quot;, type:&quot;min&quot;, lo:null, hi:null, text:&quot;&quot;, inferred:false},
-    {name:&quot;&quot;, unit:&quot;%&quot;, type:&quot;max&quot;, lo:null, hi:null, text:&quot;&quot;, inferred:false}]}, []);
-  const box = $(&quot;#limitsBox&quot;); box.open = true; box.scrollIntoView({block:&quot;start&quot;, behavior:&quot;smooth&quot;});
-  const inp = $(&quot;#edTbl tbody input&quot;); if (inp) setTimeout(() =&gt; inp.focus(), 300);
-};
-$(&quot;#tdsName&quot;).addEventListener(&quot;input&quot;, e =&gt; { if (state.tds){ state.tds.name = e.target.value; $(&quot;#resTitle&quot;).textContent = tdsLabel(state.tds); if (hasCoaData()) autoSave(); } });
-$(&quot;#tdsCode&quot;).addEventListener(&quot;input&quot;, e =&gt; { if (state.tds){ state.tds.code = e.target.value; state.tds.grade = &quot;&quot;; $(&quot;#resTitle&quot;).textContent = tdsLabel(state.tds); if (hasCoaData()) autoSave(); } });
-
-$(&quot;#coaPasteBtn&quot;).onclick = () =&gt; { $(&quot;#coaPasteBox&quot;).hidden = !$(&quot;#coaPasteBox&quot;).hidden; if (!$(&quot;#coaPasteBox&quot;).hidden) $(&quot;#coaPaste&quot;).focus(); };
-$(&quot;#coaPasteGo&quot;).onclick = () =&gt; {
-  const lines = textLines($(&quot;#coaPaste&quot;).value);
-  if (!lines.length) return toast(&quot;The text box is empty&quot;);
-  $(&quot;#coaPasteBox&quot;).hidden = true;
-  applyCoa(lines, &quot;pasted COA text&quot;, false);
-};
-$(&quot;#coaManualBtn&quot;).onclick = () =&gt; {
-  if (!state.tds) return toast(&quot;Load or enter the TDS first (step 1) — then type the COA values next to each limit&quot;);
+const drop = $(&quot;#coaDrop&quot;);
+drop.onclick = () =&gt; $(&quot;#coaFile&quot;).click();
+drop.onkeydown = e =&gt; { if (e.key===&quot;Enter&quot;||e.key===&quot; &quot;){ e.preventDefault(); $(&quot;#coaFile&quot;).click(); } };
+bindDrop(drop, fs =&gt; handleCoaFile(fs[0]));
+$(&quot;#coaFile&quot;).onchange = e =&gt; { const f = e.target.files[0]; e.target.value = &quot;&quot;; if (f) handleCoaFile(f); };
+$(&quot;#btnManual&quot;).onclick = () =&gt; {
+  if (!state.lib.length) return openAddDoc1();
+  if (!state.cur){ toast(&quot;Select Document 1 in step 1 first&quot;); $(&quot;#prodSel&quot;).focus(); return; }
   const v = $(&quot;#resTbl .vin&quot;); if (v){ v.scrollIntoView({block:&quot;center&quot;, behavior:&quot;smooth&quot;}); v.focus(); }
-  toast(&quot;Type each value from the COA into the table — the verdict and report update as you type&quot;);
+  toast(&quot;Type each value from Document 2 into the table — the verdict and report update as you type&quot;);
 };
-
+$(&quot;#btnPaste&quot;).onclick = () =&gt; { $(&quot;#pasteBox&quot;).hidden = !$(&quot;#pasteBox&quot;).hidden; if (!$(&quot;#pasteBox&quot;).hidden) $(&quot;#pasteTxt&quot;).focus(); };
+$(&quot;#btnPasteGo&quot;).onclick = () =&gt; {
+  const lines = textLines($(&quot;#pasteTxt&quot;).value);
+  if (!lines.length) return toast(&quot;The text box is empty&quot;);
+  $(&quot;#pasteBox&quot;).hidden = true;
+  $(&quot;#coaChip&quot;).hidden = false; $(&quot;#coaChip&quot;).textContent = &quot;📋 Pasted text · &quot; + lines.length + &quot; lines&quot;;
+  applyCoa(lines, &quot;pasted text&quot;, false);
+};
+$(&quot;#prodSel&quot;).onchange = e =&gt; { state.cur = e.target.value || null; $(&quot;#autoNote&quot;).textContent = &quot;&quot;; runMatch(); };
 $(&quot;#resTbl&quot;).addEventListener(&quot;input&quot;, e =&gt; {
   const pi = e.target.dataset.pi; if (pi == null) return;
   coaVals[pi] = Object.assign(coaVals[pi]||{}, {value:e.target.value, auto:false, conv:null});
@@ -9208,37 +9303,48 @@ $(&quot;#resTbl&quot;).addEventListener(&quot;input&quot;, e =&gt; {
   renderCheck();
   const el = $(`#resTbl .vin[data-pi=&quot;${pi}&quot;]`); if (el){ el.focus(); try{ el.setSelectionRange(pos,pos); }catch(_){} }
 });
-[&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;].forEach(id =&gt; $(id).addEventListener(&quot;input&quot;, () =&gt; { if (state.tds &amp;&amp; hasCoaData()) autoSave(); }));
+[&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;].forEach(id =&gt; $(id).addEventListener(&quot;input&quot;, () =&gt; { if (state.cur &amp;&amp; hasCoaData()) autoSave(); }));
 $(&quot;#btnClear&quot;).onclick = clearCheck;
 $(&quot;#btnPrint&quot;).onclick = () =&gt; { const s = snapshot(); if (s &amp;&amp; recId){ const r = state.hist.find(h=&gt;h.id===recId); if (r){ s.no = r.no; s.ts = r.ts; } } printReport(s &amp;&amp; hasCoaData() ? s : null); };
 document.addEventListener(&quot;click&quot;, e =&gt; {
+  if (e.target.closest(&quot;[data-adddoc1]&quot;)) return openAddDoc1();
   if (e.target.closest(&quot;[data-rep],[data-hdel]&quot;)) return;
   const b = e.target.closest(&quot;[data-open]&quot;); if (b) openReport(state.hist.find(h =&gt; h.id === b.dataset.open));
 });
 
-$(&quot;#histSearch&quot;).oninput = renderHist;
-$(&quot;#histVerdict&quot;).onchange = renderHist;
-$(&quot;#btnCsv&quot;).onclick = csv;
-$(&quot;#btnExport&quot;).onclick = () =&gt; download(&quot;coa_reports_backup_&quot; + new Date().toISOString().slice(0,10) + &quot;.json&quot;, JSON.stringify({v:2, hist:state.hist}, null, 1), &quot;application/json&quot;);
+$(&quot;#libSearch&quot;).oninput = renderLibList;
+$(&quot;#libList&quot;).onclick = e =&gt; { const b = e.target.closest(&quot;.lib-item&quot;); if (!b) return; state.libSel = b.dataset.id; renderLibList(); renderLibEd(); };
+const tdsDrop = $(&quot;#tdsDrop&quot;);
+tdsDrop.onclick = () =&gt; { addFromCheck = false; $(&quot;#tdsFile&quot;).click(); };
+tdsDrop.onkeydown = e =&gt; { if (e.key===&quot;Enter&quot;||e.key===&quot; &quot;){ e.preventDefault(); tdsDrop.click(); } };
+bindDrop(tdsDrop, fs =&gt; { addFromCheck = false; handleTdsFiles(fs); });
+$(&quot;#tdsFile&quot;).onchange = e =&gt; { const fs = [...e.target.files]; e.target.value = &quot;&quot;; if (fs.length){ closeModal(); handleTdsFiles(fs); } };
+$(&quot;#btnTdsBlank&quot;).onclick = () =&gt; { addFromCheck = false; openImportReview([blankDoc1()]); };
+$(&quot;#btnExport&quot;).onclick = () =&gt; download(&quot;compliance_backup_&quot; + new Date().toISOString().slice(0,10) + &quot;.json&quot;, JSON.stringify({v:3, lib:state.lib, hist:state.hist}, null, 1), &quot;application/json&quot;);
 $(&quot;#btnImport&quot;).onclick = () =&gt; $(&quot;#impFile&quot;).click();
 $(&quot;#impFile&quot;).onchange = async e =&gt; {
   const f = e.target.files[0]; e.target.value = &quot;&quot;; if (!f) return;
   try {
     const d = JSON.parse(await f.text());
-    const list = Array.isArray(d.hist) ? d.hist : null; if (!list) throw new Error(&quot;not a report backup file&quot;);
-    const have = new Set(state.hist.map(h =&gt; h.id));
-    const add = list.filter(h =&gt; h &amp;&amp; h.id &amp;&amp; Array.isArray(h.rows) &amp;&amp; !have.has(h.id));
-    state.hist = state.hist.concat(add).sort((a,b) =&gt; String(b.ts).localeCompare(String(a.ts)));
-    persist(); $(&quot;#nHist&quot;).textContent = state.hist.length; renderHist();
-    toast(&quot;Added &quot; + add.length + &quot; report&quot; + (add.length===1?&quot;&quot;:&quot;s&quot;) + ((list.length - add.length) ? &quot; · &quot; + (list.length - add.length) + &quot; already present&quot; : &quot;&quot;));
+    if (!Array.isArray(d.lib) &amp;&amp; !Array.isArray(d.hist)) throw new Error(&quot;not a backup file&quot;);
+    const libIds = new Set(state.lib.map(t =&gt; t.id)), histIds = new Set(state.hist.map(h =&gt; h.id));
+    const addL = (d.lib||[]).filter(t =&gt; t &amp;&amp; t.id &amp;&amp; Array.isArray(t.params) &amp;&amp; !libIds.has(t.id)).map(t =&gt; Object.assign(t, {builtin:false}));
+    const addH = (d.hist||[]).filter(h =&gt; h &amp;&amp; h.id &amp;&amp; Array.isArray(h.rows) &amp;&amp; !histIds.has(h.id));
+    state.lib = state.lib.concat(addL); state.hist = state.hist.concat(addH).sort((a,b) =&gt; String(b.ts).localeCompare(String(a.ts)));
+    persist(); fillProdSel(); renderLibList(); renderLibEd(); renderCheck();
+    toast(&quot;Added &quot; + addL.length + &quot; Document 1 item&quot; + (addL.length===1?&quot;&quot;:&quot;s&quot;) + &quot; and &quot; + addH.length + &quot; report&quot; + (addH.length===1?&quot;&quot;:&quot;s&quot;));
   } catch(err){ toast(&quot;Could not read the backup: &quot; + err.message); }
 };
+$(&quot;#histSearch&quot;).oninput = renderHist;
+$(&quot;#histVerdict&quot;).onchange = renderHist;
+$(&quot;#btnCsv&quot;).onclick = csv;
 $(&quot;#histTbl&quot;).onclick = e =&gt; {
   const r = e.target.closest(&quot;[data-rep]&quot;); if (r) return printReport(state.hist.find(h=&gt;h.id===r.dataset.rep));
   const d = e.target.closest(&quot;[data-hdel]&quot;); if (d &amp;&amp; confirm(&quot;Delete this report?&quot;)) deleteReport(d.dataset.hdel);
 };
-$(&quot;#modal&quot;).addEventListener(&quot;click&quot;, e =&gt; { if (e.target.id === &quot;modal&quot;) closeModal(); });
-document.addEventListener(&quot;keydown&quot;, e =&gt; { if (e.key === &quot;Escape&quot; &amp;&amp; !$(&quot;#modal&quot;).hidden) closeModal(); });
+function dismissModal(){ if ($(&quot;#imCancel&quot;)) $(&quot;#imCancel&quot;).click(); else closeModal(); }
+$(&quot;#modal&quot;).addEventListener(&quot;click&quot;, e =&gt; { if (e.target.id === &quot;modal&quot;) dismissModal(); });
+document.addEventListener(&quot;keydown&quot;, e =&gt; { if (e.key === &quot;Escape&quot; &amp;&amp; !$(&quot;#modal&quot;).hidden) dismissModal(); });
 
 // theme
 const THEMES = [&quot;light&quot;,&quot;dark&quot;,&quot;system&quot;];
@@ -9251,12 +9357,11 @@ window.addEventListener(&quot;message&quot;, e =&gt; {
   if (d.__portalTheme) applyTheme(d.__portalTheme);
   if (d.__coaStoreData &amp;&amp; d.__coaStoreData.key === STORE_KEY &amp;&amp; STORAGE === &quot;parent&quot;){
     let v = null; try { v = JSON.parse(d.__coaStoreData.val); } catch(_){}
-    if (v){ applyStored(v); $(&quot;#nHist&quot;).textContent = state.hist.length; if (!$(&quot;#v-hist&quot;).hidden) renderHist(); }
+    if (v){ applyStored(v); fillProdSel(); renderCheck(); if (!$(&quot;#v-hist&quot;).hidden) renderHist(); if (!$(&quot;#v-lib&quot;).hidden){ renderLibList(); renderLibEd(); } }
   }
 });
 
-$(&quot;#nHist&quot;).textContent = state.hist.length;
-renderLimits();
+fillProdSel();
 renderCheck();
 &lt;/script&gt;
 &lt;/body&gt;
@@ -9276,11 +9381,11 @@ renderCheck();
 (function(){
   "use strict";
   var ORDER    = ["ledger","duty","strat","game","deal","news","play","proc","copper","fin","coa"];
-  var LABEL    = {"ledger":"Trade Ledger","duty":"Duty Matrix","strat":"Strategy","game":"Game Theory","deal":"Deal Sheet","news":"News","play":"Playbook","proc":"Process","copper":"Copper LME","fin":"Finance","coa":"COA Check"};
+  var LABEL    = {"ledger":"Trade Ledger","duty":"Duty Matrix","strat":"Strategy","game":"Game Theory","deal":"Deal Sheet","news":"News","play":"Playbook","proc":"Process","copper":"Copper LME","fin":"Finance","coa":"Document Check"};
   var TABC     = {"ledger":"var(--imports)","duty":"var(--exports)","strat":"var(--accent)","game":"var(--imports)","deal":"var(--good)","news":"var(--warn)","play":"var(--ink-muted)","proc":"var(--good)","copper":"var(--exports)","fin":"var(--imports)","coa":"var(--good)"};
-  var STAMP    = [{"label":"Trade Map 2025","review":"2027-03-01"},{"label":"MacMap 2026-09","review":"2027-03-01"},{"label":"Review 2026-09","review":"2027-03-01"},{"label":"models 2026-09","review":"2027-03-01"},{"label":"FBX 2026-09","review":"2027-03-01"},{"label":"GDELT live","review":"2027-06-01"},{"label":"2026-09-03","review":"2027-03-01"},{"label":"process refs","review":"2028-01-01"},{"label":"westmetall CSV","review":"2027-06-01"},{"label":"AV 2026-09-21","review":"2026-12-01"},{"label":"TDS + COA","review":"2027-09-01"}];      /* [{label, review}] */
+  var STAMP    = [{"label":"Trade Map 2025","review":"2027-03-01"},{"label":"MacMap 2026-09","review":"2027-03-01"},{"label":"Review 2026-09","review":"2027-03-01"},{"label":"models 2026-09","review":"2027-03-01"},{"label":"FBX 2026-09","review":"2027-03-01"},{"label":"GDELT live","review":"2027-06-01"},{"label":"2026-09-03","review":"2027-03-01"},{"label":"process refs","review":"2028-01-01"},{"label":"westmetall CSV","review":"2027-06-01"},{"label":"AV 2026-09-21","review":"2026-12-01"},{"label":"Doc 1 vs Doc 2","review":"2027-09-01"}];      /* [{label, review}] */
   var PRODUCTS = [["Potassium Nitrate", "283421"], ["Activated Carbon", "380210"], ["Ammonium Sulphate", "310221"], ["Calcium Chloride", "282720"], ["Calcium Hypochlorite", "282810"], ["Caustic Soda", "281511"], ["Copper Sulphate", "283325"], ["Ferric Chloride", "282739"], ["Ferrous Sulphate", "283329"], ["Formaldehyde", "291211"], ["Formic Acid", "291511"], ["Hydrochloric Acid", "280610"], ["Hydrogen Peroxide", "284700"], ["Lead Nitrate", "283429"], ["Magnesium Chloride", "282731"], ["Magnesium Oxide", "251990"], ["Magnesium Sulfate", "283321"], ["Manganese Sulphate", "283329"], ["Nitric Acid", "280800"], ["Potassium Amyl Xanthate", "293020"], ["Potassium Carbonate", "283640"], ["Soda Ash", "283620"], ["Sodium Fluoride", "282619"], ["Sodium Formate", "291512"], ["Sodium Metabisulphite", "283210"], ["Sodium Sulphide", "283010"], ["Sulphur Powder", "250300"], ["Zinc Sulphate", "283329"]];   /* [[name, hs], ...] */
-  var ALIAS    = { strategy:"strat", board:"strat", review:"strat", ledger:"ledger", trade:"ledger", duty:"duty", matrix:"duty", dealsheet:"deal", sheet:"deal", playbook:"play", play:"play", game:"game", gametheory:"game", nash:"game", process:"proc", proc:"proc", recipe:"proc", production:"proc", copper:"copper", lme:"copper", bakir:"copper", fin:"fin", finance:"fin", finans:"fin", coa:"coa", tds:"coa", kalite:"coa", quality:"coa", rapor:"coa", report:"coa", home:"home", dashboard:"home", modules:"home" };
+  var ALIAS    = { strategy:"strat", board:"strat", review:"strat", ledger:"ledger", trade:"ledger", duty:"duty", matrix:"duty", dealsheet:"deal", sheet:"deal", playbook:"play", play:"play", game:"game", gametheory:"game", nash:"game", process:"proc", proc:"proc", recipe:"proc", production:"proc", copper:"copper", lme:"copper", bakir:"copper", fin:"fin", finance:"fin", finans:"fin", coa:"coa", tds:"coa", kalite:"coa", quality:"coa", rapor:"coa", report:"coa", check:"coa", document:"coa", compliance:"coa", home:"home", dashboard:"home", modules:"home" };
   var NAV = ["home"].concat(ORDER);   /* "home" is a shell view, not an iframe */
   var frameOf = {}, tabOf = {};
   NAV.forEach(function(k){ frameOf[k]=document.getElementById("f_"+k); tabOf[k]=document.getElementById("tab_"+k); });
