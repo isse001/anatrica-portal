@@ -232,7 +232,7 @@ body{
     <button id="tab_proc" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--good)"><span class="dot"></span>Process</button>
     <button id="tab_copper" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--exports)"><span class="dot"></span>Copper LME</button>
     <button id="tab_fin" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--imports)"><span class="dot"></span>Finance</button>
-    <button id="tab_coa" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--good)"><span class="dot"></span>COA Kontrol</button>
+    <button id="tab_coa" role="tab" aria-selected="false" tabindex="-1" style="--pane:var(--good)"><span class="dot"></span>COA Check</button>
   </div>
 </div>
 
@@ -307,9 +307,9 @@ body{
       </button>
       <button class="tile" type="button" data-go="coa" style="--pane:var(--good)">
         <span class="tile-ico"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M9 15l2 2 4-4"/></svg></span>
-        <span class="tile-name">COA Kontrol</span>
-        <span class="tile-desc">Add your product TDS, upload or type the delivery COA &rarr; UYGUN / KO&Scedil;ULLU / UYGUN DE&#286;&#304;L, read aloud. Your TDS &amp; reports stay in your own browser.</span>
-        <span class="tile-foot"><span class="tile-stamp">your own TDS</span><span class="tile-arrow"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span>
+        <span class="tile-name">COA Check</span>
+        <span class="tile-desc">Load two documents &mdash; the product TDS and the delivery COA &rarr; COMPLIANT / CONDITIONAL / NOT COMPLIANT, read aloud. Reports stay in your own browser.</span>
+        <span class="tile-foot"><span class="tile-stamp">TDS + COA</span><span class="tile-arrow"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span>
       </button>
     </div>
   </div>
@@ -8014,12 +8014,12 @@ draw();
 &lt;/body&gt;
 &lt;/html&gt;
 "></iframe>
-  <iframe id="f_coa" title="COA Kontrol" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;tr&quot; data-theme=&quot;light&quot;&gt;
+  <iframe id="f_coa" title="COA Check" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-&lt;title&gt;COA Uygunluk Kontrolü&lt;/title&gt;
+&lt;title&gt;TDS vs COA Check&lt;/title&gt;
 &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
 &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot;&gt;
@@ -8063,24 +8063,20 @@ body{background:var(--bg);color:var(--ink);font-family:&quot;IBM Plex Sans&quot;
 .wrap{max-width:1200px;margin:0 auto;padding:22px 16px 90px}
 h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.01em}
 button,input,select,textarea{font:inherit;color:inherit}
-.mono{font-family:var(--mono)}
 .muted{color:var(--ink-muted)}
 
-/* masthead */
 .mast{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:16px}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)}
 .mast h1{font-size:23px;margin-top:4px}
-.mast .sub{color:var(--ink-secondary);font-size:13px;margin-top:4px;max-width:72ch}
+.mast .sub{color:var(--ink-secondary);font-size:13px;margin-top:4px;max-width:78ch}
 .mast-tools{display:flex;gap:8px;flex-wrap:wrap}
 
-/* tabs */
 .tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:18px}
 .tab{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;cursor:pointer;color:var(--ink-muted);font-weight:600;font-size:13.5px;margin-bottom:-1px}
 .tab:hover{color:var(--ink)}
 .tab[aria-selected=&quot;true&quot;]{color:var(--accent);border-bottom-color:var(--accent)}
 .tab .n{font-family:var(--mono);font-size:11px;font-weight:500;background:var(--surface-2);border-radius:999px;padding:1px 7px;margin-left:6px;color:var(--ink-secondary)}
 
-/* generic */
 .btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);border-radius:var(--radius-s);padding:8px 12px;cursor:pointer;font-size:13px;font-weight:500;white-space:nowrap}
 .btn:hover{border-color:var(--ink-muted)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
@@ -8088,7 +8084,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn.ghost{background:var(--surface-2);border-color:var(--border)}
 .btn.danger{color:var(--bad)}
 .btn.sm{padding:5px 9px;font-size:12px}
-.btn:disabled{opacity:.5;cursor:not-allowed}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);box-shadow:var(--shadow)}
 .card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border)}
@@ -8096,32 +8091,36 @@ button,input,select,textarea{font:inherit;color:inherit}
 .card-b{padding:16px}
 .lbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:5px}
 .inp{width:100%;padding:8px 10px;border:1px solid var(--border-strong);border-radius:var(--radius-s);background:var(--surface);font-size:13.5px}
-textarea.inp{font-family:var(--mono);font-size:12px;min-height:140px;resize:vertical}
+textarea.inp{font-family:var(--mono);font-size:12px;min-height:120px;resize:vertical}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
 .step{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin-bottom:10px}
 .step b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:12px;font-family:var(--mono)}
+.step .hint{font-weight:400;font-size:12px;color:var(--ink-muted);margin-left:auto}
 
-/* layout of check tab */
-.check-grid{display:grid;grid-template-columns:minmax(280px,360px) 1fr;gap:18px;align-items:start}
-@media (max-width:900px){.check-grid{grid-template-columns:1fr}}
-.side&gt;.card+.card{margin-top:14px}
-
-/* dropzone */
-.drop{border:1.5px dashed var(--border-strong);border-radius:var(--radius-m);padding:22px 14px;text-align:center;cursor:pointer;background:var(--surface-2);transition:border-color .15s,background .15s}
+.docs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media (max-width:800px){.docs{grid-template-columns:1fr}}
+.doc.loaded{border-color:var(--accent)}
+.drop{border:1.5px dashed var(--border-strong);border-radius:var(--radius-m);padding:20px 14px;text-align:center;cursor:pointer;background:var(--surface-2);transition:border-color .15s,background .15s}
 .drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
 .drop .big{font-weight:600;font-size:14px}
 .drop .small{font-size:12px;color:var(--ink-muted);margin-top:4px}
 .drop svg{color:var(--accent);margin-bottom:6px}
-.filechip{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;background:var(--surface-2);border-radius:var(--radius-s);padding:7px 10px;word-break:break-all}
+.doc.loaded .drop{padding:10px 12px}
+.doc.loaded .drop svg,.doc.loaded .drop .small{display:none}
+.doc.loaded .drop .big{font-size:12.5px;font-weight:500;color:var(--ink-secondary)}
+.filechip{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;background:var(--accent-soft);border-radius:var(--radius-s);padding:8px 10px;word-break:break-all}
+.filechip b{font-weight:600}
 .progress{height:4px;background:var(--surface-3);border-radius:4px;overflow:hidden;margin-top:10px}
 .progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.links{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 16px}
 .linkbtn{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px;text-decoration:underline}
+.pastebox{margin-top:8px}
 
-/* verdict */
 .verdict{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:var(--radius-m);border:1px solid;margin-bottom:14px}
 .verdict .ic{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:22px}
 .verdict h3{font-size:19px}
 .verdict p{margin:2px 0 0;font-size:13px;color:var(--ink-secondary)}
+.verdict .mismatch{margin-top:6px;color:var(--warn);font-weight:500}
 .v-ok{background:var(--good-soft);border-color:var(--good)} .v-ok .ic{background:var(--good)} .v-ok h3{color:var(--good)}
 .v-bad{background:var(--bad-soft);border-color:var(--bad)} .v-bad .ic{background:var(--bad)} .v-bad h3{color:var(--bad)}
 .v-warn{background:var(--warn-soft);border-color:var(--warn)} .v-warn .ic{background:var(--warn)} .v-warn h3{color:var(--warn)}
@@ -8129,7 +8128,6 @@ textarea.inp{font-family:var(--mono);font-size:12px;min-height:140px;resize:vert
 .stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .stat{font-family:var(--mono);font-size:11.5px;border-radius:999px;padding:3px 10px;border:1px solid var(--border)}
 
-/* tables */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);font-weight:500;text-align:left;padding:8px 10px;border-bottom:1px solid var(--border-strong);white-space:nowrap}
@@ -8149,6 +8147,26 @@ td.num{font-family:var(--mono);white-space:nowrap}
 tr.row-bad td{background:color-mix(in srgb,var(--bad-soft) 55%,transparent)}
 tr.speaking td{background:var(--accent-soft)!important;box-shadow:inset 0 1px 0 var(--accent),inset 0 -1px 0 var(--accent)}
 tr.speaking td:first-child{box-shadow:inset 3px 0 0 var(--accent),inset 0 1px 0 var(--accent),inset 0 -1px 0 var(--accent)}
+.src{font-size:11px;color:var(--ink-muted);font-family:var(--mono);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+details.raw summary{cursor:pointer;font-size:12.5px;color:var(--ink-secondary);padding:8px 0 0}
+details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);padding:10px;font-size:11.5px;max-height:300px;overflow:auto;white-space:pre-wrap}
+.legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:12px;color:var(--ink-secondary);margin-top:12px}
+.empty{padding:36px 20px;text-align:center;color:var(--ink-muted)}
+.empty .big{font-size:15px;color:var(--ink-secondary);font-weight:600;margin-bottom:4px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+details.limits{margin-top:16px}
+details.limits&gt;summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:14px 16px;font-weight:600;font-size:14px}
+details.limits&gt;summary::-webkit-details-marker{display:none}
+details.limits&gt;summary::before{content:&quot;▸&quot;;color:var(--accent);transition:transform .15s}
+details.limits[open]&gt;summary::before{transform:rotate(90deg)}
+details.limits&gt;summary .psub{font-weight:400}
+.ed td{padding:5px 6px}
+.ed input,.ed select{width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;background:var(--surface);font-size:12.5px}
+.ed input.n{font-family:var(--mono);width:84px}
+.x{background:none;border:0;color:var(--ink-muted);cursor:pointer;font-size:16px;padding:2px 6px;border-radius:4px}
+.x:hover{color:var(--bad);background:var(--bad-soft)}
+
 .ttsbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);padding:9px 12px;margin-bottom:14px;font-size:12.5px;color:var(--ink-secondary)}
 .ttsbar label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
 .ttsbar select{padding:4px 6px;border:1px solid var(--border-strong);border-radius:5px;background:var(--surface);font-size:12px;max-width:220px}
@@ -8156,40 +8174,9 @@ tr.speaking td:first-child{box-shadow:inset 3px 0 0 var(--accent),inset 0 1px 0 
 .btn.speak-on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.speak-on .eq{display:inline-block;width:8px;height:8px;border-radius:2px;background:currentColor;animation:pulse 1s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.35}}
-.src{font-size:11px;color:var(--ink-muted);font-family:var(--mono);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
-details.raw summary{cursor:pointer;font-size:12.5px;color:var(--ink-secondary);padding:10px 0}
-details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);padding:10px;font-size:11.5px;max-height:320px;overflow:auto;white-space:pre-wrap}
-.legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:12px;color:var(--ink-secondary);margin-top:12px}
-.empty{padding:40px 20px;text-align:center;color:var(--ink-muted)}
-.empty .big{font-size:15px;color:var(--ink-secondary);font-weight:600;margin-bottom:4px}
+.saved{font-family:var(--mono);font-size:11.5px;color:var(--good);display:inline-flex;align-items:center;gap:6px}
+.saved.idle{color:var(--ink-muted)}
 
-/* library */
-.lib-grid{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:18px;align-items:start}
-@media (max-width:900px){.lib-grid{grid-template-columns:1fr}}
-.lib-list{max-height:640px;overflow:auto}
-.lib-item{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--border);padding:10px 14px;cursor:pointer}
-.lib-item:hover{background:var(--surface-2)}
-.lib-item[aria-current=&quot;true&quot;]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
-.lib-item .c{font-family:var(--mono);font-size:11px;color:var(--ink-muted)}
-.tag{font-family:var(--mono);font-size:10px;border-radius:4px;padding:1px 5px;background:var(--surface-3);color:var(--ink-secondary);margin-left:4px}
-.ed td{padding:5px 6px}
-.ed input,.ed select{width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;background:var(--surface);font-size:12.5px}
-.ed input.n{font-family:var(--mono);width:84px}
-.x{background:none;border:0;color:var(--ink-muted);cursor:pointer;font-size:16px;padding:2px 6px;border-radius:4px}
-.x:hover{color:var(--bad);background:var(--bad-soft)}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.search{min-width:0;flex:1}
-
-/* toast */
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:50;max-width:90vw}
-.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* modal */
-.modal{position:fixed;inset:0;background:rgba(15,20,23,.45);display:grid;place-items:center;z-index:40;padding:16px}
-.modal .card{width:min(980px,100%);max-height:92vh;overflow:auto}
-
-/* print report */
-#report{display:none}
 .rep{font-size:13px}
 .rep .rep-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:12px}
 .rep .rep-no{font-family:var(--mono);font-size:12px;color:var(--ink-muted);text-align:right}
@@ -8208,8 +8195,13 @@ details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);paddin
 .sum .v{font-size:24px;font-weight:600;margin-top:2px}
 #histTbl tbody tr[data-open]{cursor:pointer}
 #histTbl tbody tr[data-open]:hover td{background:var(--surface-2)}
-.saved{font-family:var(--mono);font-size:11.5px;color:var(--good);display:inline-flex;align-items:center;gap:6px}
-.saved.idle{color:var(--ink-muted)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:50;max-width:90vw}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(15,20,23,.45);display:grid;place-items:center;z-index:40;padding:16px}
+.modal .card{width:min(980px,100%);max-height:92vh;overflow:auto}
+
+#report{display:none}
 @media print{
   body{background:#fff;color:#000;font-size:12px}
   .wrap&gt;*:not(#report){display:none!important}
@@ -8229,151 +8221,149 @@ details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);paddin
 
 &lt;header class=&quot;mast&quot;&gt;
   &lt;div&gt;
-    &lt;div class=&quot;eyebrow&quot;&gt;Anatrica · Kalite Kontrol&lt;/div&gt;
-    &lt;h1&gt;COA ↔ TDS Uygunluk Kontrolü&lt;/h1&gt;
-    &lt;div class=&quot;sub&quot;&gt;Ürünün TDS'sini ekleyin, teslimatla gelen COA'yı yükleyin veya elle girin — parametre parametre karşılaştırır ve sevkiyatın uygun olup olmadığını söyler. &lt;b&gt;TDS'leriniz ve raporlarınız yalnızca kendi tarayıcınızda saklanır&lt;/b&gt;, kimseyle paylaşılmaz.&lt;/div&gt;
+    &lt;div class=&quot;eyebrow&quot;&gt;Anatrica · Quality Control&lt;/div&gt;
+    &lt;h1&gt;TDS ↔ COA Compliance Check&lt;/h1&gt;
+    &lt;div class=&quot;sub&quot;&gt;Load two documents — the product's &lt;b&gt;TDS&lt;/b&gt; (specification) and the delivery's &lt;b&gt;COA&lt;/b&gt; (certificate of analysis). Every parameter is compared and you get a clear verdict. &lt;b&gt;Your documents and reports stay in your own browser&lt;/b&gt; and are never shared.&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;mast-tools&quot;&gt;
-    &lt;button class=&quot;btn primary&quot; data-addtds&gt;＋ Yeni TDS ekle&lt;/button&gt;
-    &lt;button class=&quot;btn ghost sm&quot; id=&quot;btnTheme&quot; title=&quot;Tema&quot;&gt;◐ Tema&lt;/button&gt;
+    &lt;button class=&quot;btn ghost sm&quot; id=&quot;btnTheme&quot; title=&quot;Theme&quot;&gt;◐ Theme&lt;/button&gt;
   &lt;/div&gt;
 &lt;/header&gt;
 
 &lt;nav class=&quot;tabs&quot; role=&quot;tablist&quot;&gt;
-  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; data-tab=&quot;check&quot; aria-selected=&quot;true&quot;&gt;COA Kontrol&lt;/button&gt;
-  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; data-tab=&quot;lib&quot; aria-selected=&quot;false&quot;&gt;TDS Kütüphanesi &lt;span class=&quot;n&quot; id=&quot;nLib&quot;&gt;0&lt;/span&gt;&lt;/button&gt;
-  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; data-tab=&quot;hist&quot; aria-selected=&quot;false&quot;&gt;Raporlar &lt;span class=&quot;n&quot; id=&quot;nHist&quot;&gt;0&lt;/span&gt;&lt;/button&gt;
+  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; data-tab=&quot;check&quot; aria-selected=&quot;true&quot;&gt;Compare&lt;/button&gt;
+  &lt;button class=&quot;tab&quot; role=&quot;tab&quot; data-tab=&quot;hist&quot; aria-selected=&quot;false&quot;&gt;Reports &lt;span class=&quot;n&quot; id=&quot;nHist&quot;&gt;0&lt;/span&gt;&lt;/button&gt;
 &lt;/nav&gt;
 
-&lt;!-- ============ CHECK ============ --&gt;
+&lt;!-- ============ COMPARE ============ --&gt;
 &lt;section id=&quot;v-check&quot;&gt;
-  &lt;div class=&quot;check-grid&quot;&gt;
-    &lt;div class=&quot;side&quot;&gt;
+  &lt;div class=&quot;docs&quot;&gt;
+    &lt;!-- document 1: TDS --&gt;
+    &lt;div class=&quot;card doc&quot; id=&quot;tdsCard&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
+      &lt;div class=&quot;step&quot;&gt;&lt;b&gt;1&lt;/b&gt; TDS — specification&lt;/div&gt;
+      &lt;div class=&quot;drop&quot; id=&quot;tdsDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Upload TDS file&quot;&gt;
+        &lt;svg width=&quot;28&quot; height=&quot;28&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z&quot;/&gt;&lt;path d=&quot;M14 3v5h5&quot;/&gt;&lt;path d=&quot;M9 13h6M9 17h4&quot;/&gt;&lt;/svg&gt;
+        &lt;div class=&quot;big&quot; id=&quot;tdsDropTxt&quot;&gt;Drop the TDS here or click to choose&lt;/div&gt;
+        &lt;div class=&quot;small&quot;&gt;PDF · JPG · PNG (scanned documents are read with OCR)&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;input type=&quot;file&quot; id=&quot;tdsFile&quot; accept=&quot;.pdf,image/*,.txt&quot; hidden&gt;
+      &lt;div class=&quot;progress&quot; id=&quot;tdsProg&quot; hidden&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+      &lt;div id=&quot;tdsChip&quot; class=&quot;filechip&quot; hidden&gt;&lt;/div&gt;
+      &lt;div class=&quot;grid2&quot; id=&quot;tdsMeta&quot; hidden style=&quot;margin-top:10px&quot;&gt;
+        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;tdsName&quot;&gt;Product&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;tdsName&quot;&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;tdsCode&quot;&gt;TDS code / grade&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;tdsCode&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;links&quot;&gt;
+        &lt;button class=&quot;linkbtn&quot; id=&quot;tdsPasteBtn&quot;&gt;Paste TDS text&lt;/button&gt;
+        &lt;button class=&quot;linkbtn&quot; id=&quot;tdsManualBtn&quot;&gt;✎ Enter TDS limits manually&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;pastebox&quot; id=&quot;tdsPasteBox&quot; hidden&gt;
+        &lt;textarea class=&quot;inp&quot; id=&quot;tdsPaste&quot; placeholder=&quot;One parameter per line: Parameter · Unit · Limit&amp;#10;Purity	% min	99.0&amp;#10;Moisture	% max	0.5&amp;#10;Fe	ppm max	10&quot;&gt;&lt;/textarea&gt;
+        &lt;button class=&quot;btn sm primary&quot; id=&quot;tdsPasteGo&quot; style=&quot;margin-top:6px&quot;&gt;Read TDS text&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;&lt;/div&gt;
 
-      &lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
-        &lt;div class=&quot;step&quot;&gt;&lt;b&gt;1&lt;/b&gt; Ürün / TDS seç&lt;/div&gt;
-        &lt;select class=&quot;inp&quot; id=&quot;prodSel&quot;&gt;&lt;/select&gt;
-        &lt;div class=&quot;psub&quot; id=&quot;autoNote&quot; style=&quot;margin-top:6px&quot;&gt;&lt;/div&gt;
-        &lt;div style=&quot;margin-top:8px&quot;&gt;&lt;button class=&quot;linkbtn&quot; data-addtds&gt;＋ Yeni TDS ekle (PDF, yapıştır veya elle)&lt;/button&gt;&lt;/div&gt;
-      &lt;/div&gt;&lt;/div&gt;
-      &lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
-        &lt;div class=&quot;step&quot;&gt;&lt;b&gt;2&lt;/b&gt; COA yükle veya elle gir&lt;/div&gt;
-        &lt;div class=&quot;drop&quot; id=&quot;coaDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;COA dosyası yükle&quot;&gt;
-          &lt;svg width=&quot;28&quot; height=&quot;28&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z&quot;/&gt;&lt;path d=&quot;M14 3v5h5&quot;/&gt;&lt;path d=&quot;M12 12v6M9 15l3-3 3 3&quot;/&gt;&lt;/svg&gt;
-          &lt;div class=&quot;big&quot;&gt;COA dosyasını bırakın veya seçin&lt;/div&gt;
-          &lt;div class=&quot;small&quot;&gt;PDF · JPG · PNG (taranmış belgeler OCR ile okunur)&lt;/div&gt;
-        &lt;/div&gt;
-        &lt;input type=&quot;file&quot; id=&quot;coaFile&quot; accept=&quot;.pdf,image/*,.txt&quot; hidden&gt;
-        &lt;div id=&quot;coaChip&quot; class=&quot;filechip&quot; hidden&gt;&lt;/div&gt;
-        &lt;div class=&quot;progress&quot; id=&quot;coaProg&quot; hidden&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
-        &lt;div style=&quot;margin-top:10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start&quot;&gt;
-          &lt;button class=&quot;linkbtn&quot; id=&quot;btnManual&quot;&gt;✎ COA değerlerini tabloya elle gir&lt;/button&gt;
-          &lt;button class=&quot;linkbtn&quot; id=&quot;btnPaste&quot;&gt;…veya COA metnini yapıştırın&lt;/button&gt;&lt;/div&gt;
-        &lt;div id=&quot;pasteBox&quot; hidden style=&quot;margin-top:8px&quot;&gt;
-          &lt;textarea class=&quot;inp&quot; id=&quot;pasteTxt&quot; placeholder=&quot;COA tablosunu buraya yapıştırın (e-posta, Word, Excel)…&quot;&gt;&lt;/textarea&gt;
-          &lt;button class=&quot;btn sm primary&quot; id=&quot;btnPasteGo&quot; style=&quot;margin-top:6px&quot;&gt;Metni oku&lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;&lt;/div&gt;
+    &lt;!-- document 2: COA --&gt;
+    &lt;div class=&quot;card doc&quot; id=&quot;coaCard&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
+      &lt;div class=&quot;step&quot;&gt;&lt;b&gt;2&lt;/b&gt; COA — certificate of analysis&lt;/div&gt;
+      &lt;div class=&quot;drop&quot; id=&quot;coaDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Upload COA file&quot;&gt;
+        &lt;svg width=&quot;28&quot; height=&quot;28&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z&quot;/&gt;&lt;path d=&quot;M14 3v5h5&quot;/&gt;&lt;path d=&quot;M9 15l2 2 4-4&quot;/&gt;&lt;/svg&gt;
+        &lt;div class=&quot;big&quot; id=&quot;coaDropTxt&quot;&gt;Drop the COA here or click to choose&lt;/div&gt;
+        &lt;div class=&quot;small&quot;&gt;PDF · JPG · PNG (scanned documents are read with OCR)&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;input type=&quot;file&quot; id=&quot;coaFile&quot; accept=&quot;.pdf,image/*,.txt&quot; hidden&gt;
+      &lt;div class=&quot;progress&quot; id=&quot;coaProg&quot; hidden&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+      &lt;div id=&quot;coaChip&quot; class=&quot;filechip&quot; hidden&gt;&lt;/div&gt;
+      &lt;div class=&quot;links&quot;&gt;
+        &lt;button class=&quot;linkbtn&quot; id=&quot;coaPasteBtn&quot;&gt;Paste COA text&lt;/button&gt;
+        &lt;button class=&quot;linkbtn&quot; id=&quot;coaManualBtn&quot;&gt;✎ Type COA values manually&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;pastebox&quot; id=&quot;coaPasteBox&quot; hidden&gt;
+        &lt;textarea class=&quot;inp&quot; id=&quot;coaPaste&quot; placeholder=&quot;Paste the COA table here (from e-mail, Word, Excel)…&quot;&gt;&lt;/textarea&gt;
+        &lt;button class=&quot;btn sm primary&quot; id=&quot;coaPasteGo&quot; style=&quot;margin-top:6px&quot;&gt;Read COA text&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
 
-      &lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;card-b&quot;&gt;
-        &lt;div class=&quot;step&quot;&gt;&lt;b&gt;3&lt;/b&gt; Sevkiyat bilgisi&lt;/div&gt;
-        &lt;div class=&quot;grid2&quot;&gt;
-          &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fSup&quot;&gt;Tedarikçi&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fSup&quot;&gt;&lt;/div&gt;
-          &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fLot&quot;&gt;Lot / Batch&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fLot&quot;&gt;&lt;/div&gt;
-          &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fDate&quot;&gt;COA tarihi&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fDate&quot;&gt;&lt;/div&gt;
-          &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fRef&quot;&gt;Sevkiyat / Konteyner&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fRef&quot;&gt;&lt;/div&gt;
-        &lt;/div&gt;
-        &lt;label class=&quot;lbl&quot; for=&quot;fNote&quot; style=&quot;margin-top:12px&quot;&gt;Not&lt;/label&gt;
-        &lt;input class=&quot;inp&quot; id=&quot;fNote&quot;&gt;
-      &lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;card&quot; style=&quot;margin-bottom:16px&quot;&gt;&lt;div class=&quot;card-b&quot; style=&quot;padding-top:12px;padding-bottom:12px&quot;&gt;
+    &lt;div class=&quot;grid2&quot;&gt;
+      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fSup&quot;&gt;Supplier&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fSup&quot;&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fLot&quot;&gt;Lot / batch&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fLot&quot;&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fDate&quot;&gt;COA date&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fDate&quot;&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fRef&quot;&gt;Shipment / container&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fRef&quot;&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;label class=&quot;lbl&quot; for=&quot;fNote&quot;&gt;Note&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;fNote&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
+  &lt;/div&gt;&lt;/div&gt;
 
-    &lt;div&gt;
-      &lt;div id=&quot;verdict&quot; class=&quot;verdict v-none&quot;&gt;
-        &lt;div class=&quot;ic&quot;&gt;?&lt;/div&gt;
-        &lt;div&gt;&lt;h3&gt;Henüz kontrol yok&lt;/h3&gt;&lt;p&gt;Soldan bir COA yükleyin; ürün otomatik tanınır ve değerler TDS ile karşılaştırılır. Değerleri tabloda elle de girebilir/düzeltebilirsiniz.&lt;/p&gt;&lt;/div&gt;
+  &lt;div id=&quot;verdict&quot; class=&quot;verdict v-none&quot;&gt;&lt;/div&gt;
+
+  &lt;div class=&quot;ttsbar&quot; id=&quot;ttsBar&quot; hidden&gt;
+    &lt;span class=&quot;ttl&quot;&gt;🔊 Read aloud&lt;/span&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;ttsAuto&quot;&gt; Read automatically when a comparison is done&lt;/label&gt;
+    &lt;label&gt;Read: &lt;select id=&quot;ttsMode&quot;&gt;&lt;option value=&quot;all&quot;&gt;All values&lt;/option&gt;&lt;option value=&quot;issues&quot;&gt;Issues only&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+    &lt;label&gt;Speed: &lt;select id=&quot;ttsRate&quot;&gt;&lt;option value=&quot;0.8&quot;&gt;Slow&lt;/option&gt;&lt;option value=&quot;1&quot;&gt;Normal&lt;/option&gt;&lt;option value=&quot;1.2&quot;&gt;Fast&lt;/option&gt;&lt;option value=&quot;1.5&quot;&gt;Very fast&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+    &lt;label&gt;Voice: &lt;select id=&quot;ttsVoice&quot;&gt;&lt;/select&gt;&lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;card-h&quot;&gt;
+      &lt;h2 id=&quot;resTitle&quot;&gt;Parameter comparison&lt;/h2&gt;
+      &lt;div class=&quot;toolbar&quot;&gt;
+        &lt;span class=&quot;saved idle&quot; id=&quot;saveState&quot;&gt;The report is saved automatically&lt;/span&gt;
+        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnSpeak&quot; hidden&gt;🔊 Read aloud&lt;/button&gt;
+        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnPrint&quot;&gt;Print / PDF&lt;/button&gt;
+        &lt;button class=&quot;btn sm primary&quot; id=&quot;btnClear&quot;&gt;＋ New comparison&lt;/button&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;ttsbar&quot; id=&quot;ttsBar&quot; hidden&gt;
-        &lt;span class=&quot;ttl&quot;&gt;🔊 Sesli okuma&lt;/span&gt;
-        &lt;label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;ttsAuto&quot;&gt; Analiz bitince otomatik oku&lt;/label&gt;
-        &lt;label&gt;Oku: &lt;select id=&quot;ttsMode&quot;&gt;&lt;option value=&quot;all&quot;&gt;Tüm değerler&lt;/option&gt;&lt;option value=&quot;issues&quot;&gt;Sadece sorunlular&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
-        &lt;label&gt;Hız: &lt;select id=&quot;ttsRate&quot;&gt;&lt;option value=&quot;0.8&quot;&gt;Yavaş&lt;/option&gt;&lt;option value=&quot;1&quot;&gt;Normal&lt;/option&gt;&lt;option value=&quot;1.2&quot;&gt;Hızlı&lt;/option&gt;&lt;option value=&quot;1.5&quot;&gt;Çok hızlı&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
-        &lt;label&gt;Ses: &lt;select id=&quot;ttsVoice&quot;&gt;&lt;/select&gt;&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card-b&quot; style=&quot;padding-top:8px&quot;&gt;
+      &lt;div class=&quot;stats&quot; id=&quot;stats&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tbl-wrap&quot;&gt;
+        &lt;table id=&quot;resTbl&quot;&gt;
+          &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;TDS limit&lt;/th&gt;&lt;th&gt;COA value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+          &lt;tbody&gt;&lt;/tbody&gt;
+        &lt;/table&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;card&quot;&gt;
-        &lt;div class=&quot;card-h&quot;&gt;
-          &lt;h2 id=&quot;resTitle&quot;&gt;Parametre karşılaştırması&lt;/h2&gt;
-          &lt;div class=&quot;toolbar&quot;&gt;
-            &lt;span class=&quot;saved idle&quot; id=&quot;saveState&quot;&gt;Rapor COA okununca otomatik kaydedilir&lt;/span&gt;
-            &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnSpeak&quot; hidden&gt;🔊 Sesli oku&lt;/button&gt;
-            &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnPrint&quot;&gt;Yazdır / PDF&lt;/button&gt;
-            &lt;button class=&quot;btn sm primary&quot; id=&quot;btnClear&quot;&gt;＋ Yeni kontrol&lt;/button&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;card-b&quot; style=&quot;padding-top:8px&quot;&gt;
-          &lt;div class=&quot;stats&quot; id=&quot;stats&quot;&gt;&lt;/div&gt;
-          &lt;div class=&quot;tbl-wrap&quot;&gt;
-            &lt;table id=&quot;resTbl&quot;&gt;
-              &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parametre&lt;/th&gt;&lt;th&gt;TDS limiti&lt;/th&gt;&lt;th&gt;COA değeri&lt;/th&gt;&lt;th&gt;Durum&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
-              &lt;tbody&gt;&lt;/tbody&gt;
-            &lt;/table&gt;
-          &lt;/div&gt;
-          &lt;div class=&quot;legend&quot;&gt;
-            &lt;span&gt;&lt;span class=&quot;pill p-ok&quot;&gt;UYGUN&lt;/span&gt; limit içinde&lt;/span&gt;
-            &lt;span&gt;&lt;span class=&quot;pill p-warn&quot;&gt;SINIRDA&lt;/span&gt; limit içinde ama çok yakın (maks/aralık: limitin son %5'i · min: limitin en fazla 0,5 puan üstü)&lt;/span&gt;
-            &lt;span&gt;&lt;span class=&quot;pill p-bad&quot;&gt;UYGUN DEĞİL&lt;/span&gt; limit dışı&lt;/span&gt;
-            &lt;span&gt;&lt;span class=&quot;pill p-miss&quot;&gt;EKSİK&lt;/span&gt; COA'da yok&lt;/span&gt;
-            &lt;span&gt;&lt;span class=&quot;pill p-info&quot;&gt;BİLGİ&lt;/span&gt; değerlendirilmez&lt;/span&gt;
-          &lt;/div&gt;
-          &lt;details class=&quot;raw&quot; id=&quot;rawBox&quot; hidden&gt;&lt;summary&gt;COA'dan okunan ham metin&lt;/summary&gt;&lt;pre id=&quot;rawTxt&quot;&gt;&lt;/pre&gt;&lt;/details&gt;
-        &lt;/div&gt;
+      &lt;div class=&quot;legend&quot;&gt;
+        &lt;span&gt;&lt;span class=&quot;pill p-ok&quot;&gt;PASS&lt;/span&gt; within limit&lt;/span&gt;
+        &lt;span&gt;&lt;span class=&quot;pill p-warn&quot;&gt;BORDERLINE&lt;/span&gt; within limit but very close (max/range: last 5 % of the limit · min: at most 0.5 points above)&lt;/span&gt;
+        &lt;span&gt;&lt;span class=&quot;pill p-bad&quot;&gt;FAIL&lt;/span&gt; out of specification&lt;/span&gt;
+        &lt;span&gt;&lt;span class=&quot;pill p-miss&quot;&gt;MISSING&lt;/span&gt; not on the COA&lt;/span&gt;
+        &lt;span&gt;&lt;span class=&quot;pill p-info&quot;&gt;INFO&lt;/span&gt; not evaluated&lt;/span&gt;
       &lt;/div&gt;
+      &lt;details class=&quot;raw&quot; id=&quot;coaRawBox&quot; hidden&gt;&lt;summary&gt;Text read from the COA&lt;/summary&gt;&lt;pre id=&quot;coaRaw&quot;&gt;&lt;/pre&gt;&lt;/details&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/section&gt;
 
-&lt;!-- ============ LIBRARY ============ --&gt;
-&lt;section id=&quot;v-lib&quot; hidden&gt;
-  &lt;div class=&quot;lib-grid&quot;&gt;
-    &lt;div class=&quot;card&quot;&gt;
-      &lt;div class=&quot;card-h&quot; style=&quot;gap:8px&quot;&gt;
-        &lt;input class=&quot;inp search&quot; id=&quot;libSearch&quot; placeholder=&quot;Ürün / kod ara…&quot;&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;lib-list&quot; id=&quot;libList&quot;&gt;&lt;/div&gt;
-      &lt;div class=&quot;card-b&quot; style=&quot;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px&quot;&gt;
-        &lt;div class=&quot;drop tds-drop&quot; id=&quot;tdsDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;TDS dosyası yükle&quot; style=&quot;padding:16px 12px&quot;&gt;
-          &lt;div class=&quot;big&quot;&gt;＋ Yeni TDS ekle&lt;/div&gt;
-          &lt;div class=&quot;small&quot;&gt;TDS PDF'lerini buraya bırakın veya tıklayın (birden fazla seçilebilir)&lt;/div&gt;
-        &lt;/div&gt;
-        &lt;input type=&quot;file&quot; id=&quot;tdsFile&quot; accept=&quot;.pdf,image/*,.txt&quot; multiple hidden&gt;
-        &lt;button class=&quot;btn ghost&quot; id=&quot;btnTdsBlank&quot;&gt;＋ Elle TDS oluştur&lt;/button&gt;
-        &lt;div style=&quot;display:flex;gap:8px&quot;&gt;
-          &lt;button class=&quot;btn ghost sm&quot; id=&quot;btnExport&quot; style=&quot;flex:1&quot; title=&quot;TDS'lerinizi ve raporlarınızı dosya olarak indirir — başka bilgisayara taşımak veya arkadaşınızla paylaşmak için&quot;&gt;Yedeği indir&lt;/button&gt;
-          &lt;button class=&quot;btn ghost sm&quot; id=&quot;btnImport&quot; style=&quot;flex:1&quot; title=&quot;İndirilen yedek / paylaşılan TDS dosyasını ekler (mevcutlar silinmez)&quot;&gt;Yedek / TDS dosyası ekle&lt;/button&gt;
-          &lt;input type=&quot;file&quot; id=&quot;impFile&quot; accept=&quot;.json&quot; hidden&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+  &lt;details class=&quot;card limits&quot; id=&quot;limitsBox&quot; hidden&gt;
+    &lt;summary&gt;TDS limits &lt;span class=&quot;psub&quot; id=&quot;limitsSum&quot;&gt;&lt;/span&gt;&lt;/summary&gt;
+    &lt;div class=&quot;card-b&quot; style=&quot;border-top:1px solid var(--border)&quot;&gt;
+      &lt;div id=&quot;edTbl&quot;&gt;&lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table class=&quot;ed&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;Unit&lt;/th&gt;&lt;th&gt;Limit type&lt;/th&gt;&lt;th&gt;Min&lt;/th&gt;&lt;th&gt;Max&lt;/th&gt;&lt;th&gt;Text&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;toolbar&quot; style=&quot;margin-top:10px&quot;&gt;&lt;button class=&quot;btn sm ghost&quot; id=&quot;edAdd&quot;&gt;＋ Add row&lt;/button&gt;
+        &lt;span class=&quot;psub&quot;&gt;Min / Max / Range rows are evaluated automatically; &quot;Text&quot; rows need a manual check; &quot;Info&quot; rows (origin, appearance…) are not evaluated. Fix anything the reader got wrong here.&lt;/span&gt;&lt;/div&gt;
+      &lt;details class=&quot;raw&quot; id=&quot;tdsRawBox&quot; hidden&gt;&lt;summary&gt;Text read from the TDS&lt;/summary&gt;&lt;pre id=&quot;tdsRaw&quot;&gt;&lt;/pre&gt;&lt;/details&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;card&quot; id=&quot;libEd&quot;&gt;&lt;/div&gt;
-  &lt;/div&gt;
+  &lt;/details&gt;
 &lt;/section&gt;
 
-&lt;!-- ============ HISTORY ============ --&gt;
+&lt;!-- ============ REPORTS ============ --&gt;
 &lt;section id=&quot;v-hist&quot; hidden&gt;
   &lt;div class=&quot;sumrow&quot; id=&quot;sumRow&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;card&quot;&gt;
     &lt;div class=&quot;card-h&quot;&gt;
-      &lt;h2&gt;COA uygunluk raporları&lt;/h2&gt;
+      &lt;h2&gt;Compliance reports&lt;/h2&gt;
       &lt;div class=&quot;toolbar&quot;&gt;
         &lt;select class=&quot;inp&quot; id=&quot;histVerdict&quot; style=&quot;width:auto&quot;&gt;
-          &lt;option value=&quot;&quot;&gt;Tüm sonuçlar&lt;/option&gt;&lt;option value=&quot;ok&quot;&gt;Uygun&lt;/option&gt;&lt;option value=&quot;warn&quot;&gt;Koşullu&lt;/option&gt;&lt;option value=&quot;bad&quot;&gt;Uygun değil&lt;/option&gt;
+          &lt;option value=&quot;&quot;&gt;All results&lt;/option&gt;&lt;option value=&quot;ok&quot;&gt;Compliant&lt;/option&gt;&lt;option value=&quot;warn&quot;&gt;Conditional&lt;/option&gt;&lt;option value=&quot;bad&quot;&gt;Not compliant&lt;/option&gt;
         &lt;/select&gt;
-        &lt;input class=&quot;inp&quot; id=&quot;histSearch&quot; placeholder=&quot;Ürün, tedarikçi, lot, rapor no…&quot; style=&quot;width:230px&quot;&gt;
-        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnCsv&quot;&gt;CSV indir&lt;/button&gt;
+        &lt;input class=&quot;inp&quot; id=&quot;histSearch&quot; placeholder=&quot;Product, supplier, lot, report no…&quot; style=&quot;width:230px&quot;&gt;
+        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnCsv&quot;&gt;Download CSV&lt;/button&gt;
+        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnExport&quot; title=&quot;Download all reports as a backup file&quot;&gt;Backup&lt;/button&gt;
+        &lt;button class=&quot;btn sm ghost&quot; id=&quot;btnImport&quot; title=&quot;Add reports from a backup file (existing reports are kept)&quot;&gt;Restore&lt;/button&gt;
+        &lt;input type=&quot;file&quot; id=&quot;impFile&quot; accept=&quot;.json&quot; hidden&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table id=&quot;histTbl&quot;&gt;
-      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Rapor no&lt;/th&gt;&lt;th&gt;Tarih&lt;/th&gt;&lt;th&gt;Ürün&lt;/th&gt;&lt;th&gt;Tedarikçi&lt;/th&gt;&lt;th&gt;Lot&lt;/th&gt;&lt;th&gt;Sonuç&lt;/th&gt;&lt;th&gt;Sorunlu parametreler&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Report no&lt;/th&gt;&lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Product&lt;/th&gt;&lt;th&gt;Supplier&lt;/th&gt;&lt;th&gt;Lot&lt;/th&gt;&lt;th&gt;Result&lt;/th&gt;&lt;th&gt;Issues&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
       &lt;tbody&gt;&lt;/tbody&gt;
     &lt;/table&gt;&lt;/div&gt;
   &lt;/div&gt;
@@ -8394,10 +8384,11 @@ if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = &quot;https://cdnj
 const $ = (s, r = document) =&gt; r.querySelector(s);
 const $$ = (s, r = document) =&gt; Array.from(r.querySelectorAll(s));
 const esc = s =&gt; String(s == null ? &quot;&quot; : s).replace(/[&amp;&lt;&gt;&quot;]/g, c =&gt; ({&quot;&amp;&quot;:&quot;&amp;amp;&quot;,&quot;&lt;&quot;:&quot;&amp;lt;&quot;,&quot;&gt;&quot;:&quot;&amp;gt;&quot;,'&quot;':&quot;&amp;quot;&quot;}[c]));
-function toast(m){ const t=$(&quot;#toast&quot;); t.textContent=m; t.classList.add(&quot;on&quot;); clearTimeout(toast._t); toast._t=setTimeout(()=&gt;t.classList.remove(&quot;on&quot;),2600); }
+function toast(m){ const t=$(&quot;#toast&quot;); t.textContent=m; t.classList.add(&quot;on&quot;); clearTimeout(toast._t); toast._t=setTimeout(()=&gt;t.classList.remove(&quot;on&quot;),2800); }
 function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }
 function lsSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ return false; } }
 const uid = () =&gt; Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const DATE_LOCALE = &quot;en-GB&quot;;
 
 /* ================= number + spec parsing ================= */
 // &quot;99,5&quot; → 99.5 ; &quot;1,000&quot; / &quot;7,680&quot; → thousands ; &quot;0,05&quot; → 0.05
@@ -8418,7 +8409,7 @@ function cleanUnit(u){
   return (u === &quot;_&quot; || u === &quot;-&quot;) ? &quot;&quot; : u;
 }
 function parseSpec(name, unit, spec){
-  const p = {name:(name||&quot;&quot;).trim(), unit:cleanUnit(unit), type:&quot;info&quot;, lo:null, hi:null, text:&quot;&quot;, inferred:false, raw:[unit||&quot;&quot;,spec||&quot;&quot;].join(&quot; &quot;).trim()};
+  const p = {name:(name||&quot;&quot;).trim(), unit:cleanUnit(unit), type:&quot;info&quot;, lo:null, hi:null, text:&quot;&quot;, inferred:false};
   const s0 = (spec||&quot;&quot;).trim();
   if (INFO_RX.test(p.name) || /≈/.test(s0)) { p.type=&quot;info&quot;; p.text=s0===&quot;_&quot;?&quot;&quot;:s0; return p; }
   let s = s0.replace(/\([^)]*\)/g,&quot; &quot;).replace(/\bto\b/gi,&quot;-&quot;).replace(/~/g,&quot;-&quot;);
@@ -8446,43 +8437,36 @@ function limitText(p){
     case &quot;min&quot;: return &quot;≥ &quot;+fmt(p.lo)+u;
     case &quot;max&quot;: return &quot;≤ &quot;+fmt(p.hi)+u;
     case &quot;range&quot;: return fmt(p.lo)+&quot; – &quot;+fmt(p.hi)+u;
-    case &quot;nominal&quot;: return &quot;≈ &quot;+fmt(p.lo)+u+&quot; (tipik)&quot;;
+    case &quot;nominal&quot;: return &quot;≈ &quot;+fmt(p.lo)+u+&quot; (typical)&quot;;
     case &quot;text&quot;: return p.text;
     default: return p.text || &quot;—&quot;;
   }
 }
 
-/* ================= library ================= */
-function tdsFromRows(meta, rows){
-  return Object.assign({params: rows.map(r =&gt; parseSpec(r[0], r[1], r[2]))}, meta);
-}
-const state = { lib: [], hist: [], cur: null, libSel: null, coaText: &quot;&quot;, coaLines: [], coaFile: &quot;&quot; };
+/* ================= state + storage ================= */
+const state = { hist: [], tds: null, tdsLines: [], coaLines: [], coaFile: &quot;&quot; };
+const coaVals = {}; // param index → {value, auto, line, conv}
 // Storage: this page's localStorage; inside the portal (srcdoc iframe, where that can throw)
 // fall back to the portal shell's localStorage via postMessage.
 const STORAGE = (function(){
   try { localStorage.setItem(&quot;__coa_t&quot;,&quot;1&quot;); localStorage.removeItem(&quot;__coa_t&quot;); return &quot;local&quot;; }
   catch(e){ return window.parent !== window ? &quot;parent&quot; : &quot;none&quot;; }
 })();
-function applyStored(d){
-  // each user keeps only the TDS they added themselves (old built-in entries are dropped)
-  state.lib = (d &amp;&amp; Array.isArray(d.lib)) ? d.lib.filter(t =&gt; !t.builtin) : [];
-  state.hist = (d &amp;&amp; Array.isArray(d.hist)) ? d.hist : [];
-}
+function applyStored(d){ state.hist = (d &amp;&amp; Array.isArray(d.hist)) ? d.hist : []; }
 applyStored(STORAGE === &quot;local&quot; ? lsGet(STORE_KEY) : null);
 if (STORAGE === &quot;parent&quot;) try { window.parent.postMessage({__coaStoreGet: STORE_KEY}, &quot;*&quot;); } catch(e){}
 let warnedStore = false;
 function persist(){
-  const data = {v:1, lib:state.lib, hist:state.hist};
+  const data = {v:2, hist:state.hist};
   if (STORAGE === &quot;local&quot; &amp;&amp; lsSet(STORE_KEY, data)) return;
   if (STORAGE === &quot;parent&quot;){ try { window.parent.postMessage({__coaStoreSet:{key:STORE_KEY, val:JSON.stringify(data)}}, &quot;*&quot;); return; } catch(e){} }
-  if (!warnedStore){ warnedStore = true; toast(&quot;Uyarı: tarayıcı depolaması kapalı — raporlar kalıcı değil. 'Yedeği indir' kullanın.&quot;); }
+  if (!warnedStore){ warnedStore = true; toast(&quot;Warning: browser storage is off — reports will not be kept. Use Reports → Backup.&quot;); }
 }
-const tdsById = id =&gt; state.lib.find(t =&gt; t.id === id);
-const tdsLabel = t =&gt; t.name + (t.code ? &quot; · &quot;+t.code : &quot;&quot;);
+const tdsLabel = t =&gt; t ? ((t.name || &quot;Unnamed product&quot;) + (t.code ? &quot; · &quot; + t.code : &quot;&quot;)) : &quot;&quot;;
 
 /* ================= file → text lines ================= */
 async function pdfLines(buf, onProg){
-  if (!window.pdfjsLib) throw new Error(&quot;PDF okuyucu yüklenemedi (internet bağlantısı gerekli).&quot;);
+  if (!window.pdfjsLib) throw new Error(&quot;PDF reader could not load (internet connection needed).&quot;);
   const pdf = await pdfjsLib.getDocument({data:buf}).promise;
   const lines = [];
   let textChars = 0;
@@ -8525,7 +8509,7 @@ async function pdfLines(buf, onProg){
 let tessLoading = null;
 function loadTess(){
   if (window.Tesseract) return Promise.resolve();
-  return tessLoading || (tessLoading = new Promise((res,rej)=&gt;{ const s=document.createElement(&quot;script&quot;); s.src=&quot;https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js&quot;; s.onload=res; s.onerror=()=&gt;rej(new Error(&quot;OCR motoru yüklenemedi (internet gerekli).&quot;)); document.head.appendChild(s); }));
+  return tessLoading || (tessLoading = new Promise((res,rej)=&gt;{ const s=document.createElement(&quot;script&quot;); s.src=&quot;https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js&quot;; s.onload=res; s.onerror=()=&gt;rej(new Error(&quot;OCR engine could not load (internet connection needed).&quot;)); document.head.appendChild(s); }));
 }
 async function ocr(img, onProg){
   await loadTess();
@@ -8538,7 +8522,35 @@ async function fileLines(file, onProg){
   const n = file.name.toLowerCase();
   if (n.endsWith(&quot;.pdf&quot;) || file.type === &quot;application/pdf&quot;) return pdfLines(await file.arrayBuffer(), onProg);
   if (file.type.startsWith(&quot;image/&quot;)) return {lines: await ocr(file, onProg), ocr:true};
-  return {lines: (await file.text()).split(/\r?\n/).map(l=&gt;l.replace(/\t/g,&quot;  |  &quot;).replace(/\s+/g,&quot; &quot;).trim()).filter(Boolean), ocr:false};
+  return {lines: textLines(await file.text()), ocr:false};
+}
+const textLines = t =&gt; String(t||&quot;&quot;).split(/\r?\n/).map(l=&gt;l.replace(/\t/g,&quot;  |  &quot;).replace(/\s+/g,&quot; &quot;).trim()).filter(Boolean);
+
+/* ================= TDS text → spec rows ================= */
+const ADDR_RX = /(maslak|meydan sk|veko giz|no:3 kat|34398|istanbul|türkiye|\+90 ?850|info@|www\.|anatrica\.net)/i;
+function parseTdsLines(lines, fname){
+  const clean = lines.map(l =&gt; l.split(&quot;|&quot;).map(x=&gt;x.trim()).filter(x =&gt; x &amp;&amp; !ADDR_RX.test(x)).join(&quot; | &quot;)).filter(Boolean);
+  const start = clean.findIndex(l =&gt; /(propert|parameter|characteristic|specification|test item|item)\b.*\b(unit|result|value|spec|limit|standard)/i.test(l));
+  const body = start &gt;= 0 ? clean.slice(start+1) : clean;
+  const rows = [];
+  for (const l of body){
+    if (/^(page|www|tel|fax|e-?mail|note|remark)/i.test(l)) continue;
+    const parts = l.split(&quot; | &quot;);
+    if (parts.length &gt;= 3){ rows.push([parts[0], parts[1], parts.slice(2).join(&quot; &quot;)]); continue; }
+    // single-string line: split &quot;Name  unit  spec&quot;
+    const m = /^(.*?)\s+((?:%|wt%|w\/%|ppm|mg\/kg|mg\/g|g\/cm3|g\/cc|mm|_)(?:\s*(?:min|max|m\/m|w\/w))?\.?)\s+(.+)$/i.exec(l)
+           || /^(.*?[A-Za-z)\]])\s+((?:min|max)\.?)\s+(.+)$/i.exec(l)
+           || /^(.*?[A-Za-z)\]])\s+([≥≤&lt;&gt;]=?\s*-?\d.*)$/.exec(l);
+    if (m) rows.push(m.length === 4 ? [m[1], m[2], m[3]] : [m[1], &quot;&quot;, m[2]]);
+    else if (parts.length === 2 &amp;&amp; /\d/.test(parts[1])) rows.push([parts[0], &quot;&quot;, parts[1]]);
+  }
+  const filt = rows.filter(r =&gt; r[0] &amp;&amp; r[0].length &lt; 90 &amp;&amp; !/^(properties|parameter)$/i.test(r[0]));
+  const text = clean.join(&quot;\n&quot;);
+  const code = (/(ANT-[A-Z]{2}-\d{3})/.exec(fname||&quot;&quot;) || /(ANT-[A-Z]{2}-\d{3})/.exec(text) || [,&quot;&quot;])[1];
+  const specIdx = clean.findIndex(l =&gt; /product specification|technical data|specification/i.test(l));
+  const grade = specIdx &gt;= 0 &amp;&amp; clean[specIdx+1] ? clean[specIdx+1].split(&quot; | &quot;)[0] : &quot;&quot;;
+  const name = (fname||&quot;&quot;).replace(/\.[^.]+$/,&quot;&quot;).replace(code,&quot;&quot;).replace(/[_-]+/g,&quot; &quot;).trim() || grade || &quot;&quot;;
+  return {name, code, grade, rows: filt};
 }
 
 /* ================= COA matching ================= */
@@ -8571,7 +8583,7 @@ function aliasesOf(name){
   return [...set].filter(a =&gt; a.length &gt;= 1);
 }
 function findAlias(line, alias){
-  // returns end index of match or -1
+  // returns end index of match, -1 for none, or a negative code for a word-order-free match
   if (alias.length &lt;= 2 || SYM.has(alias)){
     const sym = alias.charAt(0).toUpperCase() + alias.slice(1);
     const rx = alias === &quot;ph&quot; ? /(^|[^A-Za-z])p[Hh]([^A-Za-z0-9]|$)/ : new RegExp(&quot;(^|[^A-Za-z])&quot; + sym.replace(/[+]/g,&quot;\\+&quot;) + &quot;([^A-Za-z0-9]|$)&quot;);
@@ -8585,7 +8597,7 @@ function findAlias(line, alias){
   if (toks.length &lt; 2) return -1;
   let end = -1;
   for (const w of toks){ const r = new RegExp(&quot;(^|[^a-z0-9])&quot; + w + &quot;(?![a-z])&quot;).exec(L); if (!r) return -1; end = Math.max(end, r.index + r[1].length + w.length); }
-  return -end - 2; // negative → fuzzy (decoded by caller)
+  return -end - 2;
 }
 const RESULT_WORDS = /\b(conforms?|complies|comply|pass(ed)?|ok|absent|negative|nil|not detected|n\.?d\.?|none|clear|meets?)\b/i;
 function extractValue(line, fromIdx, p){
@@ -8598,7 +8610,7 @@ function extractValue(line, fromIdx, p){
   s = s.replace(/-?\d+(?:[.,]\d+)*\s*(?:%\s*)?(?:min|max)\b\.?/gi,&quot; &quot;);
   s = s.replace(/\d+(?:[.,]\d+)*\s*[-–—~]\s*\d+(?:[.,]\d+)*/g,&quot; &quot;);        // spec ranges
   const tokens = []; let m; const rx = /(&lt;|&gt;)?\s*(-?\d+(?:[.,]\d+)*)/g;
-  while ((m = rx.exec(s))) tokens.push({pre:m[1]||&quot;&quot;, v:normNum(m[2]), raw:(m[1]||&quot;&quot;)+m[2]});
+  while ((m = rx.exec(s))) tokens.push({pre:m[1]||&quot;&quot;, v:normNum(m[2])});
   const ctxU = s.toLowerCase();
   let conv = null;
   if (tokens.length){
@@ -8615,7 +8627,7 @@ function extractValue(line, fromIdx, p){
 function matchCoa(tds, lines){
   const cands = [];
   tds.params.forEach((p, pi) =&gt; {
-    if (p.type === &quot;info&quot;) return;
+    if (p.type === &quot;info&quot; || !p.name) return;
     const al = aliasesOf(p.name);
     lines.forEach((ln, li) =&gt; {
       let best = null;
@@ -8639,24 +8651,6 @@ function matchCoa(tds, lines){
   }
   return res;
 }
-function detectProduct(lines){
-  const txt = normTxt(lines.join(&quot; \n &quot;));
-  let best = null;
-  for (const t of state.lib){
-    let sc = 0;
-    const nm = normTxt(t.name), gr = normTxt(t.grade||&quot;&quot;);
-    if (nm &amp;&amp; txt.includes(nm)) sc += 20 + nm.length/4;
-    else { const words = nm.split(&quot; &quot;).filter(w=&gt;w.length&gt;3); const hit = words.filter(w=&gt;txt.includes(w)).length; sc += words.length ? 10*hit/words.length : 0; }
-    if (gr &amp;&amp; txt.includes(gr)) sc += 12;
-    else if (gr){ const gt = gr.replace(/[()]/g,&quot; &quot;).split(&quot; &quot;).filter(w =&gt; w.length &gt;= 2); sc += gt.length ? 10 * gt.filter(w =&gt; txt.includes(w)).length / gt.length : 0; }
-    if (t.code &amp;&amp; txt.includes(normTxt(t.code))) sc += 30;
-    const m = matchCoa(t, lines); const k = Object.keys(m).length;
-    const tot = t.params.filter(p=&gt;p.type!==&quot;info&quot;).length || 1;
-    sc += 12 * k / tot + k*0.5;
-    if (!best || sc &gt; best.sc) best = {t, sc};
-  }
-  return best &amp;&amp; best.sc &gt; 6 ? best.t : null;
-}
 function detectMeta(lines){
   const txt = lines.join(&quot;\n&quot;), o = {};
   let m = /(?:batch|lot)\s*(?:no\.?|number|nr\.?|#)?\s*[:.\-|]?\s*\|?\s*([A-Z0-9][A-Z0-9\-\/.]{2,})/i.exec(txt);
@@ -8665,9 +8659,24 @@ function detectMeta(lines){
   if (m) o.date = m[1];
   return o;
 }
+// Do the two documents look like the same product? (product-name words from the TDS found in the COA)
+const GENERIC = new Set([&quot;grade&quot;,&quot;technical&quot;,&quot;tech&quot;,&quot;industrial&quot;,&quot;powder&quot;,&quot;feed&quot;,&quot;food&quot;,&quot;high&quot;,&quot;end&quot;,&quot;solution&quot;,&quot;flakes&quot;,&quot;pearl&quot;,&quot;pearls&quot;,&quot;light&quot;,&quot;dense&quot;]);
+function productMismatch(){
+  const t = state.tds; if (!t || !state.coaLines.length) return &quot;&quot;;
+  const txt = normTxt(state.coaLines.join(&quot; &quot;));
+  // every distinctive word of the product name should appear (&quot;Soda Ash Light&quot; vs a &quot;Caustic Soda&quot; COA → &quot;ash&quot; missing)
+  const words = normTxt(t.name).split(/[^a-z0-9]+/).filter(w =&gt; w.length &gt;= 3 &amp;&amp; !GENERIC.has(w));
+  const missing = words.filter(w =&gt; !new RegExp(&quot;(^|[^a-z0-9])&quot; + w + &quot;(?![a-z])&quot;).test(txt));
+  if (words.length &amp;&amp; missing.length) return `The COA text does not mention “${t.name}”. Make sure both documents are for the same product.`;
+  // second signal: most TDS parameters could not be found on the COA
+  const evals = t.params.filter(p =&gt; p.type !== &quot;info&quot; &amp;&amp; p.type !== &quot;nominal&quot; &amp;&amp; p.name).length;
+  const found = Object.values(coaVals).filter(v =&gt; v &amp;&amp; v.auto).length;
+  if (evals &gt;= 3 &amp;&amp; found &lt; evals / 2) return `Only ${found} of ${evals} TDS parameters were found on the COA — check that the two documents belong together.`;
+  return &quot;&quot;;
+}
 
 /* ================= evaluation ================= */
-const ST = { ok:[&quot;UYGUN&quot;,&quot;p-ok&quot;], warn:[&quot;SINIRDA&quot;,&quot;p-warn&quot;], bad:[&quot;UYGUN DEĞİL&quot;,&quot;p-bad&quot;], miss:[&quot;EKSİK&quot;,&quot;p-miss&quot;], info:[&quot;BİLGİ&quot;,&quot;p-info&quot;], manual:[&quot;MANUEL&quot;,&quot;p-warn&quot;] };
+const ST = { ok:[&quot;PASS&quot;,&quot;p-ok&quot;], warn:[&quot;BORDERLINE&quot;,&quot;p-warn&quot;], bad:[&quot;FAIL&quot;,&quot;p-bad&quot;], miss:[&quot;MISSING&quot;,&quot;p-miss&quot;], info:[&quot;INFO&quot;,&quot;p-info&quot;], manual:[&quot;MANUAL&quot;,&quot;p-warn&quot;] };
 function evalParam(p, raw){
   const s = (raw==null ? &quot;&quot; : String(raw)).trim();
   if (p.type === &quot;info&quot;) return {st:&quot;info&quot;};
@@ -8675,23 +8684,24 @@ function evalParam(p, raw){
   if (p.type === &quot;text&quot;){
     const tx = normTxt(p.text);
     if (/absent|negative|nil|not detected/.test(tx)) return {st: /absent|negative|nil|not detected|n\.?d|none|conform|compl|pass/i.test(s) ? &quot;ok&quot; : (/present|positive|detected/i.test(s) ? &quot;bad&quot; : &quot;manual&quot;)};
-    return {st: /conform|compl|pass|meets|ok|uygun/i.test(s) ? &quot;ok&quot; : &quot;manual&quot;, note:&quot;görsel/manuel kontrol&quot;};
+    return {st: /conform|compl|pass|meets|\bok\b/i.test(s) ? &quot;ok&quot; : &quot;manual&quot;, note:&quot;visual / manual check&quot;};
   }
   const lt = /^&lt;/.test(s), gt = /^&gt;/.test(s);
   const nd = /^(n\.?d\.?|not detected|nil|none|absent)$/i.test(s);
   const n = nums(s.replace(/^[&lt;&gt;]\s*/,&quot;&quot;));
   if (!n.length &amp;&amp; !nd){
-    if (/conform|compl|pass|meets|uygun|ok/i.test(s)) return {st:&quot;manual&quot;, note:&quot;sayısal değer yok, 'uygun' beyanı&quot;};
-    return {st:&quot;manual&quot;, note:&quot;sayı okunamadı&quot;};
+    if (/conform|compl|pass|meets|\bok\b/i.test(s)) return {st:&quot;manual&quot;, note:&quot;no numeric value, only a 'conforms' statement&quot;};
+    return {st:&quot;manual&quot;, note:&quot;could not read a number&quot;};
   }
   const v = nd ? 0 : n[0].v;
   switch(p.type){
-    case &quot;min&quot;:
+    case &quot;min&quot;: {
       if (lt) return {st:&quot;bad&quot;};
       if (v &lt; p.lo) return {st:&quot;bad&quot;, v};
-      // &quot;close to limit&quot;: for high-purity % specs a quarter of the headroom to 100 %, otherwise 0.5 % of the limit
+      // &quot;close to limit&quot;: for high-purity % specs a quarter of the headroom to 100 % (max 0.5 pt), otherwise 0.5 % of the limit
       const band = (/%/.test(p.unit||&quot;&quot;) &amp;&amp; p.lo &gt; 50 &amp;&amp; p.lo &lt; 100) ? Math.min((100 - p.lo) * 0.25, 0.5) : Math.abs(p.lo) * 0.005;
       return {st: (!gt &amp;&amp; v &lt; p.lo + band) ? &quot;warn&quot; : &quot;ok&quot;, v};
+    }
     case &quot;max&quot;:
       if (gt) return {st: v &gt;= p.hi ? &quot;bad&quot; : &quot;manual&quot;, v};
       if (v &gt; p.hi) return {st:&quot;bad&quot;, v};
@@ -8703,7 +8713,7 @@ function evalParam(p, raw){
     }
     case &quot;nominal&quot;: {
       const dev = p.lo ? (v-p.lo)/p.lo*100 : 0;
-      return {st:&quot;info&quot;, v, note:&quot;tipik değerden sapma &quot;+(dev&gt;=0?&quot;+&quot;:&quot;&quot;)+dev.toFixed(1)+&quot;%&quot;};
+      return {st:&quot;info&quot;, v, note:&quot;deviation from typical value &quot;+(dev&gt;=0?&quot;+&quot;:&quot;&quot;)+dev.toFixed(1)+&quot;%&quot;};
     }
   }
   return {st:&quot;manual&quot;};
@@ -8720,121 +8730,200 @@ function overall(results){
   return {c, v};
 }
 
-/* ================= CHECK view ================= */
-const coaVals = {}; // pi → {value, auto, line, conv}
-function fillProdSel(){
-  const sel = $(&quot;#prodSel&quot;), cur = state.cur;
-  const sorted = [...state.lib].sort((a,b)=&gt;tdsLabel(a).localeCompare(tdsLabel(b)));
-  sel.innerHTML = (state.lib.length ? '&lt;option value=&quot;&quot;&gt;— Ürün seçin —&lt;/option&gt;' : '&lt;option value=&quot;&quot;&gt;— Önce TDS ekleyin —&lt;/option&gt;') + sorted.map(t =&gt; `&lt;option value=&quot;${esc(t.id)}&quot;&gt;${esc(tdsLabel(t))}${t.grade?&quot; — &quot;+esc(t.grade):&quot;&quot;}&lt;/option&gt;`).join(&quot;&quot;);
-  sel.value = cur || &quot;&quot;;
-  $(&quot;#nLib&quot;).textContent = state.lib.length;
-  $(&quot;#nHist&quot;).textContent = state.hist.length;
-}
+/* ================= compare view ================= */
 function currentResults(){
-  const t = tdsById(state.cur); if (!t) return [];
+  const t = state.tds; if (!t) return [];
   return t.params.map((p,pi) =&gt; { const cv = coaVals[pi]||{}; return Object.assign({p, pi, value:cv.value||&quot;&quot;, auto:!!cv.auto, line:cv.line||&quot;&quot;, conv:cv.conv}, evalParam(p, cv.value)); });
 }
+const hasCoaData = () =&gt; state.coaLines.length &gt; 0 || Object.values(coaVals).some(v =&gt; v &amp;&amp; String(v.value||&quot;&quot;).trim());
+function renderDocs(){
+  const t = state.tds;
+  $(&quot;#tdsCard&quot;).classList.toggle(&quot;loaded&quot;, !!t);
+  $(&quot;#tdsDropTxt&quot;).textContent = t ? &quot;Replace TDS — drop or click&quot; : &quot;Drop the TDS here or click to choose&quot;;
+  $(&quot;#tdsMeta&quot;).hidden = !t;
+  if (t){
+    const n = t.params.filter(p =&gt; p.type !== &quot;info&quot;).length;
+    $(&quot;#tdsChip&quot;).hidden = false;
+    $(&quot;#tdsChip&quot;).innerHTML = `📄 &lt;span&gt;&lt;b&gt;${esc(t.file || &quot;TDS&quot;)}&lt;/b&gt; · ${n} limit${n===1?&quot;&quot;:&quot;s&quot;} read&lt;/span&gt;`;
+    if (document.activeElement !== $(&quot;#tdsName&quot;)) $(&quot;#tdsName&quot;).value = t.name || &quot;&quot;;
+    if (document.activeElement !== $(&quot;#tdsCode&quot;)) $(&quot;#tdsCode&quot;).value = [t.code, t.grade].filter(Boolean).join(&quot; · &quot;);
+  } else $(&quot;#tdsChip&quot;).hidden = true;
+  const hasCoa = state.coaLines.length &gt; 0;
+  $(&quot;#coaCard&quot;).classList.toggle(&quot;loaded&quot;, hasCoa || hasCoaData());
+  $(&quot;#coaDropTxt&quot;).textContent = hasCoa ? &quot;Replace COA — drop or click&quot; : &quot;Drop the COA here or click to choose&quot;;
+  $(&quot;#coaChip&quot;).hidden = !state.coaFile;
+  if (state.coaFile) $(&quot;#coaChip&quot;).innerHTML = `📄 &lt;span&gt;&lt;b&gt;${esc(state.coaFile)}&lt;/b&gt; · ${Object.keys(coaVals).length} value${Object.keys(coaVals).length===1?&quot;&quot;:&quot;s&quot;} matched&lt;/span&gt;`;
+  $(&quot;#coaRawBox&quot;).hidden = !hasCoa; $(&quot;#coaRaw&quot;).textContent = state.coaLines.join(&quot;\n&quot;);
+  $(&quot;#tdsRawBox&quot;).hidden = !state.tdsLines.length; $(&quot;#tdsRaw&quot;).textContent = state.tdsLines.join(&quot;\n&quot;);
+}
+function renderLimits(){
+  const t = state.tds, box = $(&quot;#limitsBox&quot;);
+  box.hidden = !t;
+  if (!t) return;
+  $(&quot;#limitsSum&quot;).textContent = `· ${t.params.length} row${t.params.length===1?&quot;&quot;:&quot;s&quot;} — click to review or correct`;
+  $(&quot;#edTbl tbody&quot;).innerHTML = paramEditorRows(t.params);
+}
 function renderCheck(){
-  const t = tdsById(state.cur);
-  const tb = $(&quot;#resTbl tbody&quot;);
+  renderDocs();
+  const t = state.tds, tb = $(&quot;#resTbl tbody&quot;);
   if (!t){
-    tb.innerHTML = state.lib.length
-      ? `&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;Ürün seçilmedi&lt;/div&gt;Soldan ürünün TDS'sini seçin, sonra COA'yı yükleyin veya değerleri tabloya elle yazın.&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`
-      : `&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;Henüz TDS yok&lt;/div&gt;Karşılaştırma için önce ürünün TDS'sini ekleyin — PDF yükleyerek, tabloyu yapıştırarak veya elle.&lt;br&gt;&lt;br&gt;&lt;button class=&quot;btn primary&quot; data-addtds&gt;＋ İlk TDS'yi ekle&lt;/button&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
-    $(&quot;#stats&quot;).innerHTML = &quot;&quot;; setVerdict(null); $(&quot;#resTitle&quot;).textContent = &quot;Parametre karşılaştırması&quot;; return;
+    tb.innerHTML = `&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;Load the two documents&lt;/div&gt;1 · TDS (the specification) &amp;nbsp;→&amp;nbsp; 2 · COA (the delivery's certificate). You can also type either one manually.&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
+    $(&quot;#stats&quot;).innerHTML = &quot;&quot;; setVerdict(null); $(&quot;#resTitle&quot;).textContent = &quot;Parameter comparison&quot;; return;
   }
-  $(&quot;#resTitle&quot;).textContent = tdsLabel(t) + (t.grade ? &quot; — &quot; + t.grade : &quot;&quot;);
+  $(&quot;#resTitle&quot;).textContent = tdsLabel(t) + (t.grade &amp;&amp; !t.code ? &quot; — &quot; + t.grade : &quot;&quot;);
   const R = currentResults();
-  tb.innerHTML = R.map(r =&gt; {
+  tb.innerHTML = R.length ? R.map(r =&gt; {
     const p = r.p, [lab, cls] = ST[r.st];
-    const note = [r.note, p.inferred ? &quot;limit yönü tahmini&quot; : &quot;&quot;, r.conv ? &quot;birim çevrildi &quot;+r.conv : &quot;&quot;].filter(Boolean).join(&quot; · &quot;);
-    const input = p.type === &quot;info&quot; ? `&lt;span class=&quot;muted&quot;&gt;—&lt;/span&gt;` : `&lt;input class=&quot;vin${r.auto?&quot; auto&quot;:&quot;&quot;}&quot; data-pi=&quot;${r.pi}&quot; value=&quot;${esc(r.value)}&quot; placeholder=&quot;değer&quot; title=&quot;${r.auto?&quot;COA'dan otomatik okundu — düzeltebilirsiniz&quot;:&quot;Elle girin&quot;}&quot;&gt;`;
+    const note = [r.note, p.inferred ? &quot;limit direction inferred&quot; : &quot;&quot;, r.conv ? &quot;unit converted &quot;+r.conv : &quot;&quot;].filter(Boolean).join(&quot; · &quot;);
+    const input = p.type === &quot;info&quot; ? `&lt;span class=&quot;muted&quot;&gt;—&lt;/span&gt;` : `&lt;input class=&quot;vin${r.auto?&quot; auto&quot;:&quot;&quot;}&quot; data-pi=&quot;${r.pi}&quot; value=&quot;${esc(r.value)}&quot; placeholder=&quot;value&quot; aria-label=&quot;COA value for ${esc(p.name)}&quot; title=&quot;${r.auto?&quot;Read from the COA — you can correct it&quot;:&quot;Type the COA value&quot;}&quot;&gt;`;
     return `&lt;tr data-row=&quot;${r.pi}&quot; class=&quot;${r.st===&quot;bad&quot;?&quot;row-bad&quot;:&quot;&quot;}&quot;&gt;
-      &lt;td&gt;&lt;div class=&quot;pname&quot;&gt;${esc(p.name)}&lt;/div&gt;${r.line?`&lt;span class=&quot;src&quot; title=&quot;${esc(r.line)}&quot;&gt;↳ ${esc(r.line)}&lt;/span&gt;`:&quot;&quot;}&lt;/td&gt;
+      &lt;td&gt;&lt;div class=&quot;pname&quot;&gt;${esc(p.name || &quot;(unnamed)&quot;)}&lt;/div&gt;${r.line?`&lt;span class=&quot;src&quot; title=&quot;${esc(r.line)}&quot;&gt;↳ ${esc(r.line)}&lt;/span&gt;`:&quot;&quot;}&lt;/td&gt;
       &lt;td class=&quot;num&quot;&gt;${esc(limitText(p))}&lt;/td&gt;
       &lt;td&gt;${input}&lt;/td&gt;
       &lt;td&gt;&lt;span class=&quot;pill ${cls}&quot;&gt;${lab}&lt;/span&gt;${note?`&lt;div class=&quot;psub&quot;&gt;${esc(note)}&lt;/div&gt;`:&quot;&quot;}&lt;/td&gt;&lt;/tr&gt;`;
-  }).join(&quot;&quot;);
+  }).join(&quot;&quot;) : `&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;No limits yet&lt;/div&gt;Add the TDS limits in the &quot;TDS limits&quot; section below.&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
   const o = overall(R);
-  $(&quot;#stats&quot;).innerHTML = [[&quot;ok&quot;,&quot;Uygun&quot;],[&quot;warn&quot;,&quot;Sınırda&quot;],[&quot;bad&quot;,&quot;Uygun değil&quot;],[&quot;miss&quot;,&quot;Eksik&quot;],[&quot;manual&quot;,&quot;Manuel&quot;],[&quot;info&quot;,&quot;Bilgi&quot;]]
+  $(&quot;#stats&quot;).innerHTML = [[&quot;ok&quot;,&quot;Pass&quot;],[&quot;warn&quot;,&quot;Borderline&quot;],[&quot;bad&quot;,&quot;Fail&quot;],[&quot;miss&quot;,&quot;Missing&quot;],[&quot;manual&quot;,&quot;Manual&quot;],[&quot;info&quot;,&quot;Info&quot;]]
     .filter(([k])=&gt;o.c[k]).map(([k,l])=&gt;`&lt;span class=&quot;stat ${ST[k][1]}&quot;&gt;${l}: ${o.c[k]}&lt;/span&gt;`).join(&quot;&quot;);
-  setVerdict(o, R);
-  if (state.coaLines.length || Object.keys(coaVals).length) autoSave();
+  setVerdict(hasCoaData() ? o : {v:&quot;wait&quot;, c:o.c}, R);
+  if (hasCoaData()) autoSave();
 }
 function setVerdict(o, R){
   const el = $(&quot;#verdict&quot;);
-  if (!o){ el.className=&quot;verdict v-none&quot;; el.innerHTML=`&lt;div class=&quot;ic&quot;&gt;?&lt;/div&gt;&lt;div&gt;&lt;h3&gt;Henüz kontrol yok&lt;/h3&gt;&lt;p&gt;Soldan bir COA yükleyin; ürün otomatik tanınır ve değerler TDS ile karşılaştırılır. Değerleri tabloda elle de girebilir/düzeltebilirsiniz.&lt;/p&gt;&lt;/div&gt;`; return; }
-  const names = st =&gt; R.filter(r=&gt;r.st===st).map(r=&gt;r.p.name);
   let cls, ic, h, p;
-  if (o.v === &quot;bad&quot;){ cls=&quot;v-bad&quot;; ic=&quot;✕&quot;; h=&quot;UYGUN DEĞİL&quot;; p=&quot;Limit dışı: &quot; + names(&quot;bad&quot;).join(&quot;, &quot;) + &quot;. Sevkiyatı kabul etmeden önce tedarikçiyle görüşün / numune analizi isteyin.&quot;; }
-  else if (o.v === &quot;ok&quot;){ cls=&quot;v-ok&quot;; ic=&quot;✓&quot;; h=&quot;UYGUN&quot;; p=`Değerlendirilen ${o.c.ok} parametrenin tamamı TDS limitleri içinde.`; }
-  else if (o.v === &quot;warn&quot;){
-    cls=&quot;v-warn&quot;; ic=&quot;!&quot;; h=&quot;KOŞULLU UYGUN&quot;;
-    const parts = [];
-    if (o.c.warn) parts.push(&quot;sınıra yakın: &quot; + names(&quot;warn&quot;).join(&quot;, &quot;));
-    if (o.c.miss) parts.push(&quot;COA'da eksik: &quot; + names(&quot;miss&quot;).join(&quot;, &quot;));
-    if (o.c.manual) parts.push(&quot;manuel kontrol: &quot; + names(&quot;manual&quot;).join(&quot;, &quot;));
-    p = &quot;Limit dışı değer yok, ancak &quot; + parts.join(&quot; · &quot;) + &quot;.&quot;;
-  } else { cls=&quot;v-none&quot;; ic=&quot;?&quot;; h=&quot;Değer bekleniyor&quot;; p=&quot;COA yükleyin veya değerleri tabloya girin.&quot;; }
+  if (!o){ cls=&quot;v-none&quot;; ic=&quot;?&quot;; h=&quot;No comparison yet&quot;; p=&quot;Load the TDS and the COA above. Values are matched automatically; you can also type or correct them in the table.&quot;; }
+  else if (o.v === &quot;wait&quot;){ cls=&quot;v-none&quot;; ic=&quot;2&quot;; h=&quot;TDS loaded — now add the COA&quot;; p=&quot;Upload or paste the COA, or type its values into the table below.&quot;; }
+  else {
+    const names = st =&gt; R.filter(r=&gt;r.st===st).map(r=&gt;r.p.name);
+    if (o.v === &quot;bad&quot;){ cls=&quot;v-bad&quot;; ic=&quot;✕&quot;; h=&quot;NOT COMPLIANT&quot;; p=&quot;Out of specification: &quot; + names(&quot;bad&quot;).join(&quot;, &quot;) + &quot;. Talk to the supplier / request a sample analysis before accepting the shipment.&quot;; }
+    else if (o.v === &quot;ok&quot;){ cls=&quot;v-ok&quot;; ic=&quot;✓&quot;; h=&quot;COMPLIANT&quot;; p=`All ${o.c.ok} evaluated parameters are within the TDS limits.`; }
+    else if (o.v === &quot;warn&quot;){
+      cls=&quot;v-warn&quot;; ic=&quot;!&quot;; h=&quot;CONDITIONALLY COMPLIANT&quot;;
+      const parts = [];
+      if (o.c.warn) parts.push(&quot;close to the limit: &quot; + names(&quot;warn&quot;).join(&quot;, &quot;));
+      if (o.c.miss) parts.push(&quot;missing on the COA: &quot; + names(&quot;miss&quot;).join(&quot;, &quot;));
+      if (o.c.manual) parts.push(&quot;manual check: &quot; + names(&quot;manual&quot;).join(&quot;, &quot;));
+      p = &quot;Nothing is out of specification, but &quot; + parts.join(&quot; · &quot;) + &quot;.&quot;;
+    } else { cls=&quot;v-none&quot;; ic=&quot;?&quot;; h=&quot;Waiting for values&quot;; p=&quot;No COA value could be evaluated yet — upload the COA or type the values.&quot;; }
+  }
+  const mm = o &amp;&amp; o.v !== &quot;wait&quot; ? productMismatch() : &quot;&quot;;
   el.className = &quot;verdict &quot; + cls;
-  el.innerHTML = `&lt;div class=&quot;ic&quot;&gt;${ic}&lt;/div&gt;&lt;div&gt;&lt;h3&gt;${h}&lt;/h3&gt;&lt;p&gt;${esc(p)}&lt;/p&gt;&lt;/div&gt;`;
-}
-function applyCoa(lines, fname, isOcr){
-  recId = null; setSaved(null);   // each COA read = a new report, so start its shipment fields fresh
-  [&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;].forEach(s =&gt; $(s).value = &quot;&quot;);
-  state.coaLines = lines; state.coaFile = fname;
-  $(&quot;#rawBox&quot;).hidden = !lines.length; $(&quot;#rawTxt&quot;).textContent = lines.join(&quot;\n&quot;);
-  const meta = detectMeta(lines);
-  if (meta.lot &amp;&amp; !$(&quot;#fLot&quot;).value) $(&quot;#fLot&quot;).value = meta.lot;
-  if (meta.date &amp;&amp; !$(&quot;#fDate&quot;).value) $(&quot;#fDate&quot;).value = meta.date;
-  const det = detectProduct(lines);
-  if (det){ state.cur = det.id; $(&quot;#prodSel&quot;).value = det.id; $(&quot;#autoNote&quot;).textContent = &quot;Otomatik tanındı — yanlışsa listeden değiştirin.&quot;; }
-  else if (!state.cur) $(&quot;#autoNote&quot;).textContent = state.lib.length ? &quot;Ürün tanınamadı — lütfen listeden seçin veya bu ürünün TDS'sini ekleyin.&quot; : &quot;COA okundu. Karşılaştırmak için önce bu ürünün TDS'sini ekleyin.&quot;;
-  runMatch();
-  toast((isOcr?&quot;OCR ile okundu · &quot;:&quot;&quot;) + Object.keys(coaVals).length + &quot; parametre COA'dan eşleştirildi&quot;);
-  if (TTS.ok &amp;&amp; TTS.auto &amp;&amp; state.cur) speakCurrent();
+  el.innerHTML = `&lt;div class=&quot;ic&quot;&gt;${ic}&lt;/div&gt;&lt;div&gt;&lt;h3&gt;${h}&lt;/h3&gt;&lt;p&gt;${esc(p)}&lt;/p&gt;${mm ? `&lt;p class=&quot;mismatch&quot;&gt;⚠ ${esc(mm)}&lt;/p&gt;` : &quot;&quot;}&lt;/div&gt;`;
 }
 function runMatch(){
   for (const k in coaVals) delete coaVals[k];
-  const t = tdsById(state.cur);
-  if (t &amp;&amp; state.coaLines.length){
-    const m = matchCoa(t, state.coaLines);
+  if (state.tds &amp;&amp; state.coaLines.length){
+    const m = matchCoa(state.tds, state.coaLines);
     for (const pi in m) coaVals[pi] = {value:m[pi].value, auto:true, line:m[pi].line, conv:m[pi].conv};
   }
-  renderCheck();
+  renderLimits(); renderCheck();
+}
+function setTds(t, lines){
+  state.tds = t; state.tdsLines = lines || [];
+  runMatch();
+  if (!t.params.length) $(&quot;#limitsBox&quot;).open = true;
+}
+function applyCoa(lines, fname, isOcr){
+  stopSpeak();
+  recId = null; setSaved(null);   // each new COA = a new report, so start its shipment fields fresh
+  [&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;].forEach(s =&gt; $(s).value = &quot;&quot;);
+  state.coaLines = lines; state.coaFile = fname;
+  const meta = detectMeta(lines);
+  if (meta.lot) $(&quot;#fLot&quot;).value = meta.lot;
+  if (meta.date) $(&quot;#fDate&quot;).value = meta.date;
+  runMatch();
+  if (!state.tds){ toast(&quot;COA read — now load the TDS (step 1) to compare&quot;); return; }
+  toast((isOcr?&quot;Read with OCR · &quot;:&quot;&quot;) + Object.keys(coaVals).length + &quot; of &quot; + state.tds.params.filter(p=&gt;p.type!==&quot;info&quot;).length + &quot; parameters matched on the COA&quot;);
+  if (TTS.ok &amp;&amp; TTS.auto) speakCurrent();
+}
+async function readFile(file, which){
+  const prog = $(&quot;#&quot; + which + &quot;Prog&quot;), chip = $(&quot;#&quot; + which + &quot;Chip&quot;);
+  chip.hidden = false; chip.textContent = &quot;📄 &quot; + file.name + &quot; — reading…&quot;;
+  prog.hidden = false; prog.firstElementChild.style.width = &quot;5%&quot;;
+  try {
+    const res = await fileLines(file, f =&gt; { if (isFinite(f)) prog.firstElementChild.style.width = Math.max(5, f*100) + &quot;%&quot;; });
+    return res;
+  } catch(e){ chip.textContent = &quot;📄 &quot; + file.name + &quot; — could not be read&quot;; toast(&quot;Could not read &quot; + file.name + &quot;: &quot; + e.message); console.error(e); return null; }
+  finally { setTimeout(() =&gt; prog.hidden = true, 400); }
+}
+async function handleTdsFile(file){
+  const r = await readFile(file, &quot;tds&quot;); if (!r) return;
+  const pr = parseTdsLines(r.lines, file.name);
+  setTds({name:pr.name, code:pr.code, grade:pr.grade, file:file.name, params:pr.rows.map(x =&gt; parseSpec(x[0], x[1], x[2]))}, r.lines);
+  toast(pr.rows.length ? `TDS read${r.ocr?&quot; with OCR&quot;:&quot;&quot;}: ${pr.rows.length} rows — check them under &quot;TDS limits&quot; if needed` : &quot;No specification table found in the TDS — add the limits manually under \&quot;TDS limits\&quot;&quot;);
 }
 async function handleCoaFile(file){
-  const chip = $(&quot;#coaChip&quot;), prog = $(&quot;#coaProg&quot;);
-  chip.hidden = false; chip.innerHTML = `📄 &lt;span&gt;${esc(file.name)}&lt;/span&gt; &lt;span class=&quot;muted&quot; id=&quot;coaStat&quot;&gt;okunuyor…&lt;/span&gt;`;
-  prog.hidden = false; prog.firstElementChild.style.width = &quot;5%&quot;;
-  try{
-    const {lines, ocr:isOcr} = await fileLines(file, f =&gt; { prog.firstElementChild.style.width = Math.max(5, f*100)+&quot;%&quot;; const s=$(&quot;#coaStat&quot;); if (s &amp;&amp; isFinite(f)) s.textContent = Math.round(f*100)+&quot;%&quot;; });
-    $(&quot;#coaStat&quot;).textContent = lines.length + &quot; satır&quot; + (isOcr ? &quot; · OCR&quot; : &quot;&quot;);
-    applyCoa(lines, file.name, isOcr);
-  } catch(e){ $(&quot;#coaStat&quot;).textContent = &quot;hata&quot;; toast(&quot;Okunamadı: &quot; + e.message); console.error(e); }
-  finally { setTimeout(()=&gt;prog.hidden = true, 500); }
+  const r = await readFile(file, &quot;coa&quot;); if (!r) return;
+  applyCoa(r.lines, file.name, r.ocr);
 }
 function clearCheck(){
   stopSpeak();
   recId = null; setSaved(null);
   for (const k in coaVals) delete coaVals[k];
-  state.coaLines = []; state.coaFile = &quot;&quot;;
-  [&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;,&quot;#pasteTxt&quot;].forEach(s =&gt; $(s).value = &quot;&quot;);
-  $(&quot;#coaChip&quot;).hidden = true; $(&quot;#rawBox&quot;).hidden = true; $(&quot;#autoNote&quot;).textContent = &quot;&quot;;
-  renderCheck();
+  state.tds = null; state.tdsLines = []; state.coaLines = []; state.coaFile = &quot;&quot;;
+  [&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;,&quot;#tdsPaste&quot;,&quot;#coaPaste&quot;].forEach(s =&gt; $(s).value = &quot;&quot;);
+  $(&quot;#tdsPasteBox&quot;).hidden = true; $(&quot;#coaPasteBox&quot;).hidden = true;
+  renderLimits(); renderCheck();
 }
+
+/* ================= TDS limits editor ================= */
+const TYPES = [[&quot;min&quot;,&quot;Min (≥)&quot;],[&quot;max&quot;,&quot;Max (≤)&quot;],[&quot;range&quot;,&quot;Range&quot;],[&quot;text&quot;,&quot;Text&quot;],[&quot;nominal&quot;,&quot;Typical&quot;],[&quot;info&quot;,&quot;Info&quot;]];
+function paramEditorRows(params){
+  return params.map((p,i)=&gt;`&lt;tr data-i=&quot;${i}&quot;&gt;
+    &lt;td&gt;&lt;input data-f=&quot;name&quot; value=&quot;${esc(p.name)}&quot; aria-label=&quot;Parameter&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input data-f=&quot;unit&quot; value=&quot;${esc(p.unit)}&quot; style=&quot;width:80px&quot; aria-label=&quot;Unit&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;select data-f=&quot;type&quot; aria-label=&quot;Limit type&quot;&gt;${TYPES.map(([v,l])=&gt;`&lt;option value=&quot;${v}&quot;${p.type===v?&quot; selected&quot;:&quot;&quot;}&gt;${l}&lt;/option&gt;`).join(&quot;&quot;)}&lt;/select&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input class=&quot;n&quot; data-f=&quot;lo&quot; value=&quot;${p.lo==null?&quot;&quot;:fmt(p.lo)}&quot; ${[&quot;min&quot;,&quot;range&quot;,&quot;nominal&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;} aria-label=&quot;Min&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input class=&quot;n&quot; data-f=&quot;hi&quot; value=&quot;${p.hi==null?&quot;&quot;:fmt(p.hi)}&quot; ${[&quot;max&quot;,&quot;range&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;} aria-label=&quot;Max&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input data-f=&quot;text&quot; value=&quot;${esc(p.text)}&quot; ${[&quot;text&quot;,&quot;info&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;} aria-label=&quot;Text&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;button class=&quot;x&quot; data-del=&quot;${i}&quot; title=&quot;Delete row&quot;&gt;×&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`).join(&quot;&quot;);
+}
+(function bindEditor(){
+  const root = $(&quot;#edTbl&quot;);
+  const changed = () =&gt; { $(&quot;#limitsSum&quot;).textContent = `· ${state.tds.params.length} rows — edited`; renderCheck(); };
+  root.addEventListener(&quot;input&quot;, e =&gt; {
+    const tr = e.target.closest(&quot;tr[data-i]&quot;); if (!tr || !state.tds) return;
+    const p = state.tds.params[+tr.dataset.i], f = e.target.dataset.f;
+    if (f === &quot;type&quot;) return;
+    if (f === &quot;lo&quot; || f === &quot;hi&quot;){ const n = nums(e.target.value); p[f] = n.length ? n[0].v : null; }
+    else p[f] = e.target.value;
+    p.inferred = false; changed();
+  });
+  root.addEventListener(&quot;change&quot;, e =&gt; {
+    if (e.target.dataset.f !== &quot;type&quot; || !state.tds) return;
+    const p = state.tds.params[+e.target.closest(&quot;tr[data-i]&quot;).dataset.i];
+    p.type = e.target.value; p.inferred = false;
+    root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(state.tds.params); changed();
+  });
+  root.addEventListener(&quot;click&quot;, e =&gt; {
+    const d = e.target.closest(&quot;[data-del]&quot;); if (!d || !state.tds) return;
+    const i = +d.dataset.del;
+    state.tds.params.splice(i, 1);
+    // COA values are keyed by row index — shift the ones after the deleted row
+    const keys = Object.keys(coaVals).map(Number).sort((a,b)=&gt;a-b);
+    for (const k of keys){ if (k === i) delete coaVals[k]; else if (k &gt; i){ coaVals[k-1] = coaVals[k]; delete coaVals[k]; } }
+    root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(state.tds.params); changed();
+  });
+  $(&quot;#edAdd&quot;).onclick = () =&gt; {
+    if (!state.tds) return;
+    state.tds.params.push({name:&quot;&quot;, unit:&quot;%&quot;, type:&quot;max&quot;, lo:null, hi:null, text:&quot;&quot;, inferred:false});
+    root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(state.tds.params); changed();
+    const inp = root.querySelector(`tr[data-i=&quot;${state.tds.params.length-1}&quot;] input`); if (inp) inp.focus();
+  };
+})();
+
+/* ================= reports: every comparison is kept as a numbered report ================= */
+let recId = null, saveTimer = null;
 function snapshot(){
-  const t = tdsById(state.cur); if (!t) return null;
+  const t = state.tds; if (!t) return null;
   const R = currentResults(), o = overall(R);
-  return { id: uid(), ts: new Date().toISOString(), tdsId: t.id, product: tdsLabel(t), grade: t.grade||&quot;&quot;,
+  return { id: uid(), ts: new Date().toISOString(), product: tdsLabel(t), grade: t.grade||&quot;&quot;,
     sup: $(&quot;#fSup&quot;).value.trim(), lot: $(&quot;#fLot&quot;).value.trim(), coaDate: $(&quot;#fDate&quot;).value.trim(), ref: $(&quot;#fRef&quot;).value.trim(), note: $(&quot;#fNote&quot;).value.trim(),
-    file: state.coaFile, verdict: o.v, coaLines: state.coaLines.slice(0, 300),
+    tdsFile: t.file || &quot;&quot;, file: state.coaFile, verdict: o.v, coaLines: state.coaLines.slice(0, 300),
+    tds: {name:t.name, code:t.code, grade:t.grade, file:t.file, params:t.params},
     rows: R.map(r =&gt; ({name:r.p.name, limit:limitText(r.p), value:r.value, st:r.st, note:r.note||&quot;&quot;, line:r.line||&quot;&quot;})) };
 }
-const VLAB = {ok:[&quot;UYGUN&quot;,&quot;p-ok&quot;], bad:[&quot;UYGUN DEĞİL&quot;,&quot;p-bad&quot;], warn:[&quot;KOŞULLU&quot;,&quot;p-warn&quot;], none:[&quot;—&quot;,&quot;p-miss&quot;]};
-
-/* every comparison is kept as a numbered report: one record per check, updated while you edit */
-let recId = null, saveTimer = null;
+const VLAB = {ok:[&quot;COMPLIANT&quot;,&quot;p-ok&quot;], bad:[&quot;NOT COMPLIANT&quot;,&quot;p-bad&quot;], warn:[&quot;CONDITIONAL&quot;,&quot;p-warn&quot;], none:[&quot;—&quot;,&quot;p-miss&quot;]};
 function nextNo(){
   const y = new Date().getFullYear(), pre = &quot;COA-&quot; + y + &quot;-&quot;;
   const max = state.hist.reduce((m,h) =&gt; (h.no &amp;&amp; h.no.startsWith(pre)) ? Math.max(m, parseInt(h.no.slice(pre.length),10)||0) : m, 0);
@@ -8851,306 +8940,164 @@ function doAutoSave(){
 }
 function setSaved(rec){
   const el = $(&quot;#saveState&quot;);
-  if (!rec){ el.className = &quot;saved idle&quot;; el.textContent = &quot;Rapor COA okununca otomatik kaydedilir&quot;; return; }
+  if (!rec){ el.className = &quot;saved idle&quot;; el.textContent = &quot;The report is saved automatically&quot;; return; }
   el.className = &quot;saved&quot;;
-  el.innerHTML = `✓ ${esc(rec.no)} kaydedildi · &lt;button class=&quot;linkbtn&quot; data-open=&quot;${esc(rec.id)}&quot;&gt;raporu aç&lt;/button&gt;`;
+  el.innerHTML = `✓ ${esc(rec.no)} saved · &lt;button class=&quot;linkbtn&quot; data-open=&quot;${esc(rec.id)}&quot;&gt;open report&lt;/button&gt;`;
 }
+const vKey = v =&gt; VLAB[v] ? v : &quot;none&quot;;
 function reportHTML(rec){
-  const d = new Date(rec.ts), v = rec.verdict;
+  const d = new Date(rec.ts), v = vKey(rec.verdict);
   return `&lt;div class=&quot;rep&quot;&gt;
-    &lt;div class=&quot;rep-head&quot;&gt;&lt;div&gt;&lt;div class=&quot;eyebrow&quot;&gt;Anatrica · Kalite Kontrol&lt;/div&gt;&lt;h2 style=&quot;font-size:19px;margin-top:3px&quot;&gt;COA Uygunluk Raporu&lt;/h2&gt;&lt;/div&gt;
-      &lt;div class=&quot;rep-no&quot;&gt;${esc(rec.no||&quot;&quot;)}&lt;br&gt;${d.toLocaleString(&quot;tr-TR&quot;)}${rec.updated?&quot;&lt;br&gt;güncellendi &quot;+new Date(rec.updated).toLocaleString(&quot;tr-TR&quot;):&quot;&quot;}&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;rep-head&quot;&gt;&lt;div&gt;&lt;div class=&quot;eyebrow&quot;&gt;Anatrica · Quality Control&lt;/div&gt;&lt;h2 style=&quot;font-size:19px;margin-top:3px&quot;&gt;COA Compliance Report&lt;/h2&gt;&lt;/div&gt;
+      &lt;div class=&quot;rep-no&quot;&gt;${esc(rec.no||&quot;&quot;)}&lt;br&gt;${d.toLocaleString(DATE_LOCALE)}${rec.updated?&quot;&lt;br&gt;updated &quot;+new Date(rec.updated).toLocaleString(DATE_LOCALE):&quot;&quot;}&lt;/div&gt;&lt;/div&gt;
     &lt;table class=&quot;meta&quot;&gt;&lt;tbody&gt;
-      &lt;tr&gt;&lt;td&gt;Ürün / TDS&lt;/td&gt;&lt;td&gt;${esc(rec.product)} ${rec.grade?&quot;— &quot;+esc(rec.grade):&quot;&quot;}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;Tedarikçi&lt;/td&gt;&lt;td&gt;${esc(rec.sup||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;Lot / Batch&lt;/td&gt;&lt;td&gt;${esc(rec.lot||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;COA tarihi&lt;/td&gt;&lt;td&gt;${esc(rec.coaDate||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;Sevkiyat&lt;/td&gt;&lt;td&gt;${esc(rec.ref||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;COA dosyası&lt;/td&gt;&lt;td&gt;${esc(rec.file||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Product&lt;/td&gt;&lt;td&gt;${esc(rec.product)} ${rec.grade &amp;&amp; !/·/.test(rec.product)?&quot;— &quot;+esc(rec.grade):&quot;&quot;}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Supplier&lt;/td&gt;&lt;td&gt;${esc(rec.sup||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Lot / batch&lt;/td&gt;&lt;td&gt;${esc(rec.lot||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;COA date&lt;/td&gt;&lt;td&gt;${esc(rec.coaDate||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Shipment&lt;/td&gt;&lt;td&gt;${esc(rec.ref||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;TDS document&lt;/td&gt;&lt;td&gt;${esc(rec.tdsFile||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;COA document&lt;/td&gt;&lt;td&gt;${esc(rec.file||&quot;—&quot;)}&lt;/td&gt;&lt;/tr&gt;
     &lt;/tbody&gt;&lt;/table&gt;
-    &lt;div class=&quot;rep-v ${v}&quot;&gt;SONUÇ: ${VLAB[v][0]}&lt;/div&gt;
-    &lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parametre&lt;/th&gt;&lt;th&gt;TDS limiti&lt;/th&gt;&lt;th&gt;COA değeri&lt;/th&gt;&lt;th&gt;Durum&lt;/th&gt;&lt;th&gt;Not&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
-      ${rec.rows.map(r=&gt;`&lt;tr class=&quot;${r.st===&quot;bad&quot;?&quot;row-bad&quot;:&quot;&quot;}&quot;&gt;&lt;td&gt;${esc(r.name)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${esc(r.limit)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${esc(r.value||&quot;—&quot;)}&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;pill ${ST[r.st][1]}&quot;&gt;${ST[r.st][0]}&lt;/span&gt;&lt;/td&gt;&lt;td class=&quot;psub&quot;&gt;${esc(r.note)}&lt;/td&gt;&lt;/tr&gt;`).join(&quot;&quot;)}
+    &lt;div class=&quot;rep-v ${v}&quot;&gt;RESULT: ${VLAB[v][0]}&lt;/div&gt;
+    &lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parameter&lt;/th&gt;&lt;th&gt;TDS limit&lt;/th&gt;&lt;th&gt;COA value&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th&gt;Note&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+      ${rec.rows.map(r=&gt;{ const st = ST[r.st] || ST.manual; return `&lt;tr class=&quot;${r.st===&quot;bad&quot;?&quot;row-bad&quot;:&quot;&quot;}&quot;&gt;&lt;td&gt;${esc(r.name)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${esc(r.limit)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${esc(r.value||&quot;—&quot;)}&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;pill ${st[1]}&quot;&gt;${st[0]}&lt;/span&gt;&lt;/td&gt;&lt;td class=&quot;psub&quot;&gt;${esc(r.note)}&lt;/td&gt;&lt;/tr&gt;`; }).join(&quot;&quot;)}
     &lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;
-    ${rec.note?`&lt;p&gt;&lt;b&gt;Not:&lt;/b&gt; ${esc(rec.note)}&lt;/p&gt;`:&quot;&quot;}
-    &lt;div class=&quot;rep-sign&quot;&gt;&lt;div&gt;Kontrol eden / İmza&lt;/div&gt;&lt;div&gt;Onaylayan / İmza&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`;
+    ${rec.note?`&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; ${esc(rec.note)}&lt;/p&gt;`:&quot;&quot;}
+    &lt;div class=&quot;rep-sign&quot;&gt;&lt;div&gt;Checked by / signature&lt;/div&gt;&lt;div&gt;Approved by / signature&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`;
 }
 function printReport(rec){
-  if (!rec){ toast(&quot;Önce ürün seçin ve COA yükleyin&quot;); return; }
+  if (!rec){ toast(&quot;Load the TDS and the COA first&quot;); return; }
   $(&quot;#report&quot;).innerHTML = reportHTML(rec);
   window.print();
 }
+function closeModal(){ if (TTS.btn &amp;&amp; TTS.btn.id === &quot;rpSpeak&quot;) stopSpeak(); const m = $(&quot;#modal&quot;); m.hidden = true; m.innerHTML = &quot;&quot;; }
 function openReport(rec){
   if (!rec) return;
   const m = $(&quot;#modal&quot;); m.hidden = false;
-  m.innerHTML = `&lt;div class=&quot;card&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Rapor ${esc(rec.no||&quot;&quot;)}&quot;&gt;
+  m.innerHTML = `&lt;div class=&quot;card&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Report ${esc(rec.no||&quot;&quot;)}&quot;&gt;
     &lt;div class=&quot;card-h&quot;&gt;&lt;div class=&quot;toolbar&quot;&gt;
-        &lt;button class=&quot;btn sm primary&quot; id=&quot;rpPrint&quot;&gt;Yazdır / PDF&lt;/button&gt;
-        &lt;button class=&quot;btn sm ghost&quot; id=&quot;rpEdit&quot;&gt;COA ekranında aç / düzenle&lt;/button&gt;
-        &lt;button class=&quot;btn sm ghost&quot; id=&quot;rpSpeak&quot; ${TTS.ok?&quot;&quot;:&quot;hidden&quot;}&gt;🔊 Sesli oku&lt;/button&gt;
-        &lt;button class=&quot;btn sm danger&quot; id=&quot;rpDel&quot;&gt;Sil&lt;/button&gt;&lt;/div&gt;
-      &lt;button class=&quot;x&quot; id=&quot;atClose&quot; title=&quot;Kapat&quot;&gt;×&lt;/button&gt;&lt;/div&gt;
+        &lt;button class=&quot;btn sm primary&quot; id=&quot;rpPrint&quot;&gt;Print / PDF&lt;/button&gt;
+        &lt;button class=&quot;btn sm ghost&quot; id=&quot;rpEdit&quot;&gt;Open in Compare / edit&lt;/button&gt;
+        &lt;button class=&quot;btn sm ghost&quot; id=&quot;rpSpeak&quot; ${TTS.ok?&quot;&quot;:&quot;hidden&quot;}&gt;🔊 Read aloud&lt;/button&gt;
+        &lt;button class=&quot;btn sm danger&quot; id=&quot;rpDel&quot;&gt;Delete&lt;/button&gt;&lt;/div&gt;
+      &lt;button class=&quot;x&quot; id=&quot;rpClose&quot; title=&quot;Close&quot;&gt;×&lt;/button&gt;&lt;/div&gt;
     &lt;div class=&quot;card-b&quot;&gt;${reportHTML(rec)}&lt;/div&gt;&lt;/div&gt;`;
-  $(&quot;#atClose&quot;).onclick = closeModal;
+  $(&quot;#rpClose&quot;).onclick = closeModal;
   $(&quot;#rpPrint&quot;).onclick = () =&gt; printReport(rec);
   $(&quot;#rpEdit&quot;).onclick = () =&gt; { closeModal(); loadReport(rec); };
-  $(&quot;#rpSpeak&quot;).onclick = () =&gt; speakRows(rec.product, rec.verdict, rec.rows.map(r =&gt; ({name:r.name, limit:r.limit, value:r.value, st:r.st})), $(&quot;#rpSpeak&quot;));
-  $(&quot;#rpDel&quot;).onclick = () =&gt; { if (!confirm((rec.no||&quot;Rapor&quot;) + &quot; silinsin mi?&quot;)) return; deleteReport(rec.id); closeModal(); };
+  $(&quot;#rpSpeak&quot;).onclick = () =&gt; speakRows(rec.product, vKey(rec.verdict), rec.rows.map(r =&gt; ({name:r.name, limit:r.limit, value:r.value, st:r.st})), $(&quot;#rpSpeak&quot;));
+  $(&quot;#rpDel&quot;).onclick = () =&gt; { if (!confirm(&quot;Delete &quot; + (rec.no||&quot;this report&quot;) + &quot;?&quot;)) return; deleteReport(rec.id); closeModal(); };
 }
 function deleteReport(id){
   state.hist = state.hist.filter(h =&gt; h.id !== id);
   if (recId === id){ recId = null; setSaved(null); }
-  persist(); fillProdSel(); renderHist();
+  persist(); $(&quot;#nHist&quot;).textContent = state.hist.length; renderHist();
 }
 function loadReport(rec){
-  const t = tdsById(rec.tdsId);
-  if (!t){ toast(&quot;Bu raporun TDS'si kütüphanede yok — sadece görüntülenebilir&quot;); openReport(rec); return; }
-  clearTimeout(saveTimer);
-  clearCheck();
-  state.cur = t.id; state.coaLines = rec.coaLines || []; state.coaFile = rec.file || &quot;&quot;;
+  if (!rec.tds){ toast(&quot;This report was saved by an older version — it can be viewed and printed, not edited&quot;); openReport(rec); return; }
+  clearCheck(); clearTimeout(saveTimer);
+  state.tds = JSON.parse(JSON.stringify(rec.tds)); state.coaLines = rec.coaLines || []; state.coaFile = rec.file || &quot;&quot;;
   $(&quot;#fSup&quot;).value = rec.sup||&quot;&quot;; $(&quot;#fLot&quot;).value = rec.lot||&quot;&quot;; $(&quot;#fDate&quot;).value = rec.coaDate||&quot;&quot;; $(&quot;#fRef&quot;).value = rec.ref||&quot;&quot;; $(&quot;#fNote&quot;).value = rec.note||&quot;&quot;;
-  $(&quot;#rawBox&quot;).hidden = !state.coaLines.length; $(&quot;#rawTxt&quot;).textContent = state.coaLines.join(&quot;\n&quot;);
-  if (state.coaFile){ $(&quot;#coaChip&quot;).hidden = false; $(&quot;#coaChip&quot;).textContent = &quot;📄 &quot; + state.coaFile; }
-  t.params.forEach((p, pi) =&gt; { const r = rec.rows.find(x =&gt; x.name === p.name); if (r &amp;&amp; r.value) coaVals[pi] = {value:r.value, auto:false, line:r.line||&quot;&quot;}; });
-  fillProdSel(); recId = rec.id; setSaved(rec);
-  showTab(&quot;check&quot;); renderCheck(); clearTimeout(saveTimer);
-  toast(rec.no + &quot; düzenleniyor — değişiklikler bu rapora kaydedilir&quot;);
+  state.tds.params.forEach((p, pi) =&gt; { const r = rec.rows.find(x =&gt; x.name === p.name); if (r &amp;&amp; r.value) coaVals[pi] = {value:r.value, auto:false, line:r.line||&quot;&quot;}; });
+  recId = rec.id; setSaved(rec);
+  showTab(&quot;check&quot;); renderLimits(); renderCheck(); clearTimeout(saveTimer);
+  toast(&quot;Editing &quot; + rec.no + &quot; — changes are saved to this report&quot;);
 }
-
-/* ================= LIBRARY view ================= */
-function renderLibList(){
-  const q = normTxt($(&quot;#libSearch&quot;).value);
-  const items = [...state.lib].sort((a,b)=&gt;tdsLabel(a).localeCompare(tdsLabel(b))).filter(t =&gt; !q || normTxt(tdsLabel(t)+&quot; &quot;+(t.grade||&quot;&quot;)).includes(q));
-  $(&quot;#libList&quot;).innerHTML = items.map(t =&gt; `&lt;button class=&quot;lib-item&quot; data-id=&quot;${esc(t.id)}&quot; aria-current=&quot;${t.id===state.libSel}&quot;&gt;
-      &lt;div class=&quot;pname&quot;&gt;${esc(t.name)}${t.builtin?&quot;&quot;:'&lt;span class=&quot;tag&quot;&gt;yüklendi&lt;/span&gt;'}&lt;/div&gt;
-      &lt;div class=&quot;c&quot;&gt;${esc(t.code||&quot;&quot;)} ${t.grade?&quot;· &quot;+esc(t.grade):&quot;&quot;} · ${t.params.length} satır&lt;/div&gt;&lt;/button&gt;`).join(&quot;&quot;) || `&lt;div class=&quot;empty&quot;&gt;Sonuç yok&lt;/div&gt;`;
-}
-const TYPES = [[&quot;min&quot;,&quot;Min (≥)&quot;],[&quot;max&quot;,&quot;Maks (≤)&quot;],[&quot;range&quot;,&quot;Aralık&quot;],[&quot;text&quot;,&quot;Metin&quot;],[&quot;nominal&quot;,&quot;Tipik&quot;],[&quot;info&quot;,&quot;Bilgi&quot;]];
-function paramEditorRows(params){
-  return params.map((p,i)=&gt;`&lt;tr data-i=&quot;${i}&quot;&gt;
-    &lt;td&gt;&lt;input data-f=&quot;name&quot; value=&quot;${esc(p.name)}&quot;&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;input data-f=&quot;unit&quot; value=&quot;${esc(p.unit)}&quot; style=&quot;width:80px&quot;&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;select data-f=&quot;type&quot;&gt;${TYPES.map(([v,l])=&gt;`&lt;option value=&quot;${v}&quot;${p.type===v?&quot; selected&quot;:&quot;&quot;}&gt;${l}&lt;/option&gt;`).join(&quot;&quot;)}&lt;/select&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;input class=&quot;n&quot; data-f=&quot;lo&quot; value=&quot;${p.lo==null?&quot;&quot;:fmt(p.lo)}&quot; ${[&quot;min&quot;,&quot;range&quot;,&quot;nominal&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;}&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;input class=&quot;n&quot; data-f=&quot;hi&quot; value=&quot;${p.hi==null?&quot;&quot;:fmt(p.hi)}&quot; ${[&quot;max&quot;,&quot;range&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;}&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;input data-f=&quot;text&quot; value=&quot;${esc(p.text)}&quot; ${[&quot;text&quot;,&quot;info&quot;].includes(p.type)?&quot;&quot;:&quot;disabled&quot;}&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;button class=&quot;x&quot; data-del=&quot;${i}&quot; title=&quot;Satırı sil&quot;&gt;×&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`).join(&quot;&quot;);
-}
-function paramTable(params){
-  return `&lt;div class=&quot;tbl-wrap&quot;&gt;&lt;table class=&quot;ed&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Parametre&lt;/th&gt;&lt;th&gt;Birim&lt;/th&gt;&lt;th&gt;Limit tipi&lt;/th&gt;&lt;th&gt;Min&lt;/th&gt;&lt;th&gt;Maks&lt;/th&gt;&lt;th&gt;Metin&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
-    &lt;tbody&gt;${paramEditorRows(params)}&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;`;
-}
-function bindParamTable(root, params, onChange){
-  root.addEventListener(&quot;input&quot;, e =&gt; {
-    const tr = e.target.closest(&quot;tr[data-i]&quot;); if (!tr) return;
-    const p = params[+tr.dataset.i], f = e.target.dataset.f;
-    if (f === &quot;lo&quot; || f === &quot;hi&quot;){ const n = nums(e.target.value); p[f] = n.length ? n[0].v : null; }
-    else p[f] = e.target.value;
-    if (f === &quot;type&quot;) return;  // handled on change (re-renders enabled fields)
-    onChange();
-  });
-  root.addEventListener(&quot;change&quot;, e =&gt; {
-    if (e.target.dataset.f !== &quot;type&quot;) return;
-    const p = params[+e.target.closest(&quot;tr[data-i]&quot;).dataset.i];
-    p.type = e.target.value; p.inferred = false;
-    root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(params); onChange();
-  });
-  root.addEventListener(&quot;click&quot;, e =&gt; {
-    const d = e.target.closest(&quot;[data-del]&quot;); if (d){ params.splice(+d.dataset.del,1); root.querySelector(&quot;tbody&quot;).innerHTML = paramEditorRows(params); onChange(); }
-  });
-}
-function renderLibEd(){
-  const t = tdsById(state.libSel), el = $(&quot;#libEd&quot;);
-  if (!t){ el.innerHTML = `&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;${state.lib.length ? &quot;Bir TDS seçin&quot; : &quot;Kütüphaneniz boş&quot;}&lt;/div&gt;${state.lib.length ? &quot;Soldaki listeden bir ürün seçin veya yeni TDS ekleyin.&quot; : &quot;Soldan TDS PDF'i yükleyin, tabloyu yapıştırın veya elle oluşturun. Arkadaşınızın paylaştığı TDS dosyasını 'Yedek / TDS dosyası ekle' ile ekleyebilirsiniz.&quot;} Limitler burada düzenlenebilir; COA kontrolü bu limitleri kullanır.&lt;/div&gt;`; return; }
-  el.innerHTML = `&lt;div class=&quot;card-h&quot;&gt;&lt;div&gt;&lt;h2&gt;${esc(tdsLabel(t))}&lt;/h2&gt;&lt;div class=&quot;psub&quot;&gt;${esc(t.grade||&quot;&quot;)} ${t.src?&quot;· kaynak: &quot;+esc(t.src):&quot;&quot;}&lt;/div&gt;&lt;/div&gt;
-    &lt;div class=&quot;toolbar&quot;&gt;&lt;button class=&quot;btn sm primary&quot; id=&quot;edUse&quot;&gt;Bu TDS ile COA kontrol et →&lt;/button&gt;&lt;button class=&quot;btn sm danger&quot; id=&quot;edDel&quot;&gt;TDS'yi sil&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
-    &lt;div class=&quot;card-b&quot;&gt;
-      &lt;div class=&quot;grid2&quot; style=&quot;margin-bottom:14px&quot;&gt;
-        &lt;div&gt;&lt;label class=&quot;lbl&quot;&gt;Ürün adı&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;edName&quot; value=&quot;${esc(t.name)}&quot;&gt;&lt;/div&gt;
-        &lt;div&gt;&lt;label class=&quot;lbl&quot;&gt;TDS kodu&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;edCode&quot; value=&quot;${esc(t.code||&quot;&quot;)}&quot;&gt;&lt;/div&gt;
-        &lt;div&gt;&lt;label class=&quot;lbl&quot;&gt;Kalite / grade&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;edGrade&quot; value=&quot;${esc(t.grade||&quot;&quot;)}&quot;&gt;&lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div id=&quot;edTbl&quot;&gt;${paramTable(t.params)}&lt;/div&gt;
-      &lt;div class=&quot;toolbar&quot; style=&quot;margin-top:10px&quot;&gt;&lt;button class=&quot;btn sm ghost&quot; id=&quot;edAdd&quot;&gt;＋ Satır ekle&lt;/button&gt;
-      &lt;span class=&quot;psub&quot;&gt;&quot;Min/Maks/Aralık&quot; satırları otomatik değerlendirilir; &quot;Metin&quot; satırları manuel onay ister; &quot;Bilgi&quot; satırları (menşe, görünüş…) değerlendirilmez.&lt;/span&gt;&lt;/div&gt;
-    &lt;/div&gt;`;
-  const save = () =&gt; { persist(); fillProdSel(); renderLibList(); if (state.cur === t.id) renderCheck(); };
-  bindParamTable($(&quot;#edTbl&quot;), t.params, save);
-  $(&quot;#edName&quot;).oninput = e =&gt; { t.name = e.target.value; save(); };
-  $(&quot;#edCode&quot;).oninput = e =&gt; { t.code = e.target.value; save(); };
-  $(&quot;#edGrade&quot;).oninput = e =&gt; { t.grade = e.target.value; save(); };
-  $(&quot;#edAdd&quot;).onclick = () =&gt; { t.params.push({name:&quot;&quot;,unit:&quot;%&quot;,type:&quot;max&quot;,lo:null,hi:null,text:&quot;&quot;,inferred:false}); $(&quot;#edTbl tbody&quot;).innerHTML = paramEditorRows(t.params); save(); };
-  $(&quot;#edDel&quot;).onclick = () =&gt; { if (!confirm(tdsLabel(t)+&quot; silinsin mi?&quot;)) return; state.lib = state.lib.filter(x=&gt;x!==t); if (state.cur===t.id){ state.cur=null; renderCheck(); } state.libSel=null; persist(); fillProdSel(); renderLibList(); renderLibEd(); };
-  $(&quot;#edUse&quot;).onclick = () =&gt; { state.cur = t.id; fillProdSel(); runMatch(); showTab(&quot;check&quot;); };
-}
-
-/* TDS import: lines → rows */
-const ADDR_RX = /(maslak|meydan sk|veko giz|no:3 kat|34398|istanbul|türkiye|\+90 ?850|info@|www\.|anatrica\.net)/i;
-function parseTdsLines(lines, fname){
-  const clean = lines.map(l =&gt; l.split(&quot;|&quot;).map(x=&gt;x.trim()).filter(x =&gt; x &amp;&amp; !ADDR_RX.test(x)).join(&quot; | &quot;)).filter(Boolean);
-  let start = clean.findIndex(l =&gt; /(propert|parameter|characteristic|specification|test item|item)\b.*\b(unit|result|value|spec|limit|standard)/i.test(l));
-  const body = start &gt;= 0 ? clean.slice(start+1) : clean;
-  const rows = [];
-  const UNIT_RX = /^(%\s*(?:min|max|m\/m|w\/w|w\/v|by wt)?\.?|wt%|w\/%|ppm(?:\s*(?:min|max))?|mg\/kg(?:\s*(?:min|max))?|mg\/g(?:\s*(?:min|max))?|g\/cm3|g\/cm³|g\/cc|g\/ml|kg\/m3|mm|mesh|cfu\/g|mEq\/lit|min\.?|max\.?|_|-|≥|≤)$/i;
-  for (const l of body){
-    if (/^(page|www|tel|fax|e-?mail|note|remark)/i.test(l)) continue;
-    let parts = l.split(&quot; | &quot;);
-    if (parts.length &gt;= 3){ rows.push([parts[0], parts[1], parts.slice(2).join(&quot; &quot;)]); continue; }
-    // single-string line: split &quot;Name  unit  spec&quot;
-    const m = /^(.*?)\s+((?:%|wt%|w\/%|ppm|mg\/kg|mg\/g|g\/cm3|g\/cc|mm|_)(?:\s*(?:min|max|m\/m|w\/w))?\.?)\s+(.+)$/i.exec(l)
-           || /^(.*?[A-Za-z)\]])\s+((?:min|max)\.?)\s+(.+)$/i.exec(l)
-           || /^(.*?[A-Za-z)\]])\s+([≥≤&lt;&gt;]=?\s*-?\d.*)$/.exec(l);
-    if (m) rows.push(m.length === 4 ? [m[1], m[2], m[3]] : [m[1], &quot;&quot;, m[2]]);
-    else if (parts.length === 2 &amp;&amp; /\d/.test(parts[1])) rows.push([parts[0], &quot;&quot;, parts[1]]);
-  }
-  const filt = rows.filter(r =&gt; r[0] &amp;&amp; r[0].length &lt; 90 &amp;&amp; !/^(properties|parameter)$/i.test(r[0]));
-  const text = clean.join(&quot;\n&quot;);
-  const code = (/(ANT-[A-Z]{2}-\d{3})/.exec(fname||&quot;&quot;) || /(ANT-[A-Z]{2}-\d{3})/.exec(text) || [,&quot;&quot;])[1];
-  const specIdx = clean.findIndex(l =&gt; /product specification|technical data|specification/i.test(l));
-  let grade = specIdx &gt;= 0 &amp;&amp; clean[specIdx+1] ? clean[specIdx+1].split(&quot; | &quot;)[0] : &quot;&quot;;
-  let name = (fname||&quot;&quot;).replace(/\.[^.]+$/,&quot;&quot;).replace(code,&quot;&quot;).replace(/[_-]+/g,&quot; &quot;).trim() || grade || &quot;Yeni ürün&quot;;
-  return {name, code, grade, rows: filt};
-}
-function openImportReview(queue){
-  if (!queue.length) return;
-  const item = queue.shift();
-  const t = {id: uid(), name:item.name, code:item.code, grade:item.grade, src:item.file, builtin:false, params: item.rows.map(r=&gt;parseSpec(r[0],r[1],r[2]))};
-  const m = $(&quot;#modal&quot;);
-  m.hidden = false;
-  m.innerHTML = `&lt;div class=&quot;card&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot;&gt;
-    &lt;div class=&quot;card-h&quot;&gt;&lt;div&gt;&lt;h2&gt;TDS içe aktarma — kontrol edin&lt;/h2&gt;&lt;div class=&quot;psub&quot;&gt;${esc(item.file)} · ${item.rows.length} satır okundu${item.ocr?&quot; (OCR)&quot;:&quot;&quot;}${queue.length?&quot; · sırada &quot;+queue.length+&quot; dosya daha&quot;:&quot;&quot;}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-    &lt;div class=&quot;card-b&quot;&gt;
-      &lt;div class=&quot;grid2&quot; style=&quot;margin-bottom:12px&quot;&gt;
-        &lt;div&gt;&lt;label class=&quot;lbl&quot;&gt;Ürün adı&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;imName&quot; value=&quot;${esc(t.name)}&quot;&gt;&lt;/div&gt;
-        &lt;div&gt;&lt;label class=&quot;lbl&quot;&gt;TDS kodu&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;imCode&quot; value=&quot;${esc(t.code)}&quot;&gt;&lt;/div&gt;
-        &lt;div&gt;&lt;label class=&quot;lbl&quot;&gt;Kalite / grade&lt;/label&gt;&lt;input class=&quot;inp&quot; id=&quot;imGrade&quot; value=&quot;${esc(t.grade)}&quot;&gt;&lt;/div&gt;
-      &lt;/div&gt;
-      ${item.rows.length ? &quot;&quot; : `&lt;p class=&quot;psub&quot; style=&quot;color:var(--warn)&quot;&gt;Tablo satırı otomatik bulunamadı — satırları elle ekleyin veya ham metinden kopyalayın.&lt;/p&gt;`}
-      &lt;div id=&quot;imTbl&quot;&gt;${paramTable(t.params)}&lt;/div&gt;
-      &lt;div class=&quot;toolbar&quot; style=&quot;margin-top:10px&quot;&gt;&lt;button class=&quot;btn sm ghost&quot; id=&quot;imAdd&quot;&gt;＋ Satır ekle&lt;/button&gt;&lt;/div&gt;
-      &lt;details class=&quot;raw&quot;&gt;&lt;summary&gt;Ham metin&lt;/summary&gt;&lt;pre&gt;${esc(item.lines.join(&quot;\n&quot;))}&lt;/pre&gt;&lt;/details&gt;
-      &lt;div class=&quot;toolbar&quot; style=&quot;justify-content:flex-end;margin-top:12px&quot;&gt;
-        &lt;button class=&quot;btn ghost&quot; id=&quot;imCancel&quot;&gt;Vazgeç&lt;/button&gt;
-        &lt;button class=&quot;btn primary&quot; id=&quot;imSave&quot;&gt;Kütüphaneye kaydet&lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;&lt;/div&gt;`;
-  bindParamTable($(&quot;#imTbl&quot;), t.params, ()=&gt;{});
-  $(&quot;#imAdd&quot;).onclick = () =&gt; { t.params.push({name:&quot;&quot;,unit:&quot;%&quot;,type:&quot;max&quot;,lo:null,hi:null,text:&quot;&quot;,inferred:false}); $(&quot;#imTbl tbody&quot;).innerHTML = paramEditorRows(t.params); };
-  const close = () =&gt; { m.hidden = true; m.innerHTML = &quot;&quot;; openImportReview(queue); };
-  $(&quot;#imCancel&quot;).onclick = close;
-  $(&quot;#imSave&quot;).onclick = () =&gt; {
-    t.name = $(&quot;#imName&quot;).value.trim() || &quot;Yeni ürün&quot;; t.code = $(&quot;#imCode&quot;).value.trim(); t.grade = $(&quot;#imGrade&quot;).value.trim();
-    t.params = t.params.filter(p =&gt; p.name.trim());
-    state.lib.push(t); state.libSel = t.id;
-    if (addFromCheck){ state.cur = t.id; $(&quot;#autoNote&quot;).textContent = &quot;Yeni eklenen TDS seçildi.&quot;; runMatch(); }
-    persist(); fillProdSel(); renderLibList(); renderLibEd(); toast(&quot;TDS kaydedildi: &quot; + tdsLabel(t) + (addFromCheck ? &quot; — COA kontrolünde seçildi&quot; : &quot;&quot;)); close();
-  };
-}
-async function handleTdsFiles(files){
-  const queue = [];
-  for (const f of files){
-    toast(&quot;Okunuyor: &quot; + f.name);
-    try { const {lines, ocr:isOcr} = await fileLines(f); const r = parseTdsLines(lines, f.name); queue.push(Object.assign(r, {file:f.name, lines, ocr:isOcr})); }
-    catch(e){ toast(&quot;Okunamadı: &quot; + f.name + &quot; — &quot; + e.message); }
-  }
-  openImportReview(queue);
-}
-
-/* ================= HISTORY view ================= */
 function renderHist(){
   const H = state.hist, cnt = k =&gt; H.filter(h =&gt; h.verdict === k).length;
-  $(&quot;#sumRow&quot;).innerHTML = [[&quot;Toplam rapor&quot;, H.length, &quot;var(--accent)&quot;], [&quot;Uygun&quot;, cnt(&quot;ok&quot;), &quot;var(--good)&quot;], [&quot;Koşullu&quot;, cnt(&quot;warn&quot;), &quot;var(--warn)&quot;], [&quot;Uygun değil&quot;, cnt(&quot;bad&quot;), &quot;var(--bad)&quot;]]
+  $(&quot;#sumRow&quot;).innerHTML = [[&quot;Total reports&quot;, H.length, &quot;var(--accent)&quot;], [&quot;Compliant&quot;, cnt(&quot;ok&quot;), &quot;var(--good)&quot;], [&quot;Conditional&quot;, cnt(&quot;warn&quot;), &quot;var(--warn)&quot;], [&quot;Not compliant&quot;, cnt(&quot;bad&quot;), &quot;var(--bad)&quot;]]
     .map(([k,v,c]) =&gt; `&lt;div class=&quot;sum&quot; style=&quot;--k:${c}&quot;&gt;&lt;div class=&quot;k&quot;&gt;${k}&lt;/div&gt;&lt;div class=&quot;v&quot;&gt;${v}&lt;/div&gt;&lt;/div&gt;`).join(&quot;&quot;);
   const q = normTxt($(&quot;#histSearch&quot;).value), fv = $(&quot;#histVerdict&quot;).value;
-  const rows = H.filter(h =&gt; (!fv || h.verdict === fv) &amp;&amp; (!q || normTxt([h.no,h.product,h.sup,h.lot,h.ref,h.note,h.file].join(&quot; &quot;)).includes(q)));
+  const rows = H.filter(h =&gt; (!fv || h.verdict === fv) &amp;&amp; (!q || normTxt([h.no,h.product,h.sup,h.lot,h.ref,h.note,h.file,h.tdsFile].join(&quot; &quot;)).includes(q)));
   $(&quot;#histTbl tbody&quot;).innerHTML = rows.map(h =&gt; {
-    const bad = h.rows.filter(r=&gt;r.st===&quot;bad&quot;||r.st===&quot;warn&quot;||r.st===&quot;miss&quot;).map(r=&gt;r.name+&quot; (&quot;+ST[r.st][0].toLocaleLowerCase(&quot;tr-TR&quot;)+&quot;)&quot;);
-    return `&lt;tr data-open=&quot;${h.id}&quot;&gt;&lt;td class=&quot;num&quot;&gt;${esc(h.no||&quot;—&quot;)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${new Date(h.ts).toLocaleString(&quot;tr-TR&quot;,{dateStyle:&quot;short&quot;,timeStyle:&quot;short&quot;})}&lt;/td&gt;
+    const issues = h.rows.filter(r=&gt;r.st===&quot;bad&quot;||r.st===&quot;warn&quot;||r.st===&quot;miss&quot;).map(r=&gt;r.name+&quot; (&quot;+(ST[r.st]||ST.manual)[0].toLowerCase()+&quot;)&quot;);
+    const v = vKey(h.verdict);
+    return `&lt;tr data-open=&quot;${esc(h.id)}&quot;&gt;&lt;td class=&quot;num&quot;&gt;${esc(h.no||&quot;—&quot;)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${new Date(h.ts).toLocaleString(DATE_LOCALE,{dateStyle:&quot;short&quot;,timeStyle:&quot;short&quot;})}&lt;/td&gt;
       &lt;td&gt;&lt;div class=&quot;pname&quot;&gt;${esc(h.product)}&lt;/div&gt;&lt;div class=&quot;psub&quot;&gt;${esc(h.file||&quot;&quot;)}&lt;/div&gt;&lt;/td&gt;
       &lt;td&gt;${esc(h.sup||&quot;—&quot;)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${esc(h.lot||&quot;—&quot;)}&lt;/td&gt;
-      &lt;td&gt;&lt;span class=&quot;pill ${VLAB[h.verdict][1]}&quot;&gt;${VLAB[h.verdict][0]}&lt;/span&gt;&lt;/td&gt;
-      &lt;td class=&quot;psub&quot; style=&quot;max-width:320px&quot;&gt;${esc(bad.join(&quot;, &quot;)||&quot;—&quot;)}&lt;/td&gt;
-      &lt;td style=&quot;white-space:nowrap&quot;&gt;&lt;button class=&quot;btn sm ghost&quot; data-open=&quot;${h.id}&quot;&gt;Aç&lt;/button&gt; &lt;button class=&quot;btn sm ghost&quot; data-rep=&quot;${h.id}&quot;&gt;Yazdır&lt;/button&gt; &lt;button class=&quot;x&quot; data-hdel=&quot;${h.id}&quot; title=&quot;Sil&quot;&gt;×&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`;
-  }).join(&quot;&quot;) || `&lt;tr&gt;&lt;td colspan=&quot;8&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;${H.length ? &quot;Filtreye uyan rapor yok&quot; : &quot;Henüz rapor yok&quot;}&lt;/div&gt;${H.length ? &quot;&quot; : &quot;COA Kontrol sekmesinde bir COA yüklediğinizde karşılaştırma otomatik olarak burada rapor olarak saklanır.&quot;}&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
+      &lt;td&gt;&lt;span class=&quot;pill ${VLAB[v][1]}&quot;&gt;${VLAB[v][0]}&lt;/span&gt;&lt;/td&gt;
+      &lt;td class=&quot;psub&quot; style=&quot;max-width:320px&quot;&gt;${esc(issues.join(&quot;, &quot;)||&quot;—&quot;)}&lt;/td&gt;
+      &lt;td style=&quot;white-space:nowrap&quot;&gt;&lt;button class=&quot;btn sm ghost&quot; data-open=&quot;${esc(h.id)}&quot;&gt;Open&lt;/button&gt; &lt;button class=&quot;btn sm ghost&quot; data-rep=&quot;${esc(h.id)}&quot;&gt;Print&lt;/button&gt; &lt;button class=&quot;x&quot; data-hdel=&quot;${esc(h.id)}&quot; title=&quot;Delete&quot;&gt;×&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`;
+  }).join(&quot;&quot;) || `&lt;tr&gt;&lt;td colspan=&quot;8&quot;&gt;&lt;div class=&quot;empty&quot;&gt;&lt;div class=&quot;big&quot;&gt;${H.length ? &quot;No reports match the filter&quot; : &quot;No reports yet&quot;}&lt;/div&gt;${H.length ? &quot;&quot; : &quot;Every comparison you make on the Compare tab is saved here automatically as a numbered report.&quot;}&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;`;
 }
 function csv(){
-  const head = [&quot;Rapor no&quot;,&quot;Tarih&quot;,&quot;Ürün&quot;,&quot;Grade&quot;,&quot;Tedarikçi&quot;,&quot;Lot&quot;,&quot;COA tarihi&quot;,&quot;Sevkiyat&quot;,&quot;Sonuç&quot;,&quot;Parametre&quot;,&quot;TDS limiti&quot;,&quot;COA değeri&quot;,&quot;Durum&quot;,&quot;Not&quot;];
+  const head = [&quot;Report no&quot;,&quot;Date&quot;,&quot;Product&quot;,&quot;Supplier&quot;,&quot;Lot&quot;,&quot;COA date&quot;,&quot;Shipment&quot;,&quot;TDS document&quot;,&quot;COA document&quot;,&quot;Result&quot;,&quot;Parameter&quot;,&quot;TDS limit&quot;,&quot;COA value&quot;,&quot;Status&quot;,&quot;Note&quot;];
   const out = [head];
-  state.hist.forEach(h =&gt; h.rows.forEach(r =&gt; out.push([h.no||&quot;&quot;, h.ts, h.product, h.grade, h.sup, h.lot, h.coaDate, h.ref, VLAB[h.verdict][0], r.name, r.limit, r.value, ST[r.st][0], r.note])));
-  const s = &quot;﻿&quot; + out.map(r =&gt; r.map(c =&gt; '&quot;' + String(c==null?&quot;&quot;:c).replace(/&quot;/g,'&quot;&quot;') + '&quot;').join(&quot;;&quot;)).join(&quot;\r\n&quot;);
-  download(&quot;coa_raporlari.csv&quot;, s, &quot;text/csv&quot;);
+  state.hist.forEach(h =&gt; h.rows.forEach(r =&gt; out.push([h.no||&quot;&quot;, h.ts, h.product, h.sup, h.lot, h.coaDate, h.ref, h.tdsFile||&quot;&quot;, h.file||&quot;&quot;, VLAB[vKey(h.verdict)][0], r.name, r.limit, r.value, (ST[r.st]||ST.manual)[0], r.note])));
+  const s = &quot;﻿&quot; + out.map(r =&gt; r.map(c =&gt; '&quot;' + String(c==null?&quot;&quot;:c).replace(/&quot;/g,'&quot;&quot;') + '&quot;').join(&quot;,&quot;)).join(&quot;\r\n&quot;);
+  download(&quot;coa_reports.csv&quot;, s, &quot;text/csv&quot;);
 }
 function download(name, content, type){
   const a = document.createElement(&quot;a&quot;); a.href = URL.createObjectURL(new Blob([content], {type})); a.download = name; document.body.appendChild(a); a.click(); setTimeout(()=&gt;{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 
-/* ================= voice read-out (Web Speech API, offline OS voices) ================= */
+/* ================= voice read-out (Web Speech API, OS / browser voices) ================= */
 const TTS = { ok: &quot;speechSynthesis&quot; in window &amp;&amp; typeof SpeechSynthesisUtterance === &quot;function&quot;,
   auto: true, mode: &quot;all&quot;, rate: 1, voiceURI: &quot;&quot;, voices: [], btn: null, run: 0 };
 (function(){ try { Object.assign(TTS, JSON.parse(localStorage.getItem(&quot;anatrica-coa-tts&quot;)) || {}); } catch(e){} TTS.btn = null; TTS.run = 0; })();
 function saveTts(){ try { localStorage.setItem(&quot;anatrica-coa-tts&quot;, JSON.stringify({auto:TTS.auto, mode:TTS.mode, rate:TTS.rate, voiceURI:TTS.voiceURI})); } catch(e){} }
-const trNum = t =&gt; String(t).replace(/(\d)\.(\d)/g, &quot;$1,$2&quot;);
 function unitWord(u){
   u = (u||&quot;&quot;).trim();
-  const map = [[/^ppm/i,&quot;pe pe em&quot;],[/^mg\/kg/i,&quot;miligram bölü kilogram&quot;],[/^mg\/g/i,&quot;miligram bölü gram&quot;],[/^g\/cm(3|³)/i,&quot;gram bölü santimetreküp&quot;],
-    [/^g\/cc/i,&quot;gram bölü santimetreküp&quot;],[/^g\/ml/i,&quot;gram bölü mililitre&quot;],[/^cfu\/g/i,&quot;koloni bölü gram&quot;],[/^mm$/i,&quot;milimetre&quot;],[/^mesh$/i,&quot;meş&quot;],[/^meq\/lit/i,&quot;miliekivalan bölü litre&quot;]];
+  const map = [[/^ppm/i,&quot;p p m&quot;],[/^mg\/kg/i,&quot;milligrams per kilogram&quot;],[/^mg\/g/i,&quot;milligrams per gram&quot;],[/^g\/cm(3|³)/i,&quot;grams per cubic centimetre&quot;],
+    [/^g\/cc/i,&quot;grams per cubic centimetre&quot;],[/^g\/ml/i,&quot;grams per millilitre&quot;],[/^cfu\/g/i,&quot;colony forming units per gram&quot;],[/^mm$/i,&quot;millimetres&quot;],[/^mesh$/i,&quot;mesh&quot;],[/^meq\/lit/i,&quot;milliequivalents per litre&quot;]];
   for (const [rx, w] of map) if (rx.test(u)) return w;
   return &quot;&quot;;
 }
 function withUnit(n, u){
-  u = (u||&quot;&quot;).trim(); n = trNum(n);
-  if (/%/.test(u) || /^w\/%/i.test(u)) return &quot;yüzde &quot; + n;
+  u = (u||&quot;&quot;).trim();
+  if (/%/.test(u)) return n + &quot; percent&quot;;
   const w = unitWord(u); return w ? n + &quot; &quot; + w : n;
 }
 function sayLimit(t){
   t = String(t||&quot;&quot;).trim(); let m;
   if (!t || t === &quot;—&quot;) return &quot;&quot;;
-  if ((m = /^≈\s*(\S+)\s*(.*?)\s*\(tipik\)$/.exec(t))) return &quot;tipik değer &quot; + withUnit(m[1], m[2]);
-  if ((m = /^([≥≤])\s*(\S+)\s*(.*)$/.exec(t))) return (m[1] === &quot;≥&quot; ? &quot;en az &quot; : &quot;en fazla &quot;) + withUnit(m[2], m[3]);
-  if ((m = /^(\S+)\s*–\s*(\S+)\s*(.*)$/.exec(t))) return withUnit(trNum(m[1]) + &quot; ile &quot; + trNum(m[2]), m[3]) + &quot; arası&quot;;
-  return trWords(trNum(t));
+  if ((m = /^≈\s*(\S+)\s*(.*?)\s*\(typical\)$/.exec(t))) return &quot;typically &quot; + withUnit(m[1], m[2]);
+  if ((m = /^([≥≤])\s*(\S+)\s*(.*)$/.exec(t))) return (m[1] === &quot;≥&quot; ? &quot;minimum &quot; : &quot;maximum &quot;) + withUnit(m[2], m[3]);
+  if ((m = /^(\S+)\s*–\s*(\S+)\s*(.*)$/.exec(t))) return &quot;between &quot; + m[1] + &quot; and &quot; + withUnit(m[2], m[3]);
+  return t;
 }
 function sayValue(v){
   v = String(v||&quot;&quot;).trim(); if (!v) return &quot;&quot;;
-  if (/^&lt;/.test(v)) return trNum(v.slice(1).trim()) + &quot; altında&quot;;
-  if (/^&gt;/.test(v)) return trNum(v.slice(1).trim()) + &quot; üzerinde&quot;;
-  return trWords(trNum(v));
+  if (/^&lt;/.test(v)) return &quot;below &quot; + v.slice(1).trim();
+  if (/^&gt;/.test(v)) return &quot;above &quot; + v.slice(1).trim();
+  return v.replace(/\bn\.?d\.?(?=\s|$)/i, &quot;not detected&quot;);
 }
-const WORDS = [[/\bnot detected\b|\bn\.?d\.?(?=\s|$)/gi,&quot;tespit edilmedi&quot;],[/\babsent\b/gi,&quot;yok&quot;],[/\bnegative\b/gi,&quot;negatif&quot;],[/\bpositive\b/gi,&quot;pozitif&quot;],[/\bconforms?\b|\bcomplies\b|\bcomply\b|\bpass(ed)?\b/gi,&quot;uyumlu&quot;],[/\bnil\b|\bnone\b/gi,&quot;yok&quot;]];
-const trWords = t =&gt; WORDS.reduce((x, [rx, w]) =&gt; x.replace(rx, w), String(t||&quot;&quot;));
 const sayName = n =&gt; String(n||&quot;&quot;).replace(/[（(][^）)]*[）)]/g, &quot; &quot;).replace(/[{][^}]*[}]/g, &quot; &quot;).replace(/_/g, &quot; &quot;).replace(/\s+/g, &quot; &quot;).trim();
-const SAY_ST = { ok:&quot;Uygun.&quot;, warn:&quot;Uygun, ancak sınıra çok yakın.&quot;, bad:&quot;Uygun değil!&quot;, miss:&quot;Bu değer COA'da yok.&quot;, manual:&quot;Manuel kontrol gerekli.&quot;, info:&quot;&quot; };
-const SAY_V = { ok:&quot;uygun&quot;, warn:&quot;koşullu uygun&quot;, bad:&quot;uygun değil&quot;, none:&quot;değer bekleniyor&quot; };
+const SAY_ST = { ok:&quot;Pass.&quot;, warn:&quot;Pass, but very close to the limit.&quot;, bad:&quot;Fail!&quot;, miss:&quot;Not reported on the COA.&quot;, manual:&quot;Needs a manual check.&quot;, info:&quot;&quot; };
+const SAY_V = { ok:&quot;compliant&quot;, warn:&quot;conditionally compliant&quot;, bad:&quot;not compliant&quot;, none:&quot;waiting for values&quot; };
 function buildSpeech(product, verdict, rows, mode){
   const S = [], ev = rows.filter(r =&gt; r.st !== &quot;info&quot;);
   const bad = ev.filter(r =&gt; r.st === &quot;bad&quot;).length, open = ev.filter(r =&gt; [&quot;warn&quot;,&quot;miss&quot;,&quot;manual&quot;].includes(r.st)).length;
-  let head = sayName(product).replace(/·.*$/, &quot;&quot;).trim() + &quot; için sonuç: &quot; + SAY_V[verdict] + &quot;.&quot;;
-  if (bad) head += &quot; &quot; + bad + &quot; parametre limit dışında.&quot;;
-  else if (open) head += &quot; &quot; + open + &quot; parametre dikkat istiyor.&quot;;
+  let head = &quot;Result for &quot; + (sayName(product).replace(/·.*$/, &quot;&quot;).trim() || &quot;this product&quot;) + &quot;: &quot; + (SAY_V[verdict] || SAY_V.none) + &quot;.&quot;;
+  if (bad) head += &quot; &quot; + bad + (bad === 1 ? &quot; parameter is&quot; : &quot; parameters are&quot;) + &quot; out of specification.&quot;;
+  else if (open) head += &quot; &quot; + open + (open === 1 ? &quot; parameter needs&quot; : &quot; parameters need&quot;) + &quot; attention.&quot;;
   S.push({text: head, row: null});
   const list = mode === &quot;issues&quot; ? ev.filter(r =&gt; r.st !== &quot;ok&quot;) : ev;
-  if (mode === &quot;issues&quot; &amp;&amp; !list.length) S.push({text: &quot;Tüm parametreler limit içinde.&quot;, row: null});
+  if (mode === &quot;issues&quot; &amp;&amp; !list.length) S.push({text: &quot;All parameters are within the limits.&quot;, row: null});
   for (const r of list){
     const parts = [sayName(r.name) + &quot;.&quot;];
     const lim = sayLimit(r.limit); if (lim) parts.push(&quot;Limit &quot; + lim + &quot;.&quot;);
-    const val = sayValue(r.value); if (val) parts.push(&quot;COA değeri &quot; + val + &quot;.&quot;);
+    const val = sayValue(r.value); if (val) parts.push(&quot;COA value &quot; + val + &quot;.&quot;);
     if (SAY_ST[r.st]) parts.push(SAY_ST[r.st]);
     S.push({text: parts.join(&quot; &quot;), row: r.pi == null ? null : r.pi});
   }
-  S.push({text: &quot;Analiz tamamlandı.&quot;, row: null});
+  S.push({text: &quot;Comparison complete.&quot;, row: null});
   return S;
 }
+const isEn = v =&gt; /^en/i.test(v.lang);
 function pickVoice(){
   const V = TTS.voices;
-  return V.find(v =&gt; v.voiceURI === TTS.voiceURI) || V.find(v =&gt; /^tr/i.test(v.lang) &amp;&amp; /natural|online/i.test(v.name)) || V.find(v =&gt; /^tr/i.test(v.lang)) || null;
+  const saved = V.find(v =&gt; v.voiceURI === TTS.voiceURI);
+  return (saved &amp;&amp; isEn(saved) ? saved : null) || V.find(v =&gt; isEn(v) &amp;&amp; /natural|online/i.test(v.name)) || V.find(v =&gt; /^en-(US|GB)/i.test(v.lang)) || V.find(isEn) || saved || null;
 }
 function fillVoices(){
   if (!TTS.ok) return;
   TTS.voices = speechSynthesis.getVoices();
-  const tr = TTS.voices.filter(v =&gt; /^tr/i.test(v.lang)), other = TTS.voices.filter(v =&gt; !/^tr/i.test(v.lang));
+  const en = TTS.voices.filter(isEn), other = TTS.voices.filter(v =&gt; !isEn(v));
   const cur = pickVoice();
-  $(&quot;#ttsVoice&quot;).innerHTML = (tr.length ? &quot;&quot; : `&lt;option value=&quot;&quot;&gt;Türkçe ses yok — varsayılan&lt;/option&gt;`) +
-    tr.concat(other).map(v =&gt; `&lt;option value=&quot;${esc(v.voiceURI)}&quot;${cur &amp;&amp; v.voiceURI === cur.voiceURI ? &quot; selected&quot; : &quot;&quot;}&gt;${esc(v.name)} (${esc(v.lang)})&lt;/option&gt;`).join(&quot;&quot;);
+  $(&quot;#ttsVoice&quot;).innerHTML = (en.length ? &quot;&quot; : `&lt;option value=&quot;&quot;&gt;No English voice — default&lt;/option&gt;`) +
+    en.concat(other).map(v =&gt; `&lt;option value=&quot;${esc(v.voiceURI)}&quot;${cur &amp;&amp; v.voiceURI === cur.voiceURI ? &quot; selected&quot; : &quot;&quot;}&gt;${esc(v.name)} (${esc(v.lang)})&lt;/option&gt;`).join(&quot;&quot;);
 }
 function markRow(pi){
   $$(&quot;#resTbl tr.speaking&quot;).forEach(tr =&gt; tr.classList.remove(&quot;speaking&quot;));
@@ -9161,31 +9108,30 @@ function markRow(pi){
 function setSpeakBtn(btn, on){
   if (!btn) return;
   btn.classList.toggle(&quot;speak-on&quot;, on);
-  btn.innerHTML = on ? '&lt;span class=&quot;eq&quot;&gt;&lt;/span&gt; Durdur' : &quot;🔊 Sesli oku&quot;;
+  btn.innerHTML = on ? '&lt;span class=&quot;eq&quot;&gt;&lt;/span&gt; Stop' : &quot;🔊 Read aloud&quot;;
 }
 function stopSpeak(){
   if (!TTS.ok) return;
   TTS.run++; speechSynthesis.cancel(); markRow(null); setSpeakBtn(TTS.btn, false); TTS.btn = null;
 }
 function speakRows(product, verdict, rows, btn){
-  if (!TTS.ok) return toast(&quot;Bu tarayıcı sesli okumayı desteklemiyor&quot;);
+  if (!TTS.ok) return toast(&quot;This browser cannot read aloud&quot;);
   if (TTS.btn === btn &amp;&amp; btn){ stopSpeak(); return; }   // same button again = stop
   stopSpeak();
   const S = buildSpeech(product, verdict, rows, TTS.mode), run = TTS.run, voice = pickVoice();
-  if (!voice &amp;&amp; !TTS.warned){ TTS.warned = true; toast(&quot;Bilgisayarda Türkçe ses bulunamadı — varsayılan ses kullanılıyor&quot;); }
   TTS.btn = btn || null; setSpeakBtn(TTS.btn, true);
   // one utterance per sentence: avoids Chrome cutting long utterances, and lets us highlight each row
   S.forEach((seg, i) =&gt; {
     const u = new SpeechSynthesisUtterance(seg.text);
-    u.lang = voice ? voice.lang : &quot;tr-TR&quot;; if (voice) u.voice = voice; u.rate = +TTS.rate || 1;
+    u.lang = voice ? voice.lang : &quot;en-US&quot;; if (voice) u.voice = voice; u.rate = +TTS.rate || 1;
     u.onstart = () =&gt; { if (run === TTS.run) markRow(seg.row); };
     if (i === S.length - 1) u.onend = u.onerror = () =&gt; { if (run === TTS.run){ markRow(null); setSpeakBtn(TTS.btn, false); TTS.btn = null; } };
     speechSynthesis.speak(u);
   });
 }
 function speakCurrent(btn){
-  const t = tdsById(state.cur);
-  if (!t) return toast(&quot;Önce ürün seçin ve COA yükleyin&quot;);
+  const t = state.tds;
+  if (!t || !hasCoaData()) return toast(&quot;Load the TDS and the COA first&quot;);
   const R = currentResults(), o = overall(R);
   speakRows(tdsLabel(t), o.v, R.map(r =&gt; ({name:r.p.name, limit:limitText(r.p), value:r.value, st:r.st, pi:r.pi})), btn || $(&quot;#btnSpeak&quot;));
 }
@@ -9193,7 +9139,8 @@ if (TTS.ok){
   $(&quot;#ttsBar&quot;).hidden = false; $(&quot;#btnSpeak&quot;).hidden = false;
   $(&quot;#ttsAuto&quot;).checked = !!TTS.auto; $(&quot;#ttsMode&quot;).value = TTS.mode; $(&quot;#ttsRate&quot;).value = String(TTS.rate);
   if (!$(&quot;#ttsRate&quot;).value) $(&quot;#ttsRate&quot;).value = &quot;1&quot;;
-  fillVoices(); speechSynthesis.addEventListener ? speechSynthesis.addEventListener(&quot;voiceschanged&quot;, fillVoices) : (speechSynthesis.onvoiceschanged = fillVoices);
+  fillVoices();
+  if (speechSynthesis.addEventListener) speechSynthesis.addEventListener(&quot;voiceschanged&quot;, fillVoices); else speechSynthesis.onvoiceschanged = fillVoices;
   $(&quot;#ttsAuto&quot;).onchange = e =&gt; { TTS.auto = e.target.checked; saveTts(); };
   $(&quot;#ttsMode&quot;).onchange = e =&gt; { TTS.mode = e.target.value; saveTts(); };
   $(&quot;#ttsRate&quot;).onchange = e =&gt; { TTS.rate = +e.target.value; saveTts(); };
@@ -9205,33 +9152,55 @@ if (TTS.ok){
 /* ================= wiring ================= */
 function showTab(k){
   $$(&quot;.tab&quot;).forEach(b =&gt; b.setAttribute(&quot;aria-selected&quot;, b.dataset.tab === k));
-  [&quot;check&quot;,&quot;lib&quot;,&quot;hist&quot;].forEach(x =&gt; $(&quot;#v-&quot;+x).hidden = x !== k);
-  if (k === &quot;lib&quot;){ renderLibList(); renderLibEd(); }
+  [&quot;check&quot;,&quot;hist&quot;].forEach(x =&gt; $(&quot;#v-&quot;+x).hidden = x !== k);
   if (k === &quot;hist&quot;) renderHist();
 }
 $$(&quot;.tab&quot;).forEach(b =&gt; b.onclick = () =&gt; showTab(b.dataset.tab));
 
-const drop = $(&quot;#coaDrop&quot;);
-drop.onclick = () =&gt; $(&quot;#coaFile&quot;).click();
-drop.onkeydown = e =&gt; { if (e.key===&quot;Enter&quot;||e.key===&quot; &quot;){ e.preventDefault(); $(&quot;#coaFile&quot;).click(); } };
-[&quot;dragenter&quot;,&quot;dragover&quot;].forEach(ev =&gt; drop.addEventListener(ev, e =&gt; { e.preventDefault(); drop.classList.add(&quot;over&quot;); }));
-[&quot;dragleave&quot;,&quot;drop&quot;].forEach(ev =&gt; drop.addEventListener(ev, e =&gt; { e.preventDefault(); drop.classList.remove(&quot;over&quot;); }));
-drop.addEventListener(&quot;drop&quot;, e =&gt; { const f = e.dataTransfer.files[0]; if (f) handleCoaFile(f); });
-$(&quot;#coaFile&quot;).onchange = e =&gt; { const f = e.target.files[0]; if (f) handleCoaFile(f); e.target.value = &quot;&quot;; };
-$(&quot;#btnManual&quot;).onclick = () =&gt; {
-  if (!state.lib.length) return openAddTds();
-  if (!state.cur){ toast(&quot;Önce 1. adımda ürünün TDS'sini seçin&quot;); $(&quot;#prodSel&quot;).focus(); return; }
+function bindDrop(el, input, onFile){
+  el.onclick = () =&gt; input.click();
+  el.onkeydown = e =&gt; { if (e.key===&quot;Enter&quot;||e.key===&quot; &quot;){ e.preventDefault(); input.click(); } };
+  [&quot;dragenter&quot;,&quot;dragover&quot;].forEach(ev =&gt; el.addEventListener(ev, e =&gt; { e.preventDefault(); el.classList.add(&quot;over&quot;); }));
+  [&quot;dragleave&quot;,&quot;drop&quot;].forEach(ev =&gt; el.addEventListener(ev, e =&gt; { e.preventDefault(); el.classList.remove(&quot;over&quot;); }));
+  el.addEventListener(&quot;drop&quot;, e =&gt; { const f = e.dataTransfer.files[0]; if (f) onFile(f); });
+  input.onchange = e =&gt; { const f = e.target.files[0]; e.target.value = &quot;&quot;; if (f) onFile(f); };
+}
+bindDrop($(&quot;#tdsDrop&quot;), $(&quot;#tdsFile&quot;), handleTdsFile);
+bindDrop($(&quot;#coaDrop&quot;), $(&quot;#coaFile&quot;), handleCoaFile);
+
+$(&quot;#tdsPasteBtn&quot;).onclick = () =&gt; { $(&quot;#tdsPasteBox&quot;).hidden = !$(&quot;#tdsPasteBox&quot;).hidden; if (!$(&quot;#tdsPasteBox&quot;).hidden) $(&quot;#tdsPaste&quot;).focus(); };
+$(&quot;#tdsPasteGo&quot;).onclick = () =&gt; {
+  const lines = textLines($(&quot;#tdsPaste&quot;).value);
+  if (!lines.length) return toast(&quot;The text box is empty&quot;);
+  const pr = parseTdsLines([&quot;Properties | Unit | Result&quot;].concat(lines), &quot;&quot;);
+  setTds({name: state.tds ? state.tds.name : &quot;&quot;, code:&quot;&quot;, grade:&quot;&quot;, file:&quot;pasted TDS text&quot;, params: pr.rows.map(x =&gt; parseSpec(x[0], x[1], x[2]))}, lines);
+  $(&quot;#tdsPasteBox&quot;).hidden = true;
+  toast(pr.rows.length + &quot; TDS rows read&quot;);
+  if (!state.tds.name) $(&quot;#tdsName&quot;).focus();
+};
+$(&quot;#tdsManualBtn&quot;).onclick = () =&gt; {
+  if (!state.tds) setTds({name:&quot;&quot;, code:&quot;&quot;, grade:&quot;&quot;, file:&quot;entered manually&quot;, params:[
+    {name:&quot;&quot;, unit:&quot;%&quot;, type:&quot;min&quot;, lo:null, hi:null, text:&quot;&quot;, inferred:false},
+    {name:&quot;&quot;, unit:&quot;%&quot;, type:&quot;max&quot;, lo:null, hi:null, text:&quot;&quot;, inferred:false}]}, []);
+  const box = $(&quot;#limitsBox&quot;); box.open = true; box.scrollIntoView({block:&quot;start&quot;, behavior:&quot;smooth&quot;});
+  const inp = $(&quot;#edTbl tbody input&quot;); if (inp) setTimeout(() =&gt; inp.focus(), 300);
+};
+$(&quot;#tdsName&quot;).addEventListener(&quot;input&quot;, e =&gt; { if (state.tds){ state.tds.name = e.target.value; $(&quot;#resTitle&quot;).textContent = tdsLabel(state.tds); if (hasCoaData()) autoSave(); } });
+$(&quot;#tdsCode&quot;).addEventListener(&quot;input&quot;, e =&gt; { if (state.tds){ state.tds.code = e.target.value; state.tds.grade = &quot;&quot;; $(&quot;#resTitle&quot;).textContent = tdsLabel(state.tds); if (hasCoaData()) autoSave(); } });
+
+$(&quot;#coaPasteBtn&quot;).onclick = () =&gt; { $(&quot;#coaPasteBox&quot;).hidden = !$(&quot;#coaPasteBox&quot;).hidden; if (!$(&quot;#coaPasteBox&quot;).hidden) $(&quot;#coaPaste&quot;).focus(); };
+$(&quot;#coaPasteGo&quot;).onclick = () =&gt; {
+  const lines = textLines($(&quot;#coaPaste&quot;).value);
+  if (!lines.length) return toast(&quot;The text box is empty&quot;);
+  $(&quot;#coaPasteBox&quot;).hidden = true;
+  applyCoa(lines, &quot;pasted COA text&quot;, false);
+};
+$(&quot;#coaManualBtn&quot;).onclick = () =&gt; {
+  if (!state.tds) return toast(&quot;Load or enter the TDS first (step 1) — then type the COA values next to each limit&quot;);
   const v = $(&quot;#resTbl .vin&quot;); if (v){ v.scrollIntoView({block:&quot;center&quot;, behavior:&quot;smooth&quot;}); v.focus(); }
-  toast(&quot;Değerleri COA'dan okuyup tabloya yazın — sonuç ve rapor kendiliğinden oluşur&quot;);
+  toast(&quot;Type each value from the COA into the table — the verdict and report update as you type&quot;);
 };
-$(&quot;#btnPaste&quot;).onclick = () =&gt; { $(&quot;#pasteBox&quot;).hidden = !$(&quot;#pasteBox&quot;).hidden; };
-$(&quot;#btnPasteGo&quot;).onclick = () =&gt; {
-  const lines = $(&quot;#pasteTxt&quot;).value.split(/\r?\n/).map(l=&gt;l.replace(/\t/g,&quot;  |  &quot;).replace(/\s+/g,&quot; &quot;).trim()).filter(Boolean);
-  if (!lines.length) return toast(&quot;Metin boş&quot;);
-  $(&quot;#coaChip&quot;).hidden = false; $(&quot;#coaChip&quot;).innerHTML = `📋 Yapıştırılan metin · ${lines.length} satır`;
-  applyCoa(lines, &quot;yapıştırılan metin&quot;, false);
-};
-$(&quot;#prodSel&quot;).onchange = e =&gt; { state.cur = e.target.value || null; $(&quot;#autoNote&quot;).textContent = &quot;&quot;; runMatch(); };
+
 $(&quot;#resTbl&quot;).addEventListener(&quot;input&quot;, e =&gt; {
   const pi = e.target.dataset.pi; if (pi == null) return;
   coaVals[pi] = Object.assign(coaVals[pi]||{}, {value:e.target.value, auto:false, conv:null});
@@ -9239,103 +9208,55 @@ $(&quot;#resTbl&quot;).addEventListener(&quot;input&quot;, e =&gt; {
   renderCheck();
   const el = $(`#resTbl .vin[data-pi=&quot;${pi}&quot;]`); if (el){ el.focus(); try{ el.setSelectionRange(pos,pos); }catch(_){} }
 });
+[&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;].forEach(id =&gt; $(id).addEventListener(&quot;input&quot;, () =&gt; { if (state.tds &amp;&amp; hasCoaData()) autoSave(); }));
 $(&quot;#btnClear&quot;).onclick = clearCheck;
-$(&quot;#btnPrint&quot;).onclick = () =&gt; { const s = snapshot(); if (s &amp;&amp; recId){ const r = state.hist.find(h=&gt;h.id===recId); if (r){ s.no = r.no; s.ts = r.ts; } } printReport(s); };
-[&quot;#fSup&quot;,&quot;#fLot&quot;,&quot;#fDate&quot;,&quot;#fRef&quot;,&quot;#fNote&quot;].forEach(id =&gt; $(id).addEventListener(&quot;input&quot;, () =&gt; { if (recId || state.coaLines.length) autoSave(); }));
+$(&quot;#btnPrint&quot;).onclick = () =&gt; { const s = snapshot(); if (s &amp;&amp; recId){ const r = state.hist.find(h=&gt;h.id===recId); if (r){ s.no = r.no; s.ts = r.ts; } } printReport(s &amp;&amp; hasCoaData() ? s : null); };
 document.addEventListener(&quot;click&quot;, e =&gt; {
   if (e.target.closest(&quot;[data-rep],[data-hdel]&quot;)) return;
   const b = e.target.closest(&quot;[data-open]&quot;); if (b) openReport(state.hist.find(h =&gt; h.id === b.dataset.open));
 });
 
-$(&quot;#libSearch&quot;).oninput = renderLibList;
-$(&quot;#libList&quot;).onclick = e =&gt; { const b = e.target.closest(&quot;.lib-item&quot;); if (!b) return; state.libSel = b.dataset.id; renderLibList(); renderLibEd(); };
-let addFromCheck = false;
-function openAddTds(){
-  addFromCheck = !$(&quot;#v-check&quot;).hidden;
-  const m = $(&quot;#modal&quot;); m.hidden = false;
-  m.innerHTML = `&lt;div class=&quot;card&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;atTitle&quot; style=&quot;width:min(620px,100%)&quot;&gt;
-    &lt;div class=&quot;card-h&quot;&gt;&lt;h2 id=&quot;atTitle&quot;&gt;Yeni TDS ekle&lt;/h2&gt;&lt;button class=&quot;x&quot; id=&quot;atClose&quot; title=&quot;Kapat&quot;&gt;×&lt;/button&gt;&lt;/div&gt;
-    &lt;div class=&quot;card-b&quot;&gt;
-      &lt;div class=&quot;drop&quot; id=&quot;atDrop&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;TDS dosyası seç&quot;&gt;
-        &lt;svg width=&quot;28&quot; height=&quot;28&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z&quot;/&gt;&lt;path d=&quot;M14 3v5h5&quot;/&gt;&lt;path d=&quot;M12 12v6M9 15l3-3 3 3&quot;/&gt;&lt;/svg&gt;
-        &lt;div class=&quot;big&quot;&gt;TDS dosyasını bırakın veya seçin&lt;/div&gt;
-        &lt;div class=&quot;small&quot;&gt;PDF · JPG · PNG — birden fazla dosya seçebilirsiniz. Tablo otomatik okunur, kaydetmeden önce kontrol edersiniz.&lt;/div&gt;
-      &lt;/div&gt;
-      &lt;label class=&quot;lbl&quot; for=&quot;atPaste&quot; style=&quot;margin-top:16px&quot;&gt;…veya TDS tablosunu yapıştırın (her satır: Parametre · Birim · Limit)&lt;/label&gt;
-      &lt;textarea class=&quot;inp&quot; id=&quot;atPaste&quot; placeholder=&quot;Purity	% min	99.0&amp;#10;Moisture	% max	0.5&amp;#10;Fe	ppm max	10&quot;&gt;&lt;/textarea&gt;
-      &lt;div class=&quot;toolbar&quot; style=&quot;justify-content:space-between;margin-top:10px&quot;&gt;
-        &lt;button class=&quot;btn ghost&quot; id=&quot;atBlank&quot;&gt;Boş tablo ile elle gir&lt;/button&gt;
-        &lt;button class=&quot;btn primary&quot; id=&quot;atPasteGo&quot;&gt;Yapıştırılanı oku&lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;&lt;/div&gt;`;
-  const pick = () =&gt; $(&quot;#tdsFile&quot;).click();
-  $(&quot;#atClose&quot;).onclick = closeModal;
-  $(&quot;#atDrop&quot;).onclick = pick;
-  $(&quot;#atDrop&quot;).onkeydown = e =&gt; { if (e.key===&quot;Enter&quot;||e.key===&quot; &quot;){ e.preventDefault(); pick(); } };
-  bindDrop($(&quot;#atDrop&quot;), fs =&gt; { closeModal(); handleTdsFiles(fs); });
-  $(&quot;#atBlank&quot;).onclick = () =&gt; { closeModal(); openImportReview([blankTds()]); };
-  $(&quot;#atPasteGo&quot;).onclick = () =&gt; {
-    const lines = $(&quot;#atPaste&quot;).value.split(/\r?\n/).map(l=&gt;l.replace(/\t/g,&quot;  |  &quot;).replace(/\s+/g,&quot; &quot;).trim()).filter(Boolean);
-    if (!lines.length) return toast(&quot;Metin boş&quot;);
-    const r = parseTdsLines([&quot;Properties | Unit | Result&quot;].concat(lines), &quot;&quot;);
-    closeModal(); openImportReview([Object.assign(r, {name:&quot;Yeni ürün&quot;, file:&quot;yapıştırılan metin&quot;, lines})]);
-  };
-  setTimeout(() =&gt; $(&quot;#atDrop&quot;).focus(), 30);
-}
-function closeModal(){ if (TTS.btn &amp;&amp; TTS.btn.id === &quot;rpSpeak&quot;) stopSpeak(); const m = $(&quot;#modal&quot;); m.hidden = true; m.innerHTML = &quot;&quot;; }
-function blankTds(){ return {name:&quot;Yeni ürün&quot;, code:&quot;&quot;, grade:&quot;&quot;, rows:[[&quot;Purity&quot;,&quot;% min&quot;,&quot;&quot;],[&quot;Moisture&quot;,&quot;% max&quot;,&quot;&quot;]], file:&quot;elle oluşturuldu&quot;, lines:[]}; }
-function bindDrop(el, onFiles){
-  [&quot;dragenter&quot;,&quot;dragover&quot;].forEach(ev =&gt; el.addEventListener(ev, e =&gt; { e.preventDefault(); el.classList.add(&quot;over&quot;); }));
-  [&quot;dragleave&quot;,&quot;drop&quot;].forEach(ev =&gt; el.addEventListener(ev, e =&gt; { e.preventDefault(); el.classList.remove(&quot;over&quot;); }));
-  el.addEventListener(&quot;drop&quot;, e =&gt; { const fs = [...e.dataTransfer.files]; if (fs.length) onFiles(fs); });
-}
-document.addEventListener(&quot;click&quot;, e =&gt; { if (e.target.closest(&quot;[data-addtds]&quot;)) openAddTds(); });
-const tdsDrop = $(&quot;#tdsDrop&quot;);
-tdsDrop.onclick = () =&gt; { addFromCheck = false; $(&quot;#tdsFile&quot;).click(); };
-tdsDrop.onkeydown = e =&gt; { if (e.key===&quot;Enter&quot;||e.key===&quot; &quot;){ e.preventDefault(); tdsDrop.click(); } };
-bindDrop(tdsDrop, fs =&gt; { addFromCheck = false; handleTdsFiles(fs); });
-$(&quot;#tdsFile&quot;).onchange = e =&gt; { const fs = [...e.target.files]; e.target.value = &quot;&quot;; if (fs.length){ closeModal(); handleTdsFiles(fs); } };
-$(&quot;#btnTdsBlank&quot;).onclick = () =&gt; { addFromCheck = false; openImportReview([blankTds()]); };
-$(&quot;#btnExport&quot;).onclick = () =&gt; download(&quot;coa_kontrol_yedek_&quot; + new Date().toISOString().slice(0,10) + &quot;.json&quot;, JSON.stringify({v:1, lib:state.lib, hist:state.hist}, null, 1), &quot;application/json&quot;);
-$(&quot;#btnImport&quot;).onclick = () =&gt; $(&quot;#impFile&quot;).click();
-$(&quot;#impFile&quot;).onchange = async e =&gt; {
-  const f = e.target.files[0]; e.target.value = &quot;&quot;; if (!f) return;
-  try { const d = JSON.parse(await f.text()); if (!Array.isArray(d.lib)) throw new Error(&quot;geçersiz dosya&quot;);
-    const libIds = new Set(state.lib.map(t =&gt; t.id)), histIds = new Set(state.hist.map(h =&gt; h.id));
-    const addL = d.lib.filter(t =&gt; t &amp;&amp; t.id &amp;&amp; Array.isArray(t.params) &amp;&amp; !libIds.has(t.id)).map(t =&gt; Object.assign(t, {builtin:false}));
-    const addH = (Array.isArray(d.hist) ? d.hist : []).filter(h =&gt; h &amp;&amp; h.id &amp;&amp; !histIds.has(h.id));
-    state.lib = state.lib.concat(addL); state.hist = state.hist.concat(addH).sort((a,b) =&gt; String(b.ts).localeCompare(String(a.ts)));
-    persist(); fillProdSel(); renderLibList(); renderLibEd(); renderCheck(); if (!$(&quot;#v-hist&quot;).hidden) renderHist();
-    toast(&quot;Eklendi: &quot; + addL.length + &quot; TDS, &quot; + addH.length + &quot; rapor&quot; + ((d.lib.length - addL.length) ? &quot; · zaten olan &quot; + (d.lib.length - addL.length) + &quot; TDS atlandı&quot; : &quot;&quot;)); }
-  catch(err){ toast(&quot;Yedek okunamadı: &quot; + err.message); }
-};
 $(&quot;#histSearch&quot;).oninput = renderHist;
 $(&quot;#histVerdict&quot;).onchange = renderHist;
 $(&quot;#btnCsv&quot;).onclick = csv;
+$(&quot;#btnExport&quot;).onclick = () =&gt; download(&quot;coa_reports_backup_&quot; + new Date().toISOString().slice(0,10) + &quot;.json&quot;, JSON.stringify({v:2, hist:state.hist}, null, 1), &quot;application/json&quot;);
+$(&quot;#btnImport&quot;).onclick = () =&gt; $(&quot;#impFile&quot;).click();
+$(&quot;#impFile&quot;).onchange = async e =&gt; {
+  const f = e.target.files[0]; e.target.value = &quot;&quot;; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    const list = Array.isArray(d.hist) ? d.hist : null; if (!list) throw new Error(&quot;not a report backup file&quot;);
+    const have = new Set(state.hist.map(h =&gt; h.id));
+    const add = list.filter(h =&gt; h &amp;&amp; h.id &amp;&amp; Array.isArray(h.rows) &amp;&amp; !have.has(h.id));
+    state.hist = state.hist.concat(add).sort((a,b) =&gt; String(b.ts).localeCompare(String(a.ts)));
+    persist(); $(&quot;#nHist&quot;).textContent = state.hist.length; renderHist();
+    toast(&quot;Added &quot; + add.length + &quot; report&quot; + (add.length===1?&quot;&quot;:&quot;s&quot;) + ((list.length - add.length) ? &quot; · &quot; + (list.length - add.length) + &quot; already present&quot; : &quot;&quot;));
+  } catch(err){ toast(&quot;Could not read the backup: &quot; + err.message); }
+};
 $(&quot;#histTbl&quot;).onclick = e =&gt; {
   const r = e.target.closest(&quot;[data-rep]&quot;); if (r) return printReport(state.hist.find(h=&gt;h.id===r.dataset.rep));
-  const d = e.target.closest(&quot;[data-hdel]&quot;); if (d &amp;&amp; confirm(&quot;Rapor silinsin mi?&quot;)) deleteReport(d.dataset.hdel);
+  const d = e.target.closest(&quot;[data-hdel]&quot;); if (d &amp;&amp; confirm(&quot;Delete this report?&quot;)) deleteReport(d.dataset.hdel);
 };
-function dismissModal(){ if ($(&quot;#imCancel&quot;)) $(&quot;#imCancel&quot;).click(); else if ($(&quot;#atClose&quot;)) closeModal(); }
-$(&quot;#modal&quot;).addEventListener(&quot;click&quot;, e =&gt; { if (e.target.id === &quot;modal&quot;) dismissModal(); });
-document.addEventListener(&quot;keydown&quot;, e =&gt; { if (e.key === &quot;Escape&quot; &amp;&amp; !$(&quot;#modal&quot;).hidden) dismissModal(); });
+$(&quot;#modal&quot;).addEventListener(&quot;click&quot;, e =&gt; { if (e.target.id === &quot;modal&quot;) closeModal(); });
+document.addEventListener(&quot;keydown&quot;, e =&gt; { if (e.key === &quot;Escape&quot; &amp;&amp; !$(&quot;#modal&quot;).hidden) closeModal(); });
 
 // theme
 const THEMES = [&quot;light&quot;,&quot;dark&quot;,&quot;system&quot;];
 function applyTheme(t){ if (t === &quot;system&quot;) document.documentElement.removeAttribute(&quot;data-theme&quot;); else document.documentElement.setAttribute(&quot;data-theme&quot;, t); }
 let theme = (function(){ try{ return localStorage.getItem(&quot;anatrica-coa-theme&quot;) || &quot;system&quot;; }catch(e){ return &quot;system&quot;; } })();
 applyTheme(theme);
-$(&quot;#btnTheme&quot;).onclick = () =&gt; { theme = THEMES[(THEMES.indexOf(theme)+1)%3]; applyTheme(theme); try{ localStorage.setItem(&quot;anatrica-coa-theme&quot;, theme); }catch(e){} toast(&quot;Tema: &quot; + ({light:&quot;açık&quot;,dark:&quot;koyu&quot;,system:&quot;sistem&quot;})[theme]); };
+$(&quot;#btnTheme&quot;).onclick = () =&gt; { theme = THEMES[(THEMES.indexOf(theme)+1)%3]; applyTheme(theme); try{ localStorage.setItem(&quot;anatrica-coa-theme&quot;, theme); }catch(e){} toast(&quot;Theme: &quot; + theme); };
 window.addEventListener(&quot;message&quot;, e =&gt; {
   const d = e.data; if (!d) return;
   if (d.__portalTheme) applyTheme(d.__portalTheme);
   if (d.__coaStoreData &amp;&amp; d.__coaStoreData.key === STORE_KEY &amp;&amp; STORAGE === &quot;parent&quot;){
     let v = null; try { v = JSON.parse(d.__coaStoreData.val); } catch(_){}
-    if (v){ applyStored(v); fillProdSel(); renderCheck(); if (!$(&quot;#v-hist&quot;).hidden) renderHist(); if (!$(&quot;#v-lib&quot;).hidden){ renderLibList(); renderLibEd(); } }
+    if (v){ applyStored(v); $(&quot;#nHist&quot;).textContent = state.hist.length; if (!$(&quot;#v-hist&quot;).hidden) renderHist(); }
   }
 });
 
-fillProdSel();
+$(&quot;#nHist&quot;).textContent = state.hist.length;
+renderLimits();
 renderCheck();
 &lt;/script&gt;
 &lt;/body&gt;
@@ -9355,9 +9276,9 @@ renderCheck();
 (function(){
   "use strict";
   var ORDER    = ["ledger","duty","strat","game","deal","news","play","proc","copper","fin","coa"];
-  var LABEL    = {"ledger":"Trade Ledger","duty":"Duty Matrix","strat":"Strategy","game":"Game Theory","deal":"Deal Sheet","news":"News","play":"Playbook","proc":"Process","copper":"Copper LME","fin":"Finance","coa":"COA Kontrol"};
+  var LABEL    = {"ledger":"Trade Ledger","duty":"Duty Matrix","strat":"Strategy","game":"Game Theory","deal":"Deal Sheet","news":"News","play":"Playbook","proc":"Process","copper":"Copper LME","fin":"Finance","coa":"COA Check"};
   var TABC     = {"ledger":"var(--imports)","duty":"var(--exports)","strat":"var(--accent)","game":"var(--imports)","deal":"var(--good)","news":"var(--warn)","play":"var(--ink-muted)","proc":"var(--good)","copper":"var(--exports)","fin":"var(--imports)","coa":"var(--good)"};
-  var STAMP    = [{"label":"Trade Map 2025","review":"2027-03-01"},{"label":"MacMap 2026-09","review":"2027-03-01"},{"label":"Review 2026-09","review":"2027-03-01"},{"label":"models 2026-09","review":"2027-03-01"},{"label":"FBX 2026-09","review":"2027-03-01"},{"label":"GDELT live","review":"2027-06-01"},{"label":"2026-09-03","review":"2027-03-01"},{"label":"process refs","review":"2028-01-01"},{"label":"westmetall CSV","review":"2027-06-01"},{"label":"AV 2026-09-21","review":"2026-12-01"},{"label":"your own TDS","review":"2027-09-01"}];      /* [{label, review}] */
+  var STAMP    = [{"label":"Trade Map 2025","review":"2027-03-01"},{"label":"MacMap 2026-09","review":"2027-03-01"},{"label":"Review 2026-09","review":"2027-03-01"},{"label":"models 2026-09","review":"2027-03-01"},{"label":"FBX 2026-09","review":"2027-03-01"},{"label":"GDELT live","review":"2027-06-01"},{"label":"2026-09-03","review":"2027-03-01"},{"label":"process refs","review":"2028-01-01"},{"label":"westmetall CSV","review":"2027-06-01"},{"label":"AV 2026-09-21","review":"2026-12-01"},{"label":"TDS + COA","review":"2027-09-01"}];      /* [{label, review}] */
   var PRODUCTS = [["Potassium Nitrate", "283421"], ["Activated Carbon", "380210"], ["Ammonium Sulphate", "310221"], ["Calcium Chloride", "282720"], ["Calcium Hypochlorite", "282810"], ["Caustic Soda", "281511"], ["Copper Sulphate", "283325"], ["Ferric Chloride", "282739"], ["Ferrous Sulphate", "283329"], ["Formaldehyde", "291211"], ["Formic Acid", "291511"], ["Hydrochloric Acid", "280610"], ["Hydrogen Peroxide", "284700"], ["Lead Nitrate", "283429"], ["Magnesium Chloride", "282731"], ["Magnesium Oxide", "251990"], ["Magnesium Sulfate", "283321"], ["Manganese Sulphate", "283329"], ["Nitric Acid", "280800"], ["Potassium Amyl Xanthate", "293020"], ["Potassium Carbonate", "283640"], ["Soda Ash", "283620"], ["Sodium Fluoride", "282619"], ["Sodium Formate", "291512"], ["Sodium Metabisulphite", "283210"], ["Sodium Sulphide", "283010"], ["Sulphur Powder", "250300"], ["Zinc Sulphate", "283329"]];   /* [[name, hs], ...] */
   var ALIAS    = { strategy:"strat", board:"strat", review:"strat", ledger:"ledger", trade:"ledger", duty:"duty", matrix:"duty", dealsheet:"deal", sheet:"deal", playbook:"play", play:"play", game:"game", gametheory:"game", nash:"game", process:"proc", proc:"proc", recipe:"proc", production:"proc", copper:"copper", lme:"copper", bakir:"copper", fin:"fin", finance:"fin", finans:"fin", coa:"coa", tds:"coa", kalite:"coa", quality:"coa", rapor:"coa", report:"coa", home:"home", dashboard:"home", modules:"home" };
   var NAV = ["home"].concat(ORDER);   /* "home" is a shell view, not an iframe */
