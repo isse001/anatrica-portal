@@ -8309,8 +8309,8 @@ details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);paddin
             &lt;/table&gt;
           &lt;/div&gt;
           &lt;div class=&quot;legend&quot;&gt;
-            &lt;span&gt;&lt;span class=&quot;pill p-ok&quot;&gt;PASS&lt;/span&gt; within limit&lt;/span&gt;
-            &lt;span&gt;&lt;span class=&quot;pill p-warn&quot;&gt;BORDERLINE&lt;/span&gt; within limit but very close (max/range: last 5 % of the limit · min: at most 0.5 points above)&lt;/span&gt;
+            &lt;span&gt;&lt;span class=&quot;pill p-ok&quot;&gt;PASS&lt;/span&gt; within limit — a value equal to the limit also passes&lt;/span&gt;
+            &lt;span&gt;&lt;span class=&quot;pill p-warn&quot;&gt;BORDERLINE&lt;/span&gt; within limit and very close to it, but not equal (max/range: last 5 % of the limit · min: at most 0.5 points above)&lt;/span&gt;
             &lt;span&gt;&lt;span class=&quot;pill p-bad&quot;&gt;FAIL&lt;/span&gt; out of limit&lt;/span&gt;
             &lt;span&gt;&lt;span class=&quot;pill p-miss&quot;&gt;MISSING&lt;/span&gt; not in Document 2&lt;/span&gt;
             &lt;span&gt;&lt;span class=&quot;pill p-info&quot;&gt;INFO&lt;/span&gt; not evaluated&lt;/span&gt;
@@ -8714,9 +8714,13 @@ function evalParam(p, raw){
     return {st:&quot;manual&quot;, note:&quot;could not read a number&quot;};
   }
   const v = nd ? 0 : n[0].v;
+  // a value exactly on the limit meets &quot;≥&quot; / &quot;≤&quot; / range limits → PASS (not borderline)
+  const eq = (a, b) =&gt; b != null &amp;&amp; Math.abs(a - b) &lt;= 1e-9 * Math.max(1, Math.abs(b));
+  const onLimit = {st:&quot;ok&quot;, v, note:&quot;equal to the limit&quot;};
   switch(p.type){
     case &quot;min&quot;: {
       if (lt) return {st:&quot;bad&quot;};
+      if (!gt &amp;&amp; eq(v, p.lo)) return onLimit;
       if (v &lt; p.lo) return {st:&quot;bad&quot;, v};
       // &quot;close to limit&quot;: for high-purity % limits a quarter of the headroom to 100 % (max 0.5 pt), otherwise 0.5 % of the limit
       const band = (/%/.test(p.unit||&quot;&quot;) &amp;&amp; p.lo &gt; 50 &amp;&amp; p.lo &lt; 100) ? Math.min((100 - p.lo) * 0.25, 0.5) : Math.abs(p.lo) * 0.005;
@@ -8724,9 +8728,11 @@ function evalParam(p, raw){
     }
     case &quot;max&quot;:
       if (gt) return {st: v &gt;= p.hi ? &quot;bad&quot; : &quot;manual&quot;, v};
+      if (!lt &amp;&amp; !nd &amp;&amp; eq(v, p.hi)) return onLimit;
       if (v &gt; p.hi) return {st:&quot;bad&quot;, v};
       return {st: (!lt &amp;&amp; !nd &amp;&amp; v &gt;= p.hi*0.95 &amp;&amp; p.hi&gt;0) ? &quot;warn&quot; : &quot;ok&quot;, v};
     case &quot;range&quot;: {
+      if (eq(v, p.lo) || eq(v, p.hi)) return onLimit;
       if (v &lt; p.lo || v &gt; p.hi) return {st:&quot;bad&quot;, v};
       const band = (p.hi-p.lo)*0.05;
       return {st: (v &lt;= p.lo+band || v &gt;= p.hi-band) ? &quot;warn&quot; : &quot;ok&quot;, v};

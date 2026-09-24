@@ -293,8 +293,8 @@ details.raw pre{background:var(--surface-2);border-radius:var(--radius-s);paddin
             </table>
           </div>
           <div class="legend">
-            <span><span class="pill p-ok">PASS</span> within limit</span>
-            <span><span class="pill p-warn">BORDERLINE</span> within limit but very close (max/range: last 5 % of the limit · min: at most 0.5 points above)</span>
+            <span><span class="pill p-ok">PASS</span> within limit — a value equal to the limit also passes</span>
+            <span><span class="pill p-warn">BORDERLINE</span> within limit and very close to it, but not equal (max/range: last 5 % of the limit · min: at most 0.5 points above)</span>
             <span><span class="pill p-bad">FAIL</span> out of limit</span>
             <span><span class="pill p-miss">MISSING</span> not in Document 2</span>
             <span><span class="pill p-info">INFO</span> not evaluated</span>
@@ -698,9 +698,13 @@ function evalParam(p, raw){
     return {st:"manual", note:"could not read a number"};
   }
   const v = nd ? 0 : n[0].v;
+  // a value exactly on the limit meets "≥" / "≤" / range limits → PASS (not borderline)
+  const eq = (a, b) => b != null && Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(b));
+  const onLimit = {st:"ok", v, note:"equal to the limit"};
   switch(p.type){
     case "min": {
       if (lt) return {st:"bad"};
+      if (!gt && eq(v, p.lo)) return onLimit;
       if (v < p.lo) return {st:"bad", v};
       // "close to limit": for high-purity % limits a quarter of the headroom to 100 % (max 0.5 pt), otherwise 0.5 % of the limit
       const band = (/%/.test(p.unit||"") && p.lo > 50 && p.lo < 100) ? Math.min((100 - p.lo) * 0.25, 0.5) : Math.abs(p.lo) * 0.005;
@@ -708,9 +712,11 @@ function evalParam(p, raw){
     }
     case "max":
       if (gt) return {st: v >= p.hi ? "bad" : "manual", v};
+      if (!lt && !nd && eq(v, p.hi)) return onLimit;
       if (v > p.hi) return {st:"bad", v};
       return {st: (!lt && !nd && v >= p.hi*0.95 && p.hi>0) ? "warn" : "ok", v};
     case "range": {
+      if (eq(v, p.lo) || eq(v, p.hi)) return onLimit;
       if (v < p.lo || v > p.hi) return {st:"bad", v};
       const band = (p.hi-p.lo)*0.05;
       return {st: (v <= p.lo+band || v >= p.hi-band) ? "warn" : "ok", v};
